@@ -1,6 +1,7 @@
-# Title
+# Reading Time
 
-This sample demonstrates how to run scripts on every page and how to use icons.
+This script effectively demonstrates the use of DOM manipulation and regular expressions in a Chrome extension. Understanding these concepts is crucial for developing interactive and dynamic browser extensions.  This sample demonstrates how to run scripts on every page and how to use icons.
+an [reading time tutorial](https://developer.chrome.com/docs/extensions/get-started/tutorial/scripts-on-every-tab).
 
 ## Overview
 
@@ -111,7 +112,9 @@ In summary, this script calculates the reading time for an article and displays 
 
 ## Implementation Notes
 
-#### We recommend using PNG files, but other file formats are allowed, except for SVG files.  See the table below for icon usage based on icon size.
+We recommend using PNG files, but other file formats are allowed, except for SVG files.  See the table below for icon usage based on icon size.
+
+Icons play a crucial role in user recognition of the extension. Below is a guide for icon usage:
 
 | Icon size | Icon use                                              |
 | --------- | ----------------------------------------------------- |
@@ -125,4 +128,4 @@ In summary, this script calculates the reading time for an article and displays 
 
 1. Clone this repository.
 2. Load this directory in Chrome as an [unpacked extension](https://developer.chrome.com/docs/extensions/mv3/getstarted/development-basics/#load-unpacked).
-3. _Add the rest of the instructions here_
+3. Navigate to a webpage with articles to see the extension in action.
