@@ -21,6 +21,7 @@
   );
 
   document.body.append(popover);
+  console.log(nav)
   nav.append(tipWidget);
 })();
 

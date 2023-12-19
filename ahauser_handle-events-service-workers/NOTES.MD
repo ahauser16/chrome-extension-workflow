@@ -3,6 +3,36 @@
 
 This README file provides a step-by-step guide on building a Chrome extension called "Handle events with service workers" which covers extension service worker concepts.
 
+NB--> This tutorial is deprecated and will not achieve the outcome described in the documentation.  It will work up to this point: https://developer.chrome.com/docs/extensions/get-started/tutorial/service-worker-events#open-api but the "Tip of the Day" feature will not work.  
+
+When I tried to mimic the Tip of the Day behavior (shown here https://developer.chrome.com/docs/extensions/get-started/tutorial/service-worker-events#open-tip) I received the following errors in the console:
+
+```
+https://developer.chrome.com/docs/extensions/get-started/tutorial/service-worker-events#open-tip
+```
+
+and
+
+```
+{
+  "error": {
+    "code": 401,
+    "message": "API keys are not supported by this API. Expected OAuth2 access token or other authentication credentials that assert a principal. See https://cloud.google.com/docs/authentication",
+    "status": "UNAUTHENTICATED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "CREDENTIALS_MISSING",
+        "domain": "googleapis.com",
+        "metadata": {
+          "method": "google.internal.developerprofiles.v1.profile.ProfileService.GetProfile",
+          "service": "developerprofiles-pa.googleapis.com"
+        }
+      }
+    ]
+  }
+}
+```
 
 [Handle events with service workers](https://developer.chrome.com/docs/extensions/get-started/tutorial/service-worker-events).
 
