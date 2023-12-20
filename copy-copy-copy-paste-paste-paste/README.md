@@ -2,7 +2,7 @@
 ## Problem to solve:
 Traditional copy-paste methods are time-consuming, especially when transferring multiple types of content between websites and documents. Our Chrome extension, 'Copy Copy Copy Paste Paste Paste', revolutionizes this process by offering three clipboard slots for images, text, links, rich text, SVG Graphics, tables, lists, embedded content, code snippets, JSON data, XML data and more. Users can effortlessly copy different content types from one site and paste them in sequence on another, all in a single trip. Designed with efficiency in mind, it features intuitive shortcuts and secure handling of sensitive data. Ideal for professionals and researchers, 'Copy Copy Copy Paste Paste Paste' streamlines your workflow, saving time and reducing the hassle of back-and-forth navigation.
 
-Below is the template markup for the multiple side panel repository from Google Chrome's Github.
+Below is the template markup for the multiple side panel repository from Google Chrome's Github: https://github.com/GoogleChrome/chrome-extensions-samples/tree/main/functional-samples/cookbook.sidepanel-multiple
 
 # Multiple side panels example
 
