@@ -1,0 +1,10 @@
+{
+  "name": "Currency Conversion API Example",
+  "version": "1.0",
+  "manifest_version": 3,
+  "description": "this is an example of how to make an api call in a Google Chrome extension",
+  "action": {
+    "default_icon": "notaryIcon.png",
+    "default_popup": "index.html"
+  }
+}

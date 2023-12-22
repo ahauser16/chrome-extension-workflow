@@ -9,6 +9,9 @@
  * @param {(event: Event) => void} callback
  * @return {(event: Event) => void}
  */
+//ANALYSIS ONE
+// This mechanism ensures that the callback function is not called immediately but is delayed until a certain amount of time (timeout) has passed without any new events being fired.
+// It effectively "debounces" the events, reducing the frequency of callback executions, which can improve performance and responsiveness, especially for events that fire rapidly.
 function debounce(timeout, callback) {
   let timeoutID = 0;
   return (event) => {
@@ -21,36 +24,80 @@ function debounce(timeout, callback) {
 // .enable / .disable
 // ------------------
 
+// When the user clicks the button with ID toggle-state-button, the extension's action button in the Chrome toolbar will be toggled between enabled and disabled states. This functionality is useful for controlling the availability of the extension's features directly from the extension's user interface.
+
+//ANALYSIS TWO
 document
   .getElementById('toggle-state-button')
   .addEventListener('click', async () => {
-    // Use the isEnabled method to read the action's current state.
+    // "chrome.action.isEnabled()" is a method from the Chrome Extensions API. It checks whether the extension's action (usually represented by a toolbar icon) is currently enabled and returns a boolean value.  Use the isEnabled method to read the action's current state.
+
+    //NB--> The await keyword is used to wait for the promise returned by this method to resolve.
     let actionEnabled = await chrome.action.isEnabled();
     // when the button is clicked negate the state
     if (actionEnabled) {
+      //This is a method from the Chrome Extensions API used to disable the extension's action. When disabled, the action typically appears grayed out and is not interactive.
       chrome.action.disable();
     } else {
+      //This is also a method from the Chrome Extensions API. It's used to enable the extension's action, making it active and interactive again.
       chrome.action.enable();
     }
   });
 
+//ANALYSIS THREE
 document
+  //document.getElementById('popup-options'): This selects the HTML element with the ID popup-options. This element is expected to be a <select> dropdown menu.
+  // .addEventListener('change', async (event) => {...}): Adds an event listener for the change event to the selected element. The change event is triggered whenever the selected option in the dropdown changes. The listener is an asynchronous function, indicated by async, allowing the use of await within it.
   .getElementById('popup-options')
   .addEventListener('change', async (event) => {
+
+    //const popup = event.target.value;: When the dropdown's selected option changes, this line retrieves the value of the selected option. "event.target" refers to the element that triggered the event (the <select> element), and "event.target.value" is the value of the currently selected option.
     const popup = event.target.value;
+
+    // chrome.action.setPopup({ popup }): This line calls the "setPopup" method of the "chrome.action" API, setting the popup for the extension's action to the specified path. The popup variable contains the path to the new popup HTML file.
+
+    //await is used to wait for the operation to complete. This is necessary because setPopup is an asynchronous operation that returns a Promise.
     await chrome.action.setPopup({ popup });
 
-    // Show the updated popup path
+    // Show the updated popup path.  After setting the new popup, this line calls a function getCurrentPopup(). While the function's implementation isn't shown in the snippet, it's likely designed to update the UI to display the current popup path or perform some other related action.
+
+    // Again, await is used, indicating that getCurrentPopup is also asynchronous and returns a Promise.
     await getCurrentPopup();
   });
 
+
+//ANALYSIS FOUR
+//The provided function getCurrentPopup is an asynchronous function designed to retrieve the current popup URL set for a Google Chrome extension's action (such as the toolbar icon) and display it in an HTML element.
+
+//async function getCurrentPopup() {...}: This defines an asynchronous function named getCurrentPopup. The async keyword allows the use of await within the function to handle asynchronous operations.
 async function getCurrentPopup() {
-  const popup = await chrome.action.getPopup({});
-  document.getElementById('current-popup-value').value = popup;
+
+  //   step A-->Retrieves the current popup URL set for the extension's action.
+  //await chrome.action.getPopup({}): This line calls the getPopup method of the chrome.action API. The method retrieves the URL of the current popup set for the extension's action.
+  // await is used to wait for the Promise returned by getPopup to resolve. The resolved value (the URL of the current popup) is stored in the popup variable.
+  const popup = await chrome.action.getPopup({});//--> popup=current popup URL
+
+  // Log the retrieved popup URL to the console
+  console.log("Current popup URL:", popup);
+
+  // step B--> Updates an input field (or similar element) with the ID current-popup-value to display this URL.
+  //This line selects an HTML element with the ID current-popup-value. This element is expected to be an input field or similar.
+  // It then sets the value of this element to the popup URL retrieved from the chrome.action.getPopup call. This updates the UI to display the current popup URL.
+  document.getElementById('current-popup-value').value = popup;//-->sets value of an input element to the current popup URL.
+
+  //step C--> Returns the URL for potential use elsewhere in the script.
+  //The function returns the popup URL. This allows other parts of the script to use the URL returned by getCurrentPopup if needed.
   return popup;
 }
 
+
+//ANALYSIS FIVE
+//The provided JavaScript function showCurrentPage is designed to display the current popup page set for a Chrome extension's action in the user interface of the extension. It uses the getCurrentPopup utility function to retrieve the current popup URL and then updates a dropdown menu to reflect this selection.
+
+//This defines an asynchronous function named showCurrentPage. The async keyword allows the use of await within the function.
 async function showCurrentPage() {
+
+
   const popup = await getCurrentPopup();
   let pathname = '';
   if (popup) {
