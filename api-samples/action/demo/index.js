@@ -66,7 +66,7 @@ document
   });
 
 
-//ANALYSIS FOUR
+//ANALYSIS FOUR START
 //The provided function getCurrentPopup is an asynchronous function designed to retrieve the current popup URL set for a Google Chrome extension's action (such as the toolbar icon) and display it in an HTML element.
 
 //async function getCurrentPopup() {...}: This defines an asynchronous function named getCurrentPopup. The async keyword allows the use of await within the function to handle asynchronous operations.
@@ -89,47 +89,111 @@ async function getCurrentPopup() {
   //The function returns the popup URL. This allows other parts of the script to use the URL returned by getCurrentPopup if needed.
   return popup;
 }
+//OVERALL SUMMARY: In summary, getCurrentPopup acts as a utility function within the extension, providing a specific piece of information (the current popup URL) to other parts of the extension that might require it. This approach enhances code organization and maintainability by avoiding duplication of the same logic across multiple functions.
+//ANALYSIS FOUR END
 
 
-//ANALYSIS FIVE
+
+//ANALYSIS FIVE START
 //The provided JavaScript function showCurrentPage is designed to display the current popup page set for a Chrome extension's action in the user interface of the extension. It uses the getCurrentPopup utility function to retrieve the current popup URL and then updates a dropdown menu to reflect this selection.
 
 //This defines an asynchronous function named showCurrentPage. The async keyword allows the use of await within the function.
-async function showCurrentPage() {
+async function showCurrentPage() {//-->Function Declaration:
 
+  //await getCurrentPopup(): This line calls the previously discussed getCurrentPopup function, which returns the current popup URL set for the extension's action.
+  // The await keyword is used to wait for the Promise returned by getCurrentPopup to resolve, and the resolved value (the current popup URL) is stored in the popup variable.
+  const popup = await getCurrentPopup();//-->Retrieving the Current Popup URL:
 
-  const popup = await getCurrentPopup();
-  let pathname = '';
+  //   This block checks if popup has a value (i.e., if a popup URL is set).
+  // If popup is not empty, it creates a new URL object from the popup string and extracts the pathname property. The pathname is the part of the URL that comes after the domain name.
+  let pathname = '';//-->Extracting the Pathname from the URL:
   if (popup) {
     pathname = new URL(popup).pathname;
   }
 
-  const options = document.getElementById('popup-options');
+  //document.getElementById('popup-options'): This selects the dropdown menu element with the ID popup-options.
+  const options = document.getElementById('popup-options');//-->Updating the Dropdown Menu
+
+  //options.querySelector(option[value="${pathname}"]): This finds the <option> element within the dropdown that has a value attribute matching the pathname.
   const option = options.querySelector(`option[value="${pathname}"]`);
+
+  //option.selected = true;: This sets the found option as the selected one in the dropdown menu.
   option.selected = true;
 }
 
-// Populate popup inputs on page load
+//This line calls the showCurrentPage function when the script is loaded. It ensures that the dropdown menu reflects the current popup setting as soon as the page (likely a settings or options page for the extension) is loaded.
 showCurrentPage();
+
+//OVERALL BEHAVIOR: When "showCurrentPage" is called it: (i) Retrieves the current popup URL set for the extension's action, (ii) Extracts the pathname from this URL and (iii) Updates a dropdown menu (popup-options) to reflect the current popup setting based on this pathname.
+
+//This function is likely called when the extension's options page is loaded, ensuring that the dropdown menu shows the correct current selection as soon as the page is displayed.
+//ANALYSIS FIVE END
+
 
 // ----------
 // .onClicked
 // ----------
 
-// If a popup is specified, our on click handler won't be called. We declare it here rather than in
-// the `onclicked-button` handler to prevent the user from accidentally registering multiple
-// onClicked listeners.
-chrome.action.onClicked.addListener(() => {
-  chrome.tabs.create({ url: 'https://html5zombo.com/' });
+//ANALYSIS SIX START
+//The code below sets up an event listener for when the extension's action (typically represented by an icon in the browser toolbar) is clicked.
+
+//chrome.action.onClicked.addListener(() => { ... });: This line adds an event listener to the extension's action using the onClicked event of the chrome.action API.
+// When the extension's action is clicked, the provided callback function (() => { ... }) is executed.
+chrome.action.onClicked.addListener(() => {//-->Event Listener for Action Click
+
+  //Inside the callback function, chrome.tabs.create({ url: 'https://html5zombo.com/' }); is called. This line instructs the browser to open a new tab with the specified URL ('https://html5zombo.com/').
+  chrome.tabs.create({ url: 'https://html5zombo.com/' });//-->Callback Function Behavior:
 });
 
+// ORIGINAL AUTHOR'S COMMENT-->If a popup is specified, on our click handler won't be called. We declare it here rather than in the `onclicked-button` handler to prevent the user from accidentally registering multiple onClicked listeners.
+
+//MY CUSTOM FUNCTION THAT toggles between popup and onClicked behavior
+// Function to toggle between popup and onClicked behavior
+function popOrClick(usePopup) {
+  // Ternary expression to determine behavior
+  usePopup
+    ? chrome.action.setPopup({ popup: 'popup.html' })
+    : chrome.action.onClicked.addListener(() => {
+      console.log('Action icon clicked');
+    });
+}
+
+// Example usage
+popOrClick(true); // Sets the popup
+popOrClick(false); // Adds onClicked listener
+//************************************************************** */
+//EXPLANATION:
+// The popOrClick function takes one parameter, usePopup, which is expected to be a boolean.
+// The ternary expression usePopup ? ... : ... checks the value of usePopup.
+// If usePopup is true, it executes chrome.action.setPopup({ popup: 'popup.html' }), setting the popup to popup.html.
+// If usePopup is false, it executes chrome.action.onClicked.addListener(...), adding a listener that logs a message to the console when the action icon is clicked.
+// The function allows you to easily switch between having a popup and having a click listener based on the usePopup value.
+//USAGE:
+// To set the popup, call popOrClick(true).
+// To add an onClicked listener instead, call popOrClick(false).
+// This function provides a convenient way to toggle the behavior of the extension's action based on different conditions or preferences.
+//************************************************************** */
+
+
+
 document
-  .getElementById('onclicked-button')
-  .addEventListener('click', async () => {
-    // Our listener will only receive the action's click event after clear out the popup URL
-    await chrome.action.setPopup({ popup: '' });
-    await showCurrentPage();
+  //document.getElementById('onclicked-button'): This part of the code selects an HTML element with the ID onclicked-button. getElementById is a standard DOM method that retrieves an element from the HTML document based on its ID.
+  .getElementById('onclicked-button')//-->target the html element with id "onclicked-button"
+
+  //.addEventListener('click', async () => { ... }): This method attaches an event listener to the selected element. The listener is set to respond to click events. The use of async before the function indicates that it's an asynchronous function, which allows the use of await within it.
+  .addEventListener('click', async () => {//-->add an event listener & pass in an async callback
+
+    // await chrome.action.setPopup({ popup: '' });: This line calls the setPopup method from the Chrome Extensions API. It sets the popup for the extension's action to an empty string (''), effectively removing any popup that might have been set previously. The await keyword is used to wait for the operation to complete, ensuring that the popup is reset before moving on to the next line of code.  This way our listener will only receive the action's click event after the popup URL is reset.
+
+    //NB!!!that chrome.action.setPopup({ popup: '' }) not only "resets" the popup but effectively disables it. After this line executes, clicking the extension's action will no longer open a popup until a new popup is set.
+    await chrome.action.setPopup({ popup: '' });//-->Resetting ( disabling) the Popup
+
+    //This function call (presumably to a function defined elsewhere in your script) is responsible for updating the UI to reflect the current state of the popup. Since showCurrentPage is an asynchronous function, await is used to ensure that any asynchronous operations within it are completed before proceeding.
+    await showCurrentPage();//-->Updating the Current Page Display:
   });
+
+
+
 
 document
   .getElementById('onclicked-reset-button')
