@@ -196,39 +196,75 @@ document
 
 
 document
-  .getElementById('onclicked-reset-button')
-  .addEventListener('click', async () => {
-    await chrome.action.setPopup({ popup: 'popups/popup.html' });
-    await showCurrentPage();
+  .getElementById('onclicked-reset-button')//(a) Targeting the HTML Element=identify the specific element (a button, in this case) that the subsequent event listener will be attached to.
+
+  .addEventListener('click', async () => {//(b) Adding an Event Listener-->define what actions should be taken when the user clicks on the button.
+
+    await chrome.action.setPopup({ popup: 'popups/popup.html' });//(c) Callback Function Behavior=change the popup that will be displayed when the extension's action icon is clicked.
+
+    await showCurrentPage();//(d) Updating the Current Page Display=update the UI of the extension's page to reflect the new state of the popup. This could involve updating a dropdown menu, displaying a message, or other UI changes.
   });
 
-// ----------
-// badge text
-// ----------
+//HOLES IN MY REASONING: 
+//Purpose of showCurrentPage(): The call to showCurrentPage() after setting the popup suggests that this function updates the UI elements, possibly to reflect the new state of the popup. This could mean updating a dropdown or other visual indicators to show that the popup path has been reset to 'popups/popup.html'.
+
+// Asynchronous Operations: The use of async and await ensures that the popup is set before the page is updated, maintaining the correct order of operations, especially important in asynchronous programming.
+
+
+// ----------------------------------------------------------------------THE NOTES FOR BADGE TEXT HAS BEEN REFORMATTED INTO THE ENOTARY README
+// badge text------------------------------------------------------------
+// ----------------------------------------------------------------------
 
 async function showBadgeText() {
-  const text = await chrome.action.getBadgeText({});
-  document.getElementById('current-badge-text').value = text;
+  const text = await chrome.action.getBadgeText({});//(a) retrieves the current text of the badge on the extension's action (icon in the toolbar).
+
+  //NB--> The '{}' passed to 'getBadgeText' is an empty object, which is the required syntax for this API method. It DOES NOT reset the text; rather, it's likely used to specify the context (like a specific tab) from which the badge text should be retrieved. If no context is specified, it gets the badge text for the extension's action globally.
+
+  //NB--> Also, since 'await' is used to wait for the Promise returned by 'getBadgeText' to resolve then the resolved value (the current badge text) is stored in the 'text' variable.
+  document.getElementById('current-badge-text').value = text;//(b) selects an HTML element with the ID current-badge-text and sets its value property to the retrieved badge text (text), which at this point is a string and not a Promise.
 }
 
 // Populate badge text inputs on page load
-showBadgeText();
+showBadgeText();//(c) done to initialize the state or UI when the page or extension popup loads.
+//******************************** */
+
 
 document
-  .getElementById('badge-text-input')
-  .addEventListener('input', async (event) => {
-    const text = event.target.value;
-    await chrome.action.setBadgeText({ text });
+  .getElementById('badge-text-input')//(a)-->
+  //selects an HTML element with the ID badge-text-input. This element is expected to be an input field where the user can type the badge text.
 
-    showBadgeText();
+  .addEventListener('input', async (event) => {//(b)-->Adding an Event Listener:
+    //An event listener is added to the selected input field. The listener responds to input events, which are triggered every time the user types or changes the text in the input field. The async keyword indicates that the callback function is asynchronous, allowing the use of await within it.
+
+    const text = event.target.value;//(c)-->Handling the Input Event:
+    //this line retrieves the current value of the input field (the text typed by the user). 'event.target' refers to the element that triggered the event (the input field), and 'event.target.value' is the text currently entered in that field.
+
+    await chrome.action.setBadgeText({ text });//(d)-->Setting the Badge Text (Asynchronous):
+    //this line calls the 'setBadgeText' method from the Chrome Extensions API to set the badge text of the extension's action to the text entered by the user. The 'await' keyword is used to ensure that the operation completes before moving to the next line of code.
+
+    showBadgeText();//(e)-->Updating the Badge Text Display:
+    //After setting the new badge text, this line calls the 'showBadgeText' function. While the implementation details of 'showBadgeText' are not provided, it is likely responsible for updating the UI to display the current badge text, possibly in another part of the extension's interface.
   });
 
-document
-  .getElementById('clear-badge-button')
-  .addEventListener('click', async () => {
-    await chrome.action.setBadgeText({ text: '' });
 
-    showBadgeText();
+//OVERALL SUMMARY:
+// The provided code snippet below is designed to clear the badge text of a Chrome extension's action (such as the icon in the browser toolbar) when a specific button is clicked.
+
+//When the user clicks the button with the ID clear-badge-button, the event listener triggers. It executes an asynchronous function that clears the badge text of the extension's action by setting it to an empty string. After clearing the badge text, it calls showBadgeText to update the UI, likely to indicate that the badge text has been cleared.
+
+// This functionality is useful in scenarios where an extension uses badge text to display information (like notifications or counts) and needs a way to reset or clear this information based on user interaction.
+document
+  .getElementById('clear-badge-button')//(a)-->Selecting the HTML Element:
+//This line selects an HTML element with the ID 'clear-badge-button'. This element is expected to be a button in the extension's user interface.
+
+  .addEventListener('click', async () => {//(b)-->Adding an Event Listener:
+    //An event listener is added to the selected button. The listener is set to respond to 'click' events. The 'async' keyword before the function indicates that it's an asynchronous function, which allows the use of 'await' within it.
+
+    await chrome.action.setBadgeText({ text: '' });//(c)-->Handling the Click Event (Asynchronous):
+    //This line calls the 'setBadgeText' method from the Chrome Extensions API to clear the badge text of the extension's action. It does this by setting the text property to an empty string (''). The await keyword is used to ensure that the operation completes before moving to the next line of code.
+
+    showBadgeText();//(d)-->Updating the Badge Text Display:
+    //this line calls the showBadgeText function. This function is likely responsible for updating the UI to reflect the change in the badge text. While the implementation of showBadgeText is not shown, it presumably updates an element in the UI to show that the badge text is now empty.
   });
 
 // --------------------------
