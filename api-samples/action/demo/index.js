@@ -43,11 +43,16 @@ document
       chrome.action.enable();
     }
   });
+//THE NOTES ABOVE HAVE BEEN TRANSCRIBED!
+
+//XXXXXXXXXXXXXXXXXXXXXXXXxxxxxxxxxxxxxxxXXXXXXXXXXXXXXX
+
+//START TRANSCRIBING THE NOTES HERE!!!
 
 //ANALYSIS THREE
+//document.getElementById('popup-options'): This selects the HTML element with the ID popup-options. This element is expected to be a <select> dropdown menu.
+// .addEventListener('change', async (event) => {...}): Adds an event listener for the change event to the selected element. The change event is triggered whenever the selected option in the dropdown changes. The listener is an asynchronous function, indicated by async, allowing the use of await within it.
 document
-  //document.getElementById('popup-options'): This selects the HTML element with the ID popup-options. This element is expected to be a <select> dropdown menu.
-  // .addEventListener('change', async (event) => {...}): Adds an event listener for the change event to the selected element. The change event is triggered whenever the selected option in the dropdown changes. The listener is an asynchronous function, indicated by async, allowing the use of await within it.
   .getElementById('popup-options')
   .addEventListener('change', async (event) => {
 
@@ -70,11 +75,11 @@ document
 //The provided function getCurrentPopup is an asynchronous function designed to retrieve the current popup URL set for a Google Chrome extension's action (such as the toolbar icon) and display it in an HTML element.
 
 //async function getCurrentPopup() {...}: This defines an asynchronous function named getCurrentPopup. The async keyword allows the use of await within the function to handle asynchronous operations.
+//   step A-->Retrieves the current popup URL set for the extension's action.
+//await chrome.action.getPopup({}): This line calls the getPopup method of the chrome.action API. The method retrieves the URL of the current popup set for the extension's action.
+// await is used to wait for the Promise returned by getPopup to resolve. The resolved value (the URL of the current popup) is stored in the popup variable.
 async function getCurrentPopup() {
 
-  //   step A-->Retrieves the current popup URL set for the extension's action.
-  //await chrome.action.getPopup({}): This line calls the getPopup method of the chrome.action API. The method retrieves the URL of the current popup set for the extension's action.
-  // await is used to wait for the Promise returned by getPopup to resolve. The resolved value (the URL of the current popup) is stored in the popup variable.
   const popup = await chrome.action.getPopup({});//--> popup=current popup URL
 
   // Log the retrieved popup URL to the console
@@ -98,12 +103,12 @@ async function getCurrentPopup() {
 //The provided JavaScript function showCurrentPage is designed to display the current popup page set for a Chrome extension's action in the user interface of the extension. It uses the getCurrentPopup utility function to retrieve the current popup URL and then updates a dropdown menu to reflect this selection.
 
 //This defines an asynchronous function named showCurrentPage. The async keyword allows the use of await within the function.
+//await getCurrentPopup(): This line calls the previously discussed getCurrentPopup function, which returns the current popup URL set for the extension's action.
+// The await keyword is used to wait for the Promise returned by getCurrentPopup to resolve, and the resolved value (the current popup URL) is stored in the popup variable.
 async function showCurrentPage() {//-->Function Declaration:
-
-  //await getCurrentPopup(): This line calls the previously discussed getCurrentPopup function, which returns the current popup URL set for the extension's action.
-  // The await keyword is used to wait for the Promise returned by getCurrentPopup to resolve, and the resolved value (the current popup URL) is stored in the popup variable.
+  
   const popup = await getCurrentPopup();//-->Retrieving the Current Popup URL:
-
+  
   //   This block checks if popup has a value (i.e., if a popup URL is set).
   // If popup is not empty, it creates a new URL object from the popup string and extracts the pathname property. The pathname is the part of the URL that comes after the domain name.
   let pathname = '';//-->Extracting the Pathname from the URL:
