@@ -1,6 +1,6 @@
 {
   "name": "Tab Capture Example",
-  "description": "Demonstrates how to use the chrome.tabCapture API.",
+  "description": "Demonstrates how to use the chrome.tabCapture API with recording functionality.",
   "version": "1",
   "manifest_version": 3,
   "action": {
@@ -9,5 +9,6 @@
   "background": {
     "service_worker": "service-worker.js"
   },
-  "permissions": ["tabs", "tabCapture"]
+  "permissions": ["tabs", "tabCapture", "downloads"],
+  "host_permissions": ["<all_urls>"]
 }
