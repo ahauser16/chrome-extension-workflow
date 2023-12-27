@@ -2,7 +2,10 @@
     let youtubeLeftControls, youtubePlayer;
     let currentVideo = "";
     let currentVideoBookmarks = [];
+    console.log(urlParameters);
 
+
+    //To add an event listener that will listen to any incoming messages from `Background.js` we will use the following code:
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
         const { type, value, videoId } = obj;
 
