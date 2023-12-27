@@ -122,7 +122,7 @@ This code is responsible for sending messages to our `contentScript.js`.  the `s
 ---
 
 ### Content_Script.js 
-#### Code Summary: 
+#### Code Objective: 
 To add an event listener that will listen to any incoming messages from `Background.js` we will use the following code: 
 
 excerpt from `contentScript.js`
@@ -168,3 +168,94 @@ We will obtain the `value` in a moment but first we need a ternary expression to
 
     ...
 ```
+
+---
+
+### Content_Script.js 
+#### Code Objective: 
+Now we need to create that `newVideoLoaded` function.  Afterward we create this function and all the functionality surrounding it, we should see the YouTube player button on the YouTube video. 
+
+excerpt from `contentScript.js`
+```
+const newVideoLoaded = () => {
+        const bookmarkBtnExists = document.getElementsByClassName("bookmark-btn")[0];
+        console.log(bookmarkBtnExists);
+
+        if (!bookmarkBtnExists) {
+            const bookmarkBtn = document.createElement("img");
+
+            bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");
+            bookmarkBtn.className = "ytp-button " + "bookmark-btn";
+            bookmarkBtn.title = "Click to bookmark current timestamp";
+
+            youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
+            youtubePlayer = document.getElementsByClassName("video-stream")[0];
+            
+            youtubeLeftControls.append(bookmarkBtn);
+            bookmarkBtn.addEventListener("click", addNewBookmarkEventHandler);
+        }
+    }
+```
+
+
+#### Line-by-Line Review:
+
+##### Step One: 
+first we initialize our `newVideoLoaded` variable and assign it to an anonymous function.  We want this function to check if a **Bookmark Button** already exists.  We can accomplish this by using the `getElementsByClassName` function and passing in the `"bookmark-btn"` class as its parameter.  `getElementsByClassName` returns an `HTML collection` so we can grab the first element that matches the `"bookmark-btn"` class name.  This **Bookmark Button** will exist on every single YouTube video page.
+
+excerpt from `contentScript.js`
+```
+const newVideoLoaded = () => {
+    const bookmarkBtnExists = document.getElementsByClassName("bookmark-btn")[0];
+}
+```
+
+##### Step Two: 
+
+```
+if (!bookmarkBtnExists) {
+    const bookmarkBtn = document.createElement("img");
+```
+
+if the **Bookmark Button** does not exist then we want to add it to every Youtube video website that we go to and we accomplish this by creating an `img` element using the `createElement` method.
+
+##### Step Three: 
+
+Once we create the `img` element we want to do three things: (1) add our own PNG file to the `src` attribute of the `img` element, (2) add two CSS classes to the `img` element and (3) add text to our `title` 
+
+```
+if (!bookmarkBtnExists) {
+    const bookmarkBtn = document.createElement("img");
+    
+    bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");
+    bookmarkBtn.className = "ytp-button " + "bookmark-btn";
+    bookmarkBtn.title = "Click to bookmark current timestamp";
+```
+
+- `bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");` after we create the `img` element on the page this line will add our `bookmark.png` image to it by accessing the `src` attribute. 
+
+- `bookmarkBtn.className = "ytp-button " + "bookmark-btn";` this line adds two CSS classes: `"ytp-button"` and `"bookmark-btn"` which represent Youtube's styles and our own styles.
+
+- `bookmarkBtn.title = "Click to bookmark current timestamp";` this line shows the title of the video when the user hovers over our **Bookmark Button**.  We will display the text "Click to bookmark current timestamp".  
+
+##### Step Four:
+this code below requires an understanding of the Youtube watch webpage so we can reference the youtube player's controls on the lefthand side of the player.  When you inspect the Youtube page (when a video is playing/paused) there is a `div` with the class `"ytp-left-controls"`.  This `div` contains the row of `input` options such as the "replay", "play" / "pause", "next", "volume", "time display" and "chapter name" of the video.  We want to add our Bookmark Button in this row.  
+
+we can use the `getElementsByClassName` method on the `document` object to grab the reference to the div container with the class name `"ytp-left-controls"`. 
+
+also, we can use the `getElementsByClassName` method on the `document` object to grab the reference to the youtube video player with the class name `"video-stream"` which is a `<video>` element. 
+
+```
+if (!bookmarkBtnExists) {
+    ...
+    youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
+    youtubePlayer = document.getElementsByClassName("video-stream")[0];
+    ...
+```
+
+
+And that's one of the global variables we set  in our content script. And we can also do that  
+21:33
+by writing document dot get elements by class  name. And then there's this video stream class.  
+21:46
+And we're going to grab the one at the zero with  index. And it grabs a whole YouTube component  

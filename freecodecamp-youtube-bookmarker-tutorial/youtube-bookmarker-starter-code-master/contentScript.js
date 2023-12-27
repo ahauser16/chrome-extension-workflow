@@ -19,6 +19,7 @@
         const bookmarkBtnExists = document.getElementsByClassName("bookmark-btn")[0];
         console.log(bookmarkBtnExists);
 
+        //if the Bookmark Button does not exist then we want to add it to every Youtube video website that we go to.  The code below creates the button.
         if (!bookmarkBtnExists) {
             const bookmarkBtn = document.createElement("img");
 
@@ -26,9 +27,12 @@
             bookmarkBtn.className = "ytp-button " + "bookmark-btn";
             bookmarkBtn.title = "Click to bookmark current timestamp";
 
+
+            //
             youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
             youtubePlayer = document.getElementsByClassName("video-stream")[0];
             
+            //this code below adds our bookmarkBtn to the 
             youtubeLeftControls.append(bookmarkBtn);
             bookmarkBtn.addEventListener("click", addNewBookmarkEventHandler);
         }
