@@ -26,13 +26,11 @@
             bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");
             bookmarkBtn.className = "ytp-button " + "bookmark-btn";
             bookmarkBtn.title = "Click to bookmark current timestamp";
-
-
-            //
+            
             youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
             youtubePlayer = document.getElementsByClassName("video-stream")[0];
             
-            //this code below adds our bookmarkBtn to the 
+            //the video uses `appendChild` and not `append`.  at the end of the tutorial if the extension does not work revisit this point.
             youtubeLeftControls.append(bookmarkBtn);
             bookmarkBtn.addEventListener("click", addNewBookmarkEventHandler);
         }

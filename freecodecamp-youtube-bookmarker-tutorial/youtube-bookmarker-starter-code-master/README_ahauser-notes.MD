@@ -241,9 +241,11 @@ if (!bookmarkBtnExists) {
 ##### Step Four:
 this code below requires an understanding of the Youtube watch webpage so we can reference the youtube player's controls on the lefthand side of the player.  When you inspect the Youtube page (when a video is playing/paused) there is a `div` with the class `"ytp-left-controls"`.  This `div` contains the row of `input` options such as the "replay", "play" / "pause", "next", "volume", "time display" and "chapter name" of the video.  We want to add our Bookmark Button in this row.  
 
-we can use the `getElementsByClassName` method on the `document` object to grab the reference to the div container with the class name `"ytp-left-controls"`. 
+we can use the `getElementsByClassName` method on the `document` object to grab the reference to the div container with the class name `"ytp-left-controls"` and assign it to the variable `youtubeLeftControls`. 
 
-also, we can use the `getElementsByClassName` method on the `document` object to grab the reference to the youtube video player with the class name `"video-stream"` which is a `<video>` element. 
+also, we can use the `getElementsByClassName` method on the `document` object to grab the reference to the youtube video player with the class name `"video-stream"` which is a `<video>` element and assign it to the variable `youtubePlayer`.
+
+We need to initialize these two variables at the top of the `contentScript.js` file so they are in it's global scope.
 
 ```
 if (!bookmarkBtnExists) {
@@ -253,9 +255,15 @@ if (!bookmarkBtnExists) {
     ...
 ```
 
+##### Step Five:
+now we need to add our Bookmark Button using the referene to the `youtubeLeftControls` variable and the `append` function to pass in `bookmarkBtn` as its sole parameter.
 
-And that's one of the global variables we set  in our content script. And we can also do that  
-21:33
-by writing document dot get elements by class  name. And then there's this video stream class.  
-21:46
-And we're going to grab the one at the zero with  index. And it grabs a whole YouTube component  
+Then we need to add a listener to listen to for `click` events on our icon/action. 
+
+```
+if (!bookmarkBtnExists) {
+...
+    youtubeLeftControls.append(bookmarkBtn);
+    bookmarkBtn.addEventListener("click", addNewBookmarkEventHandler);
+    ...
+```
