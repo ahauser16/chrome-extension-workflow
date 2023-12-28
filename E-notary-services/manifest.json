@@ -4,34 +4,39 @@
   "version": "1.0",
   "description": "This extension is meant to aid NYS Notaries in their daily workflow.",
   "host_permissions": [
-    "https://*.google.com/*",
-    "https://*.dos.ny.gov/*",
     "https://*.meet.google.com/*"
-  ],
-  "minimum_chrome_version": "116",
-  "background": {
-    "service_worker": "service-worker.js"
-  },
-  "side_panel": {
-    "default_path": "sidepanel-global.html"
-  },
-  "content_scripts": [
-    {
-      "js": [
-        "content-script.js"
-      ],
-      "matches": [
-        "https://*.google.com/*",
-        "https://*.dos.ny.gov/*",
-        "https://*.meet.google.com/*"
-      ]
-    }
   ],
   "permissions": [
     "sidePanel",
     "contextMenus",
     "storage",
     "tabs"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.meet.google.com/*"
+      ],
+      "js": [
+        "content-script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/bookmark.png",
+        "assets/play.png",
+        "assets/delete.png",
+        "assets/save.png"
+      ],
+      "matches": [
+        "https://*.meet.google.com/*"
+      ]
+    }
   ],
   "action": {
     "default_icon": {
@@ -40,6 +45,6 @@
       "128": "images/icon-128.png"
     },
     "default_title": "E-Notary Services",
-    "default_popup": "page.html"
+    "default_popup": "popup.html"
   }
 }

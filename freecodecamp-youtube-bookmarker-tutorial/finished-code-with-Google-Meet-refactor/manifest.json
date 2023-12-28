@@ -1,13 +1,13 @@
 {
-  "name": "My YT Bookmarks",
+  "name": "Refactor Test",
   "version": "0.1.0",
-  "description": "Saving timestamps in YT videos",
+  "description": "Google Meet refactor of YT bookmark tutorial video",
   "permissions": [
     "storage",
     "tabs"
   ],
   "host_permissions": [
-    "https://*.youtube.com/*"
+    "https://meet.google.com/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -15,7 +15,7 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.youtube.com/*"
+        "https://meet.google.com/*"
       ],
       "js": [
         "contentScript.js"
@@ -31,7 +31,7 @@
         "assets/save.png"
       ],
       "matches": [
-        "https://*.youtube.com/*"
+        "https://meet.google.com/*"
       ]
     }
   ],
@@ -41,7 +41,7 @@
       "24": "assets/ext-icon.png",
       "32": "assets/ext-icon.png"
     },
-    "default_title": "My YT Bookmarks",
+    "default_title": "Notary Log:",
     "default_popup": "popup.html"
   },
   "manifest_version": 3

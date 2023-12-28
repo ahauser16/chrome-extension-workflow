@@ -4,7 +4,7 @@
 //Line D--> this line creates a `URLSearchParams` object from the query parameters string. This object provides convenient methods to work with the query string of a URL.
 ////Code Block E-->this line sends a message to the content script running in the tab with the specified `tabId`. The message is an object with two properties: `type`, set to `"NEW"`, and `videoId`, which is extracted from the query parameters (`urlParameters.get("v")` gets the value of the `v` parameter, typically the YouTube video ID).
 
-chrome.tabs.onUpdated.addListener((tabId, tab) => {//Line A
+chrome.tabs.onUpdated.addListener((tabId, tab) => {//Line A (Block A)
   if (tab.url && tab.url.includes("youtube.com/watch")) {//Line B
     const queryParameters = tab.url.split("?")[1];//Line C
     const urlParameters = new URLSearchParams(queryParameters);//Line D
