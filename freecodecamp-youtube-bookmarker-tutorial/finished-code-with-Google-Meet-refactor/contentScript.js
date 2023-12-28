@@ -4,20 +4,21 @@ console.log("Content script loaded");
   let googleMeetLeftControls, googleMeetPlayer;
   let currentMeeting = "";
 
-  chrome.runtime.onMessage.addListener((obj, sender, response) => {
-    const { type, value, meetingId } = obj;
+  const port = chrome.runtime.connect({ name: "notaryConnection" });
 
-    if (type === "NEW") {
-      currentMeeting = meetingId;
+  port.onMessage.addListener((msg) => {
+    if (msg.type === "NEW_MEETING") {
+      currentMeeting = msg.meetingId;
       newMeetingLoaded();
     }
   });
 
-  const newMeetingLoaded = async () => {
-
+  const newMeetingLoaded = () => {
     const notaryBtnExists = document.getElementsByClassName("notary-btn")[0];
-
-    console.log("content-script.js received meetingId:" + notaryBtnExists);
-
+    console.log("New meeting loaded with ID: " + currentMeeting);
+    // Additional logic for new meeting
   };
+
+  // You can also send messages to the background script if needed
+  // port.postMessage({ ... });
 })();

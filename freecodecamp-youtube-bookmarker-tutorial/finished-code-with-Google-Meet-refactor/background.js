@@ -1,42 +1,25 @@
-function sendMessageWithRetry(tabId, message, retryCount = 5, interval = 1000) {
-  function attemptToSend(retriesLeft) {
-    chrome.tabs.sendMessage(tabId, message, function (response) {
-      if (chrome.runtime.lastError) {
-        if (retriesLeft > 0) {
-          console.warn(`Retrying sendMessage. Attempts left: ${retriesLeft}. Error: ${chrome.runtime.lastError.message}`);
-          setTimeout(() => attemptToSend(retriesLeft - 1), interval);
-        } else {
-          console.error(`Failed to send message after retries. Error: ${chrome.runtime.lastError.message}`);
-        }
-      } else {
-        console.log("Message sent successfully");
-        // Handle the response if needed
-      }
-    });
-  }
+chrome.runtime.onConnect.addListener((port) => {
+  console.assert(port.name === "notaryConnection");
 
-  attemptToSend(retryCount);
-}
+  port.onMessage.addListener((msg) => {
+    if (msg.type === "NEW_MEETING") {
+      // Handle new meeting ID
+      console.log("Received new meeting ID: " + msg.meetingId);
+      // You can perform additional actions here based on the meeting ID
+    }
+  });
 
-chrome.tabs.onUpdated.addListener((tabId, tab) => {
-  console.log("Tab updated - ID: " + tabId + ", URL: " + tab.url);
+  chrome.tabs.onUpdated.addListener((tabId, tab) => {
+    if (tab.url && tab.url.includes("meet.google.com/")) {
+      const meetingIdSnippet = tab.url.split("meet.google.com/")[1];
+      const meetingId = meetingIdSnippet.split("?")[0];
 
-  if (tab.url && tab.url.includes("meet.google.com/")) {
-    const meetingIdSnippet = tab.url.split("meet.google.com/")[1];
-    const meetingId = meetingIdSnippet.split("?")[0];
+      console.log("Extracted meetingId: " + meetingId);
 
-    console.log("Extracted meetingId: " + meetingId);
-
-    const message = {
-      type: "NEW",
-      meetingId: meetingId,
-      testprop: "test",
-    };
-
-    sendMessageWithRetry(tabId, message);
-  } else {
-    console.log("URL does not include 'meet.google.com/'");
-  }
+      // Send the meeting ID to the content script
+      port.postMessage({ type: "NEW_MEETING", meetingId: meetingId });
+    }
+  });
 });
 
 // This code will log messages at various points:
