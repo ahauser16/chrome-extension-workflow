@@ -402,7 +402,7 @@ TLDR;
 
 I'm going to create it at the top here. And I'm going to say const fetch bookmarks. newVideoLoaded function. And I want to return a promise. So  we can resolve this asynchronously. And within that promise, I'm going  to fetch from Chrome Storage. So I'm going to do a Chrome storage sync and we did a set before to set Chrome Storage, we're going  to get this time our current video it takes an object. And we're going to resolve to find any bookmarks when indexing using our current video. So basically look in storage to see if our current  video has any bookmarks, or if it exists in storage. That's what's happening right here. If it does exist, we're going to JSON dot parse it  because we JSON dot Stringify before, if it doesn't, what we want to do is return an empty array. And this should work.  And we're really only going to add these in two places, which will be in our new video loaded function. So we're going to make this async. And we're gonna add a fetch bookmarks. So actually, we're just going to add this to our current video bookmarks variable. And call a weight fetch bookmarks. async await is going to resolve this promise and then the second place we want to add this is to our add new bookmarks event handler. To basically handle this case, and make  sure we're always using the most up to date set of bookmarks when destructuring. So we're gonna do current video bookmarks equals the weight, veg bookmarks. And also make this async. Awesome. So for right now, we finished everything we need for our content script file. Obviously things aren't going to show in the UI and we could check that out right here. 
 
-
+start again at 44:45 of https://www.youtube.com/watch?v=0n809nd4Zu4&list=WL&index=3&t=3088s
 ---
 
 

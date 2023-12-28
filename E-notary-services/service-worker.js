@@ -30,3 +30,23 @@ chrome.runtime.onMessage.addListener((message, sender) => {
     }
   })();
 });
+
+//refactored from Youtube tutorial
+//sample URL from a google meet session: https://meet.google.com/auq-irmc-ari
+
+//this line adds an event listener to the `chrome.tabs.onUpdated` event which is triggered whenever a tab is updated (like when the URL changes, the tab is reloaded, etc). The listener function receives two parameters: `tabId` which is the ID of the updated tab and `tab` which is an object containing information about the tab.
+chrome.tabs.onUpdated.addListener((tabId, tab) => {
+
+  if (tab.url && tab.url.includes("meet.google.com/")) {
+    const meetingId = tab.url.split("meet.google.com/")[1];
+    
+    // const urlParameters = new URLSearchParams(urlParts);
+
+    chrome.tabs.sendMessage(tabId, {
+      type: "NEW_MEETING",
+      meetingId: meetingId,
+    });
+  }
+});
+
+//https://www.youtube.com/watch?v=fU9oWQvVayk

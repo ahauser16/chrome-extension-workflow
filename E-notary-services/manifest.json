@@ -3,6 +3,11 @@
   "name": "NYS E-Signature Notary Services",
   "version": "1.0",
   "description": "This extension is meant to aid NYS Notaries in their daily workflow.",
+  "host_permissions": [
+    "https://*.google.com/*",
+    "https://*.dos.ny.gov/*",
+    "https://*.meet.google.com/*"
+  ],
   "minimum_chrome_version": "116",
   "background": {
     "service_worker": "service-worker.js"
@@ -16,18 +21,25 @@
         "content-script.js"
       ],
       "matches": [
-        "https://www.google.com/*",
-        "https://dos.ny.gov/*"
+        "https://*.google.com/*",
+        "https://*.dos.ny.gov/*",
+        "https://*.meet.google.com/*"
       ]
     }
   ],
   "permissions": [
     "sidePanel",
-    "contextMenus"
+    "contextMenus",
+    "storage",
+    "tabs"
   ],
-  "icons": {
-    "16": "images/icon-16.png",
-    "48": "images/icon-48.png",
-    "128": "images/icon-128.png"
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "E-Notary Services",
+    "default_popup": "page.html"
   }
 }

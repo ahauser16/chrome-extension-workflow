@@ -396,3 +396,21 @@ document
 `});` this ends ends the code snippet.
 
 ---
+
+Notes about Google Meet DOM structure.
+
+I want to add controls next to my the Account Name on the lower left hand corner of the window.  
+
+#ow3 > div.T4LgNb > div > div:nth-child(21) > div.crqnQb > div.fJsklc.nulMpf.Didmac.G03iKb > div > div
+
+![Alt text](image-1.png)
+
+the div with the class names "ZY8hPc gtgjre" is the parent container where I want to insert my notarize button.  The "ZY8hPc" class refers to two containers whereas the "gtgjre" class only refers to the parent.
+
+```
+<div class="ZY8hPc gtgjre" jsname="giiMnc">
+    <div class="Djiqwe sqgFe">
+
+    </div>
+</div>
+```

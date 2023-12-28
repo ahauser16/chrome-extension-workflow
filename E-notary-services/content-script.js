@@ -1,3 +1,8 @@
+(() => {
+
+  
+})();
+
 const button = new DOMParser().parseFromString(
   '<button>Click to open side panel</button>',
   'text/html'
