@@ -333,3 +333,35 @@ buttons.forEach(button => button.addEventListener('click', () => {
 3. Check Console Logs: Open the Chrome Developer Tools (F12) and switch to the Console tab to see the logs from your content script. You should see logs indicating that messages are being sent and received.
 4. Background Script Logs: To view logs from the background script, go to chrome://extensions/, find your extension, and click on the "background page" link under "Inspect views". This opens the Developer Tools for the background script.
 5. Observe Changes: If your content script changes the background color of the Google Meet page, it's a sign that the message passing is working correctly.
+
+#### As of 12/29/23 the long-lived connection worked!  See below the console.logs and notes.
+
+I started a new session and received the console.logs below from the chrome extensions page:
+
+Connection established with content script
+background.js:12 Message received from content script: {greeting: 'hello'}
+background.js:15 Received hello from content script
+
+I also received the console.log below from the google meet page:
+Message received from background script: Object
+contentScript.js:11 Received 'hi there!' from background script
+
+Based on these console logs the following is happening.
+
+1. Connection Establishment:
+
+- The message "Connection established with content script" in the background script indicates that the connection initiated by the content script (`chrome.runtime.connect`) was successful.
+
+2. Message Exchange:
+
+- The content script sends a message to the background script: `port.postMessage({ greeting: "hello" });`.
+- The background script receives this message, as indicated by "Message received from content script: {greeting: 'hello'}".
+- The background script logs "Received hello from content script", confirming it has processed the received message.
+
+3. Response Handling:
+
+- The background script sends a response back to the content script: `port.postMessage({ greeting: "hi there!" });`.
+- The content script receives this response, as shown by the log "Message received from background script: Object".
+- The content script logs "Received 'hi there!' from background script", confirming it has received and recognized the response from the background script.
+- This flow demonstrates a successful two-way communication between your content script and background script using a long-lived connection. Each script is able to send and receive messages, and you're correctly logging these events.
+- To further develop your extension, you can now build upon this messaging framework. Depending on your extension's functionality, you can use this communication channel to send relevant data, commands, or notifications between the background and content scripts. For example, in the context of a Google Meet extension, you might use this to control certain features or gather information from the Meet session.
