@@ -1,0 +1,27 @@
+  {
+    "manifest_version": 3,
+    "name": "Google Meet Extension - Long-lived connection test",
+    "version": "1.0",
+    "description": "A test to see if a long-lived connection is required when developing an extension for Google Meet",
+    "permissions": [
+      "tabs",
+      "storage",
+      "activeTab"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://meet.google.com/*"
+        ],
+        "js": [
+          "contentScript.js"
+        ]
+      }
+    ],
+    "action": {
+      "default_popup": "index.html"
+    }
+  }
