@@ -31,7 +31,7 @@ This sequence ensures that the extension is ready to interact with web pages and
 
 ### Long Lived Connection related code
 
-#### `background.js`:
+### `background.js`:
 
 First lets analyze the "listener" code in the background.js file.  This script runs in the background and manages the long-lived connections.
 
@@ -143,8 +143,70 @@ chrome.runtime.onConnect.addListener((port) => {
 
 #### Examples of "top-level" code typically found in a `background.js`
 
+1. Setting Default Extension State:<br />
+   `let extensionEnabled = true;`<br />
+This is a variable to keep track of the extension's state
 
-#### `contentScript.js`:
+2. Initializing Extension Data:<br />
+`const defaultSettings = { theme: 'dark', notifications: true };`
+`chrome.storage.sync.set({ settings: defaultSettings });`<br />
+This is a variable to keep track of the extension's state
+
+3. Scheduling a Repeating Task:<br />
+`setInterval(() => { task to repeat }, 10000);`<br />
+Code to perform a background task at regular intervals, like checking for updates every ten seconds.
+
+4. Registering Context Menu Items: such as below<br />
+```
+chrome.contextMenus.create({
+  id: 'sampleMenu',
+  title: 'Sample Context Menu',
+  contexts: ['selection']
+});
+```
+
+5. Performing an Initial API Call: such as below<br />
+```
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => {
+    // Process the data
+  });
+```
+
+6. Logging Extension Load Time:<br />
+`console.log('Extension loaded at:', new Date().toLocaleTimeString());`
+
+7. Initializing Global Variables or State:<br />
+`let cache = {};`
+
+8. Setting Up a WebRequest Listener:<br />
+```
+chrome.webRequest.onBeforeRequest.addListener(
+  function(details) { /* ... */ },
+  { urls: ["<all_urls>"] },
+  ["blocking"]
+);
+```
+
+9. Creating Alarms for Future Actions:<br />
+`chrome.alarms.create('reminder', { periodInMinutes: 60 });`
+
+10. Performing Cleanup or Reset:<br />
+`chrome.storage.local.clear();`<br />
+Clears local storage (use with caution)
+
+
+
+
+<br />
+
+---
+
+<br />
+<br />
+
+### `contentScript.js`:
 
 Second, lets analyze the `contentScript.js` file.  This script runs in the background and manages the long-lived connections.
 
@@ -197,3 +259,77 @@ port.onMessage.addListener((msg) => {
 - The background script, upon receiving this connection and message, sends back a response.
 - The content script listens for this response and logs a confirmation upon receiving it.
 - This setup allows for continuous two-way communication between the content script and the background script. The content script can send messages to the background script and react to responses, enabling complex interactions based on events occurring in the content script's context (like changes in a web page).
+
+#### Examples of common "top level" scripts to run in a content script file
+
+##### In a Google Chrome extension, top-level code in a content script refers to any code that is not enclosed within a function or an event listener. This code is executed immediately when the content script is injected into a web page. Here are several examples of such top-level code commonly found in content scripts of Chrome extensions:
+
+1. Modifying Page Style:<br />
+`document.body.style.backgroundColor = 'lightblue';`<br />
+Change the background color of the page
+
+2. Adding a Custom CSS File:<br />
+Injects a custom CSS file into the page via the head of the document using the `appendChild` function.
+```
+const styleLink = document.createElement('link');
+styleLink.rel = 'stylesheet';
+styleLink.href = chrome.runtime.getURL('styles/custom.css');
+document.head.appendChild(styleLink); // Inject a custom CSS file into the page
+```
+
+3. Inserting a DOM Element:<br />
+Add a banner or message at the top of the page via the `prepend` method.
+```
+const banner = document.createElement('div');
+banner.textContent = 'This is a message from your extension!';
+document.body.prepend(banner); 
+```
+
+4. Logging Current URL:<br />
+`console.log('Content script loaded on:', window.location.href);`
+Log the URL of the current page
+
+5. Hiding Specific Page Elements:<br />
+   `const ads = document.querySelectorAll('.ad-banner');`
+   `ads.forEach(ad => ad.style.display = 'none');`<br />
+Hide all elements with the class 'ad-banner'
+
+6. Setting Up Initial State:<br />
+`let isEnabled = true;`<br />
+A variable to keep track of the script's state
+
+7. Reading Page Content:<br />
+`const pageTitle = document.title;`<br />
+Store the title of the current page
+
+8. Injecting a Script Tag:<br />
+Inject a JavaScript file into the page
+```
+const scriptTag = document.createElement('script');
+scriptTag.src = chrome.runtime.getURL('scripts/injected.js');
+document.head.appendChild(scriptTag); 
+```
+
+9. Modifying Form Behavior:<br />
+Change the action URL of a form
+```
+const form = document.querySelector('form');
+form.action = 'https://example.com/new-action'; 
+```
+
+10. Adding Event Listeners to Existing Page Elements:<br />
+Add click event listeners to all buttons on the page
+```
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener('click', () => {
+  console.log('Button clicked!');
+})); 
+
+```
+
+### Testing and Debugging
+1. Load the Extension: Load your unpacked extension into Chrome and ensure it's active.
+2. Open Google Meet: Navigate to a Google Meet session.
+3. Check Console Logs: Open the Chrome Developer Tools (F12) and switch to the Console tab to see the logs from your content script. You should see logs indicating that messages are being sent and received.
+4. Background Script Logs: To view logs from the background script, go to chrome://extensions/, find your extension, and click on the "background page" link under "Inspect views". This opens the Developer Tools for the background script.
+5. Observe Changes: If your content script changes the background color of the Google Meet page, it's a sign that the message passing is working correctly.
