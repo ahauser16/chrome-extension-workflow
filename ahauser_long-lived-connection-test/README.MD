@@ -1,5 +1,6 @@
 # Test is based on Google's own documentation:
 ## [Google doc](https://developer.chrome.com/docs/extensions/develop/concepts/messaging#connect)
+## [chatGPTnotes](https://chat.openai.com/share/f6817514-4f0e-48aa-b98b-a3ab308f1ad6)
 
 There are two message passing APIs: one for one-time requests, and a more complex one for long-lived connections that allow multiple messages to be sent. For information about sending messages between extensions, see the cross-extension messages section.
 
@@ -29,7 +30,7 @@ User Interactions and Dynamic Events:
 After the initial loading and setup, the extension reacts to user interactions and other events. For instance, clicking the extension's icon opens the popup, and navigating to a new page might trigger content script injection if the URL matches the specified patterns.
 This sequence ensures that the extension is ready to interact with web pages and respond to user inputs as defined in its scripts and configurations.
 
-### Long Lived Connection related code
+### I. Long Lived Connection related code
 
 ### `background.js`:
 
@@ -206,7 +207,7 @@ Clears local storage (use with caution)
 <br />
 <br />
 
-### `contentScript.js`:
+### II `contentScript.js`:
 
 Second, lets analyze the `contentScript.js` file.  This script runs in the background and manages the long-lived connections.
 
@@ -327,7 +328,7 @@ buttons.forEach(button => button.addEventListener('click', () => {
 
 ```
 
-### Testing and Debugging
+### III. Testing and Debugging
 1. Load the Extension: Load your unpacked extension into Chrome and ensure it's active.
 2. Open Google Meet: Navigate to a Google Meet session.
 3. Check Console Logs: Open the Chrome Developer Tools (F12) and switch to the Console tab to see the logs from your content script. You should see logs indicating that messages are being sent and received.
@@ -365,3 +366,211 @@ Based on these console logs the following is happening.
 - The content script logs "Received 'hi there!' from background script", confirming it has received and recognized the response from the background script.
 - This flow demonstrates a successful two-way communication between your content script and background script using a long-lived connection. Each script is able to send and receive messages, and you're correctly logging these events.
 - To further develop your extension, you can now build upon this messaging framework. Depending on your extension's functionality, you can use this communication channel to send relevant data, commands, or notifications between the background and content scripts. For example, in the context of a Google Meet extension, you might use this to control certain features or gather information from the Meet session.
+
+---
+
+### IV Features to add - plan & roadmap
+
+### 1. Uploading Documents and ID Images Before the Session
+
+#### Feature Description: 
+Allow the user/principal to upload documents and ID images before the session starts.
+
+#### Implementation:
+- Popup Page: Create a user interface in `popup.html` for uploading documents and ID images.
+
+- Storage: Use `chrome.storage` to save the uploaded files. This allows the notary to access these files via the extension.
+
+- Background Script: Use the background script to manage the storage and retrieval of these files.
+
+#### Code Snippet: Popup for Uploading Documents:<br />
+`popup.html`
+```
+<input type="file" id="documentUpload" multiple>
+<button id="uploadButton">Upload</button>
+```
+
+---
+
+### 2. Starting Recording When the Session Begins
+
+#### Feature Description: 
+Start recording video and audio from the notary's active tab as soon as the user joins the session.
+
+#### Implementation:
+- Content Script: Detect when a Google Meet session starts (you can use URL changes or specific DOM elements as triggers).
+
+- Background Script: Use chrome.tabCapture API to start recording the active tab when the session begins.
+
+#### Code Snippet: Content Script for Session Detection and ID Display:<br />
+`contentScript.js`
+```
+if (location.href.includes("meet.google.com")) {
+  // Session started, display user's ID
+  const userIdElement = document.createElement('div');
+  userIdElement.textContent = 'User ID: XYZ';
+  userIdElement.style.position = 'absolute';
+  userIdElement.style.top = '0';
+  userIdElement.style.left = '0';
+  document.body.appendChild(userIdElement);
+
+  // Notify background script to start recording
+  chrome.runtime.sendMessage({ type: 'START_RECORDING' });
+}
+```
+<br />
+
+#### Code Snippet: Background Script for Recording:<br />
+`background.js`
+```
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.type === 'START_RECORDING') {
+    // Start recording logic
+  }
+});
+```
+
+---
+
+### 3. Displaying User's ID on Google Meet Video
+
+#### Feature Description: 
+Display the user's ID at the top left corner of the Google Meet video.
+
+#### Implementation:
+- Content Script: Inject a custom HTML element into the Google Meet page to display the user's ID.
+
+- CSS Styling: Style the ID display using CSS to position it at the top left corner.
+
+---
+
+### 4. E-Signature Process
+
+#### Feature Description: 
+Handle the e-signature process for both the user/principal and the notary.
+
+#### Implementation:
+- E-Signature Tool Integration: Integrate an e-signature tool or develop a custom solution for signing documents within the extension.
+
+- Data Transfer: Use chrome.runtime.sendMessage to send the signed document data to the background script for further processing.
+
+---
+
+### 5. Encryption and Backend Communication
+
+#### Feature Description: 
+Encrypt the signed document and send it to a backend server for further encryption and storage.
+
+#### Implementation:
+- Encryption: Implement front-end encryption using JavaScript libraries like crypto-js.
+  
+- Backend Communication: Use fetch or XMLHttpRequest to send the encrypted document to your backend server.
+
+---
+
+### Combined Approach
+
+#### A. Long-lived Connections: 
+Maintain a persistent connection between the content script and the background script for ongoing updates (e.g., session status, recording control).
+
+#### B. Event-driven Messages: 
+Use short-lived messages for specific actions like uploading documents, starting/stopping recording, and sending signed documents.
+
+#### Next Steps:
+- Develop the Front-end Features: Start by implementing the UI for uploading documents and displaying the user's ID.
+
+- Implement Recording: Use the chrome.tabCapture API to handle recording.
+
+- Integrate E-Signature: Research and integrate an e-signature solution.
+
+- Backend Development: Plan and develop the backend for further encryption and storage.
+
+### Current Feature Under Construction
+
+To implement the feature where a user can upload their document and ID before a Google Meet session starts, we'll follow a sequence of steps. Here's the breakdown from the moment the user pins your extension to the point where they can upload and display their documents and IDs in the Google Meet window:
+
+#### Sequence of the Feature
+
+##### 1. User Pins the Extension:
+
+- The user adds your extension to Chrome and pins it for easy access.
+
+##### 2. User Clicks on the Extension Icon:
+
+- The user clicks on the extension icon in the Chrome toolbar.
+- This action opens the popup defined in popup.html.
+
+##### 3. Displaying the Upload Interface in the Popup:
+
+- The popup.html presents an interface for the user to upload documents and IDs.
+- This interface includes file input fields and an upload button.
+
+##### 4. User Uploads Documents and IDs:
+
+- The user selects the documents and ID images they wish to upload.
+- Upon clicking the upload button, the files are stored using chrome.storage (local or sync, depending on your preference).
+
+##### 5. Storing the Uploaded Files:
+
+- The uploaded files are stored in a way that they can be retrieved later by the content script running in the Google Meet tab.
+
+##### 6. User Joins a Google Meet Session:
+
+- The user navigates to a Google Meet session.
+
+##### 7. Content Script Detects Google Meet Session:
+
+- The content script injected into the Google Meet page detects that a session has started.
+- It then retrieves the uploaded documents and IDs from chrome.storage.
+
+##### 8. Displaying Documents and IDs in Google Meet:
+
+- The content script dynamically injects elements into the Google Meet page to display the documents and IDs.
+- This could be in the form of thumbnails or links that open the documents in a modal or new tab.
+
+#### Example Code Implementation
+
+`puopup.html`
+```
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Upload Documents</title>
+  <!-- Add CSS styles if needed -->
+</head>
+<body>
+  <h1>Upload Your Documents</h1>
+  <input type="file" id="documentInput" multiple>
+  <button id="uploadButton">Upload</button>
+  <script src="popup.js"></script>
+</body>
+</html>
+```
+<br />
+
+`popup.js`
+```
+document.getElementById('uploadButton').addEventListener('click', () => {
+  const files = document.getElementById('documentInput').files;
+  if (files.length > 0) {
+    // Convert files to a format suitable for chrome.storage
+    // For example, using FileReader to read the files as Data URLs
+    // Store the files in chrome.storage
+  }
+});
+```
+<br />
+
+`contentScript.js`
+```
+if (location.href.includes("meet.google.com")) {
+  // Retrieve the uploaded documents from chrome.storage
+  // Inject elements to display the documents in the Google Meet window
+}
+```
+
+#### Testing and Debugging
+
+- Test the Upload Feature: Ensure that the popup correctly allows file uploads and stores them in chrome.storage.
+- Test Content Script Injection: Verify that the content script correctly retrieves and displays the uploaded files in the Google Meet window.
+- Debugging: Use console.log statements and Chrome DevTools to debug any issues that arise during development.

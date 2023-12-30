@@ -1,6 +1,17 @@
 
-
+//Step 1. Extracting the Meeting ID in the Content Script (meetingIdAcquisition)
 const port = chrome.runtime.connect({ name: "meetConnection" });//<--Line A
+
+// Function to extract meeting ID
+function extractMeetingId() {
+  const url = window.location.href;
+  const meetingId = url.split("meet.google.com/")[1].split("?")[0];
+  return meetingId;
+}
+
+// Send the meeting ID to the background script
+const meetingId = extractMeetingId();
+port.postMessage({ type: "MEETING_ID", meetingId: meetingId });
 
 port.postMessage({ greeting: "hello" });//<--Line B
 
