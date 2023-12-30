@@ -24,3 +24,9 @@ port.onMessage.addListener((msg) => {//<--Line C
     document.body.style.backgroundColor = 'lightblue';
   }
 });
+
+//boilerplate from chatGPT notes
+// if (location.href.includes("meet.google.com")) {
+  // Retrieve the uploaded documents from chrome.storage
+  // Inject elements to display the documents in the Google Meet window
+//}
