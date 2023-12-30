@@ -569,8 +569,74 @@ if (location.href.includes("meet.google.com")) {
 }
 ```
 
-#### Testing and Debugging
+#### Testing and Debugging - FILE(S) UPLOAD FEATURE
 
 - Test the Upload Feature: Ensure that the popup correctly allows file uploads and stores them in chrome.storage.
 - Test Content Script Injection: Verify that the content script correctly retrieves and displays the uploaded files in the Google Meet window.
 - Debugging: Use console.log statements and Chrome DevTools to debug any issues that arise during development.
+- File upload a success! (COMPLETE)
+
+---
+
+#### Testing and Debugging - retrieve FILES while in a live Google Meet session and display them within the video frame
+
+Summary: To retrieve and display the uploaded files within a Google Meet session, you'll need to modify your content script to interact with the Google Meet interface. This process involves several steps:
+
+- COMPLETED
+- 1. Retrieve Files from Storage: When the user joins a Google Meet session, your content script should retrieve the stored files from chrome.storage.local.  In your content script (`contentScript.js`), add a function to retrieve files from storage:
+
+```
+function retrieveFiles() {
+  chrome.storage.local.get(['uploadedFiles'], function(result) {
+    if (result.uploadedFiles) {
+      displayFiles(result.uploadedFiles);
+    } else {
+      console.log('No files found in storage.');
+    }
+  });
+}
+```
+
+- 2. Create a UI Element in Google Meet: You'll need to create a new UI element (like a sidebar or overlay) within the Google Meet interface to display the file names or previews.  You'll need to inject HTML into the Google Meet page to create a UI element for displaying the files. This can be a sidebar, a modal, or any other suitable element. Here's an example of creating a simple sidebar:
+
+```
+function createFileDisplayArea() {
+  const sidebar = document.createElement('div');
+  sidebar.id = 'fileDisplaySidebar';
+  sidebar.style.cssText = 'position: fixed; top: 0; right: 0; width: 300px; height: 100%; background-color: white; z-index: 1000; overflow-y: auto;';
+  document.body.appendChild(sidebar);
+}
+```
+
+- 3. Display Files: Show the file names or previews in the created UI element. You might also want to provide options to view or download the files.  Add a function to display the file names or previews in the created UI element:
+
+```
+function displayFiles(files) {
+  const sidebar = document.getElementById('fileDisplaySidebar');
+  files.forEach(file => {
+    const fileElement = document.createElement('div');
+    fileElement.textContent = file.name; // Display file name
+    // Add more code here to handle file previews if needed
+    sidebar.appendChild(fileElement);
+  });
+}
+```
+
+- 4: Initialize on Google Meet Session Start: You'll need to call these functions when the Google Meet session starts. You can do this by listening for changes in the URL or by detecting when the Google Meet interface is loaded:
+
+```
+// Call this function when you detect that a Google Meet session has started
+function onMeetSessionStart() {
+  createFileDisplayArea();
+  retrieveFiles();
+}
+```
+
+- 5 Modify Manifest: Ensure your content script has permissions to access `chrome.storage` and inject scripts into Google Meet. Your `manifest.json` should already include the necessary permissions and content script matches.
+
+#### Testing and Debugging
+
+- 1. Load the Extension: Load your extension into Chrome and open a Google Meet session.
+- 2. Check for UI Element: Ensure the sidebar or UI element you created appears in the Google Meet interface.
+- 3. Verify File Display: Check if the uploaded files are listed in the sidebar.
+- 4. Debugging: Use `console.log` statements and Chrome's Developer Tools to debug any issues.

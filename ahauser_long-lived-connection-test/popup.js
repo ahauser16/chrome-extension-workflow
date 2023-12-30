@@ -1,12 +1,9 @@
 //Step 3= request the meeting ID from the background.js (meetingIdAcquisition)
-
 document.addEventListener('DOMContentLoaded', () => {
   chrome.runtime.sendMessage({ type: "GET_MEETING_ID" }, response => {
     document.getElementById('meetingIdDisplay').textContent = response.meetingId || "No active meeting";
   });
 });
-
-
 
 document.getElementById('documentInput').addEventListener('change', function () {
   const fileList = document.getElementById('fileList');
@@ -26,6 +23,7 @@ document.getElementById('documentInput').addEventListener('change', function () 
 document.getElementById('uploadButton').addEventListener('click', function () {
   const fileInput = document.getElementById('documentInput');
   const files = fileInput.files;
+  console.log("Uploading", files.length, "file(s)...");
 
   if (files.length === 0) {
     console.log('No files selected.');
@@ -33,18 +31,17 @@ document.getElementById('uploadButton').addEventListener('click', function () {
     return;
   }
 
-  console.log(`Uploading ${files.length} file(s)...`);
-
-
   const fileData = {};
   for (const file of files) {
+    console.log("Reading file:", file.name);
     const reader = new FileReader();
     reader.onload = function (e) {
       fileData[file.name] = e.target.result;
       console.log(`File read: ${file.name}`);
 
       if (Object.keys(fileData).length === files.length) {
-        chrome.storage.local.set({ 'uploadedFiles': fileData }, function () {
+        console.log("Files read, saving to local storage...");
+        chrome.storage.local.set({ 'uploadedFiles': fileData }, () => {
           if (chrome.runtime.lastError) {
             console.error('Error saving files:', chrome.runtime.lastError.message);
           } else {
@@ -59,3 +56,6 @@ document.getElementById('uploadButton').addEventListener('click', function () {
     reader.readAsDataURL(file);
   }
 });
+
+
+
