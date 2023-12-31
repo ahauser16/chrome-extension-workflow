@@ -58,10 +58,4 @@ document.getElementById('uploadButton').addEventListener('click', function () {
 });
 
 
-//SidepanelButtonInPopup-Step 1-->below is an event listener to the "Open Side Panel" button. When clicked, it should send a message to the background.js script to trigger the opening of the side panel.
-document.getElementById('openSidePanelButton').addEventListener('click', () => {
-  console.log("Sending message to open side panel");
-  chrome.runtime.sendMessage({ action: "openSidePanel" });
-});
-
 

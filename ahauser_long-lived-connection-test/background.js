@@ -1,3 +1,5 @@
+//good article on long-lived connection syntax: https://www.linkedin.com/pulse/message-passing-chrome-extension-lakebrains-technologies/
+
 //ExtractMeetingId-Step 3-->Handling the Message in the Background Script (meetingIdAcquisition)
 
 let currentMeetingId = null;
@@ -33,53 +35,27 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
-//SidepanelButtonInPopup-Step 2-->listen for the message from popup.js and open the side panel. FYI, You'll need to keep track of the current active tab ID to open the side panel in the correct tab.-->question=how do I keep track of the current active tab using the "long-lived connection" syntax.
-let currentTabId = null;
-
-// this is a listener for when the active tab changes
-chrome.tabs.onActivated.addListener(activeInfo => {
-  currentTabId = activeInfo.tabId; // Store the ID of the currently active tab
-});
-
-// Listener for messages from other parts of the extension
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-  console.log("Message received in background:", message);
-
-  if (message.action === "openSidePanel") {
-    openSidePanel();
+//boilerplate from sidepanel API documentation.
+//https://developer.chrome.com/docs/extensions/reference/api/sidePanel
+const GOOGLE_ORIGIN = 'https://meet.google.com/';
+chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
+  if (!tab.url) return;
+  const url = new URL(tab.url);
+  // Enables the side panel on google.com
+  if (url.origin === GOOGLE_ORIGIN) {
+    await chrome.sidePanel.setOptions({
+      tabId,
+      path: 'googleMeetSidepanel.html',
+      enabled: true
+    });
+  } else {
+    // Disables the side panel on all other sites
+    await chrome.sidePanel.setOptions({
+      tabId,
+      enabled: false
+    });
   }
 });
-
-function openSidePanel() {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs.length === 0) {
-      console.error("No active tab found");
-      return;
-    }
-
-    const tabId = tabs[0].id;
-    if (tabId && tabs[0].url.includes("meet.google.com")) {
-      chrome.sidePanel.open({ tabId: tabId }).then(() => {
-        console.log("Side panel opened on tab:", tabId);
-      }).catch((error) => {
-        console.error("Error opening side panel:", error);
-      });
-    } else {
-      console.log("Side panel can only be opened on Google Meet pages.");
-    }
-  });
-}
-
-
-//How It Works
-//1.  Track the Current Active Tab: The script keeps track of the currently active tab. Whenever the active tab changes, it updates currentTabId with the new tab's ID. This is important because the side panel is context-specific and needs to know which tab to display in.
-
-//2. Listen for Messages: The script listens for messages from other parts of the extension (like your popup script). This is When a message is received, the script checks if the action specified in the message is "openSidePanel". This is a custom action we expect to be sent from the popup when the user clicks the "Open Side Panel" button.
-
-//3. Open the Side Panel: If the current tab ID is available (meaning the script knows which tab is currently active), it uses the chrome.sidePanel.open method to open the side panel in that tab. This method requires the tabId to specify where the side panel should be opened.
-
-
-
 
 
 

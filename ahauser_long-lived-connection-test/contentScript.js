@@ -13,7 +13,9 @@ function extractMeetingId() {
 // ExtractMeetingId-Step 2-->Send the meeting ID to the background script
 const meetingId = extractMeetingId();
 port.postMessage({ type: "MEETING_ID", meetingId: meetingId });
+
 port.postMessage({ greeting: "hello" });//<--Line B
+
 port.onMessage.addListener((msg) => {//<--Line C
   console.log("Message received from background script:", msg); // Log received messages
   if (msg.greeting === "hi there!") {//<--Line D
@@ -22,6 +24,12 @@ port.onMessage.addListener((msg) => {//<--Line C
     document.body.style.backgroundColor = 'lightblue';
   }
 });
+
+
+
+
+
+
 
 //workflow once user has saved files to storage and is about to join live session.
 //SaveFiles2Storage - Step 1: Retrieve Files from Storage
