@@ -1,6 +1,6 @@
-// Ensure that contentScript.js is focused on handling any interactions specific to the Google Meet page that are still relevant to your extension's functionality. For example, if you need to trigger any actions when a Google Meet session starts or ends, you would handle that here.
+// General Note: Ensure that contentScript.js is focused on handling any interactions specific to the Google Meet page that are still relevant to your extension's functionality. For example, if you need to trigger any actions when a Google Meet session starts or ends, you would handle that here.
 
-//Step 1. Extracting the Meeting ID in the Content Script (meetingIdAcquisition)
+//ExtractMeetingId-Step 1-->Extracting the Meeting ID in the Content Script (meetingIdAcquisition)
 const port = chrome.runtime.connect({ name: "meetConnection" });//<--Line A
 
 // Function to extract meeting ID
@@ -10,7 +10,7 @@ function extractMeetingId() {
   return meetingId;
 }
 
-// Send the meeting ID to the background script
+// ExtractMeetingId-Step 2-->Send the meeting ID to the background script
 const meetingId = extractMeetingId();
 port.postMessage({ type: "MEETING_ID", meetingId: meetingId });
 port.postMessage({ greeting: "hello" });//<--Line B
@@ -24,7 +24,7 @@ port.onMessage.addListener((msg) => {//<--Line C
 });
 
 //workflow once user has saved files to storage and is about to join live session.
-//Step 1: Retrieve Files from Storage
+//SaveFiles2Storage - Step 1: Retrieve Files from Storage
 function retrieveFiles() {
   console.log("Retrieving files from local storage...");
   chrome.storage.local.get(['uploadedFiles'], (result) => {
