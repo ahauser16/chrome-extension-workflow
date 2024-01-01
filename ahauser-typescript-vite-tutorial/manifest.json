@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "ahauser minimal manifest",
+    "version": "1.0.0",
+    "description": "A basic example extension with only required keys",
+    "icons": {
+        "16": "images/NYS-flag-icon-16.png",
+        "32": "images/NYS-flag-icon-32.png",
+        "48": "images/NYS-flag-icon-48.png",
+        "128": "images/NYS-flag-icon-128.png"
+    },
+    "background": {
+        "service_worker": "service-worker.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "index.html"
+    },
+    "permissions": [
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ]
+}
