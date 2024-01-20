@@ -1,8 +1,6 @@
-let myControlBar;
 let googleMeetControlBar = document.querySelector('div.fJsklc.nulMpf.Didmac.G03iKb');
 let googleMeetControlBar_Left = document.querySelector('div.lefKC');
-let googleMeetUserName = document.querySelector('div.dwSJ2e');
-
+let googleMeetUserName = document.querySelector('div.Djiqwe.sqgFe');
 
 let style = document.createElement('style');
 style.textContent = `
@@ -54,14 +52,55 @@ style.textContent = `
     cursor: pointer;
 }
 
-.logoAboveUserName{
-    background-color: pink;
+.Djiqwe.sqgFe {
+    position: relative;
+    overflow: visible;
+}
+
+.logoAboveUserName {
+    position: absolute;
+    top: -100px; 
+    left: 50%; 
+    transform: translateX(-50%);
     width: 50px;
     height: 50px;
 }
 
+.myBanner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 25px;
+    background-color: cyan;
+    z-index: 1000;
+}
+
 `;
 document.head.appendChild(style);
+
+if (document.body) {
+    document.body.style.border = '3px solid cyan';
+    let myBanner = document.createElement('div');
+    myBanner.className = 'myBanner';
+    document.body.appendChild(myBanner);
+
+    // START FROM HERE
+    // let svgns = "http://www.w3.org/2000/svg";
+    // let svg = document.createElementNS(svgns, 'svg');
+    // svg.setAttributeNS(null, 'width', '100');
+    // svg.setAttributeNS(null, 'height', '100');
+
+    // let triangle = document.createElementNS(svgns, 'polygon');
+    // triangle.setAttributeNS(null, 'points', '0,0 100,0 0,100');
+    // triangle.setAttributeNS(null, 'style', 'fill:cyan');
+
+    // svg.appendChild(triangle);
+    // document.body.appendChild(svg);
+
+} else {
+    console.log('Google Meet body not found');
+}
 
 if (googleMeetControlBar) {
     googleMeetControlBar.style.border = '3px solid red';
@@ -69,12 +108,12 @@ if (googleMeetControlBar) {
     console.log('Google Meet controls container not found');
 }
 
-
 if (googleMeetUserName) {
     googleMeetUserName.style.border = '1.5px solid green';
-    logoAboveUserName = document.createElement('div');
+    let logoAboveUserName = document.createElement('img');
     logoAboveUserName.className = 'logoAboveUserName';
-    googleMeetUserName.append(logoAboveUserName);
+    logoAboveUserName.src = 'ahauser_long-lived-connection-test/assets/NYS-flag-icon-48.png';
+    googleMeetUserName.appendChild(logoAboveUserName);
 } else {
     console.log('Google Meet user name not found');
 }
@@ -82,7 +121,7 @@ if (googleMeetUserName) {
 if (googleMeetControlBar_Left) {
     googleMeetControlBar_Left.style.border = '3px solid blue';
 
-    myControlBar = document.createElement('div');
+    let myControlBar = document.createElement('div');
     myControlBar.className = 'myControlBarContainer';
     googleMeetControlBar_Left.appendChild(myControlBar);
 
@@ -126,13 +165,21 @@ if (googleMeetControlBar_Left) {
 }
 
 
+
 // removing a div from a live session below the control bar
+let googleMeetControlBar = document.querySelector('div.fJsklc.nulMpf.Didmac.G03iKb');
+let googleMeetControlBar_Left = document.querySelector('div.lefKC');
+let googleMeetUserName = document.querySelector('div.Djiqwe.sqgFe');
+
 let myControlBarContainer = document.querySelector('div.myControlBarContainer');
 let fileUpload = document.querySelector('input.fileUpload');
 let plusOneButton = document.querySelector('button.plusOne');
 let minusOneButton = document.querySelector('button.minusOne');
 let pTag = document.querySelector('p.countDisplay');
 let sendDataButton = document.querySelector('button.sendData');
+let logoAboveUserName = document.querySelector('div.logoAboveUserName');
+let myBanner = document.createElement('div');
+
 if (myControlBarContainer) {
     myControlBarContainer.remove();
     fileUpload.remove();
@@ -140,42 +187,36 @@ if (myControlBarContainer) {
     minusOneButton.remove();
     pTag.remove();
     sendDataButton.remove();
+    logoAboveUserName.remove();
+    myBanner.remove();
+    googleMeetUserName.style.border = '';
+    googleMeetControlBar.style.border = '';
+    googleMeetControlBar_Left.style.border = '';
 } else {
     console.log('Control Bar not found');
 }
 
+///////////////////////////////////
+let googleMeetControlBar = document.querySelector('div.fJsklc.nulMpf.Didmac.G03iKb');
+let googleMeetControlBar_Left = document.querySelector('div.lefKC');
+let googleMeetUserName = document.querySelector('div.Djiqwe.sqgFe');
+googleMeetUserName.style.border = '';
+googleMeetControlBar.style.border = '';
+googleMeetControlBar_Left.style.border = '';
+/////////////////////////////////////
 
-
-// ahauser_long-lived-connection-test/assets/NYS-flag-icon-48.png
-// reference to name displayed in Google Meet session:
-<div class="dwSJ2e">Arthur Hauser</div>
-
-
-
-
-//reference to the whole control bar:
-#ow3 > div.T4LgNb > div > div: nth - child(20) > div.crqnQb > div.fJsklc.nulMpf.Didmac.G03iKb
-
-//reference to the left control bar:
-#ow3 > div.T4LgNb > div > div: nth - child(20) > div.crqnQb > div.fJsklc.nulMpf.Didmac.G03iKb > div > div > div.lefKC
-
-    //button background color
-    .P9KVBf.uaILN: not(: disabled) {
-    background - color: rgb(60, 64, 67);
+let myBanner = document.querySelector('.myBanner');
+if (myBanner) {
+    document.body.removeChild(myBanner);
+} else {
+    console.log('myBanner not found');
 }
 
-//button icon color
-.P9KVBf.uaILN: not(: disabled) {
-    color: #fff;
+let myTriangle = document.querySelector('.myTriangle');
+if (myTriangle) {
+    document.body.removeChild(myTriangle);
+} else {
+    console.log('myTriangle not found');
 }
 
-//button border radius
-.tWDL4c, .tWDL4c.VfPpkd - Jh9lGc {
-    border - radius: 100px;
-}
-
-
-//button z-index rule
-.P9KVBf.eT1oJ {
-    z - index: 0;
-}
+///////////////////////////////////////////
