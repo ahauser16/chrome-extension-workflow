@@ -86,17 +86,22 @@ if (document.body) {
     document.body.appendChild(myBanner);
 
     // START FROM HERE
-    // let svgns = "http://www.w3.org/2000/svg";
-    // let svg = document.createElementNS(svgns, 'svg');
-    // svg.setAttributeNS(null, 'width', '100');
-    // svg.setAttributeNS(null, 'height', '100');
+    let svgns = "http://www.w3.org/2000/svg";
+    let svg = document.createElementNS(svgns, 'svg');
+    svg.setAttributeNS(null, 'width', '150');
+    svg.setAttributeNS(null, 'height', '150');
+    svg.style.position = 'absolute';
+    svg.style.top = '0';
+    svg.style.left = '0';
+    svg.style.zIndex = '10000';
+    svg.className = 'myTriangle'; // Add this line
 
-    // let triangle = document.createElementNS(svgns, 'polygon');
-    // triangle.setAttributeNS(null, 'points', '0,0 100,0 0,100');
-    // triangle.setAttributeNS(null, 'style', 'fill:cyan');
+    let triangle = document.createElementNS(svgns, 'polygon');
+    triangle.setAttributeNS(null, 'points', '0,0 150,0 0,150');
+    triangle.setAttributeNS(null, 'style', 'fill:cyan');
 
-    // svg.appendChild(triangle);
-    // document.body.appendChild(svg);
+    svg.appendChild(triangle);
+    document.body.appendChild(svg);
 
 } else {
     console.log('Google Meet body not found');
