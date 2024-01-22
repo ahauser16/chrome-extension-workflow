@@ -1,61 +1,122 @@
-// General Note: Ensure that contentScript.js is focused on handling any interactions specific to the Google Meet page that are still relevant to your extension's functionality. For example, if you need to trigger any actions when a Google Meet session starts or ends, you would handle that here.
+let port = null;
 
-//ExtractMeetingId-Step 1-->Extracting the Meeting ID in the Content Script (meetingIdAcquisition)
-const port = chrome.runtime.connect({ name: "meetConnection" });//<--Line A
+function startLiveMeetSession() {
+  if (port) {
+    console.log("Live Meet session already started");
+    return;
+  }
 
-// Function to extract meeting ID
+  port = chrome.runtime.connect({ name: "liveMeetConnection" });
+
+  const meetingId = extractMeetingId();
+  if (!meetingId) {
+    console.error("Failed to extract meeting ID from URL");
+    return;
+  }
+
+  port.postMessage({ type: "MEETING_ID", meetingId: meetingId });
+
+  port.postMessage({ greeting: "hello" });
+
+  port.onMessage.addListener(handleMessage);
+}
+
+function handleMessage(msg) {
+  console.log("Message received from background script:", msg);
+
+  switch (msg.type) {
+    case "greeting":
+      handleGreeting(msg);
+      break;
+    default:
+      console.error("Received unknown message type:", msg.type);
+  }
+}
+
+function handleGreeting(msg) {
+  if (msg.greeting === "hi there!") {
+    console.log("Received 'hi there!' from background script");
+    document.body.style.backgroundColor = 'lightblue';
+  } else {
+    console.error("Received unknown greeting:", msg.greeting);
+  }
+}
+
 function extractMeetingId() {
   const url = window.location.href;
-  const meetingId = url.split("meet.google.com/")[1].split("?")[0];
+  let meetingId = null;
+
+  try {
+    meetingId = url.split("meet.google.com/")[1].split("?")[0];
+  } catch (error) {
+    console.error("Failed to extract meeting ID from URL:", url);
+    return null;
+  }
+
+  if (!meetingId) {
+    console.error("No meeting ID found in URL:", url);
+    return null;
+  }
+
   return meetingId;
 }
 
-// ExtractMeetingId-Step 2-->Send the meeting ID to the background script
-const meetingId = extractMeetingId();
-port.postMessage({ type: "MEETING_ID", meetingId: meetingId });
-
-port.postMessage({ greeting: "hello" });//<--Line B
-
-port.onMessage.addListener((msg) => {//<--Line C
-  console.log("Message received from background script:", msg); // Log received messages
-  if (msg.greeting === "hi there!") {//<--Line D
-    console.log("Received 'hi there!' from background script");
-    // Example interaction: Change the background color of the Google Meet page
-    document.body.style.backgroundColor = 'lightblue';
+function isInLiveMeetSession() {
+  const url = window.location.href;
+  // Check if the URL includes "meet.google.com/"
+  if (!url.includes("meet.google.com/")) {
+    return false;
   }
-});
 
+  // Extract the part of the URL after "meet.google.com/"
+  const urlParts = url.split("meet.google.com/");
+  if (urlParts.length < 2) {
+    console.error("No meeting ID found in URL:", url);
+    return false;
+  }
 
+  // Check if there's a unique meeting ID in the URL
+  const meetingId = urlParts[1].split("?")[0];
+  if (!meetingId) {
+    console.error("No meeting ID found in URL:", url);
+    return false;
+  }
 
-
-
-
-
-//workflow once user has saved files to storage and is about to join live session.
-//SaveFiles2Storage - Step 1: Retrieve Files from Storage
-function retrieveFiles() {
-  console.log("Retrieving files from local storage...");
-  chrome.storage.local.get(['uploadedFiles'], (result) => {
-    if (chrome.runtime.lastError) {
-      console.error("Error retrieving files:", chrome.runtime.lastError.message);
-      return;
-    }
-
-    const files = result.uploadedFiles;
-    if (!files) {
-      console.log("No files found in local storage.");
-      return;
-    }
-
-    console.log("Files retrieved:", Object.keys(files));
-    // displayFiles(files);
-
-
-    if (result.uploadedFiles) {
-      displayFiles(result.uploadedFiles);
-    } else {
-      console.log('No files found in storage.');
-    }
-  });
+  return true;
 }
-retrieveFiles();
+
+// Check if the user is in a live Meet session every 5 seconds
+setInterval(() => {
+  if (isInLiveMeetSession()) {
+    startLiveMeetSession();
+  }
+}, 3000);
+
+
+
+
+// function retrieveFiles() {
+//   console.log("Retrieving files from local storage...");
+//   chrome.storage.local.get(['uploadedFiles'], (result) => {
+//     if (chrome.runtime.lastError) {
+//       console.error("Error retrieving files:", chrome.runtime.lastError.message);
+//       return;
+//     }
+
+//     const files = result.uploadedFiles;
+//     if (!files) {
+//       console.log("No files found in local storage.");
+//       return;
+//     }
+
+//     console.log("Files retrieved:", Object.keys(files));
+
+
+//     if (result.uploadedFiles) {
+//       displayFiles(result.uploadedFiles);
+//     } else {
+//       console.log('No files found in storage.');
+//     }
+//   });
+// }
+// retrieveFiles();
