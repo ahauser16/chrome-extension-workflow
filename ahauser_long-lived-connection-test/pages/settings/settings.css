@@ -6,11 +6,12 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 5px;
     display: flex;
     flex-direction: column;
+    background-color: lightskyblue;
 }
 
 header {
@@ -36,6 +37,14 @@ section.middle {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    background-color: antiquewhite;
+}
+
+section.middle section {
+    border: 2px solid blue;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
 }
 
 form.principal-singup, form.notary-signup {
