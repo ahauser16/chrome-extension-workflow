@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>NYS E-Notary Services</h1>
+            <h2>Settings</h2>
+        </header>
+        <main class="content">
+            <section class="left">
+                <img src="../../assets/NYS-flag-icon-128.png" alt="NYS Seal">
+            </section>
+            <section class="middle">
+                <form class="principal-signup">
+                    <section>
+                        <h3>Principal Sign Up</h3>
+                        <label for="principal-first-name">First Name</label>
+                        <input type="text" id="principal-first-name" class="first-name signup" />
+
+                        <label for="principal-last-name">Last Name</label>
+                        <input type="text" id="principal-last-name" class="last-name signup" />
+
+                        <label for="principal-email">Email</label>
+                        <input type="email" id="principal-email" class="email signup" />
+
+                        <label for="principal-phone">Phone Number</label>
+                        <input type="tel" id="principal-phone" class="phone signup" />
+                    </section>
+                    <section>
+                        <h3>Address Information</h3>
+
+                        <label for="principal-address1">Address Line 1</label>
+                        <input type="text" id="principal-address1" class="address signup" />
+
+                        <label for="principal-address2">Address Line 2</label>
+                        <input type="text" id="principal-address2" class="address signup" />
+
+                        <label for="principal-city">City</label>
+                        <input type="text" id="principal-city" class="city signup" />
+
+                        <label for="principal-state">State</label>
+                        <input type="text" id="principal-state" class="state signup" />
+
+                        <label for="principal-zip">Zip Code</label>
+                        <input type="text" id="principal-zip" class="zip signup" />
+                    </section>
+                    <section>
+                        <!-- insert billing here -->
+                        <h3>Billing Information</h3>
+
+                        <label for="same-address">
+                            <input type="checkbox" id="same-address">
+                            Same as home address
+                        </label>
+
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" class="card-name signup" />
+
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" class="card-number signup" />
+
+                        <label for="card-expiration">Expiration Date</label>
+                        <input type="text" id="card-expiration" class="card-expiration signup" />
+
+                        <label for="card-cvv">CVV</label>
+                        <input type="text" id="card-cvv" class="card-cvv signup" />
+
+                        <label for="billing-address1">Billing Address Line 1</label>
+                        <input type="text" id="billing-address1" class="address signup" />
+
+                        <label for="billing-address2">Billing Address Line 2</label>
+                        <input type="text" id="billing-address2" class="address signup" />
+
+                        <label for="billing-city">City</label>
+                        <input type="text" id="billing-city" class="city signup" />
+
+                        <label for="billing-state">State</label>
+                        <input type="text" id="billing-state" class="state signup" />
+
+                        <label for="billing-zip">Zip Code</label>
+                        <input type="text" id="billing-zip" class="zip signup" />
+
+                    </section>
+                    <section>
+                        <h3>Signature Information</h3>
+
+                        <label for="principal-signature">Signature</label>
+                        <input type="file" id="principal-signature" class="upload" accept="image/*" capture="user" />
+                        <button class="createSigBtn">Create your digital signature</button>
+                    </section>
+
+                    <section>
+                        <h3>Scheduling Information</h3>
+
+                        <label for="principal-timezone">Choose Your Time Zone</label>
+                        <select id="principal-timezone" class="timezone signup">
+                            <option value="">Select your time zone</option>
+                            <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST)
+                            </option>
+                            <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
+                            <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
+                            <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
+                            <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
+                            <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
+                        </select>
+                        <br />
+                        <h4>Choose your availability</h4>
+                        <div class="availability signup">
+                            <div class="availability-day" id="Monday">
+                                <label><input type="checkbox" name="day" value="Monday"> Monday</label>
+                                <div id="monday-times">
+                                    <div class="time-slot">
+                                        <label for="monday-start-time-1">Start Time</label>
+                                        <input type="time" id="monday-start-time-1" class="time signup" />
+                                        <label for="monday-end-time-1">End Time</label>
+                                        <input type="time" id="monday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Monday">Add Time Slot</button>
+                                <button id="notesButton-Monday">Notes</button>
+                                <div id="notesContainer-Monday"></div>
+                            </div>
+                            <div class="availability-day" id="Tuesday">
+                                <label><input type="checkbox" name="day" value="Tuesday"> Tuesday</label>
+                                <div id="tuesday-times">
+                                    <div class="time-slot">
+                                        <label for="tuesday-start-time-1">Start Time</label>
+                                        <input type="time" id="tuesday-start-time-1" class="time signup" />
+                                        <label for="tuesday-end-time-1">End Time</label>
+                                        <input type="time" id="tuesday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Tuesday">Add Time Slot</button>
+                                <button id="notesButton-Tuesday">Notes</button>
+                                <div id="notesContainer-Tuesday"></div>
+                            </div>
+                            <div class="availability-day" id="Wednesday">
+                                <label><input type="checkbox" name="day" value="Wednesday"> Wednesday</label>
+                                <div id="wednesday-times">
+                                    <div class="time-slot">
+                                        <label for="wednesday-start-time-1">Start Time</label>
+                                        <input type="time" id="wednesday-start-time-1" class="time signup" />
+                                        <label for="wednesday-end-time-1">End Time</label>
+                                        <input type="time" id="wednesday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Wednesday">Add Time Slot</button>
+                                <button id="notesButton-Wednesday">Notes</button>
+                                <div id="notesContainer-Wednesday"></div>
+                            </div>
+                            <div class="availability-day" id="Thursday">
+                                <label><input type="checkbox" name="day" value="Thursday"> Thursday</label>
+                                <div id="thursday-times">
+                                    <div class="time-slot">
+                                        <label for="thursday-start-time-1">Start Time</label>
+                                        <input type="time" id="thursday-start-time-1" class="time signup" />
+                                        <label for="thursday-end-time-1">End Time</label>
+                                        <input type="time" id="thursday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Thursday">Add Time Slot</button>
+                                <button id="notesButton-Thursday">Notes</button>
+                                <div id="notesContainer-Thursday"></div>
+                            </div>
+                            <div class="availability-day" id="Friday">
+                                <label><input type="checkbox" name="day" value="Friday"> Friday</label>
+                                <div id="friday-times">
+                                    <div class="time-slot">
+                                        <label for="friday-start-time-1">Start Time</label>
+                                        <input type="time" id="friday-start-time-1" class="time signup" />
+                                        <label for="friday-end-time-1">End Time</label>
+                                        <input type="time" id="friday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Friday">Add Time Slot</button>
+                                <button id="notesButton-Friday">Notes</button>
+                                <div id="notesContainer-Friday"></div>
+                            </div>
+                            <div class="availability-day" id="Saturday">
+                                <label><input type="checkbox" name="day" value="Saturday"> Saturday</label>
+                                <div id="saturday-times">
+                                    <div class="time-slot">
+                                        <label for="saturday-start-time-1">Start Time</label>
+                                        <input type="time" id="saturday-start-time-1" class="time signup" />
+                                        <label for="saturday-end-time-1">End Time</label>
+                                        <input type="time" id="saturday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Saturday">Add Time Slot</button>
+                                <button id="notesButton-Saturday">Notes</button>
+                                <div id="notesContainer-Saturday"></div>
+                            </div>
+                            <div class="availability-day" id="Sunday">
+                                <label><input type="checkbox" name="day" value="Sunday"> Sunday</label>
+                                <div id="sunday-times">
+                                    <div class="time-slot">
+                                        <label for="sunday-start-time-1">Start Time</label>
+                                        <input type="time" id="sunday-start-time-1" class="time signup" />
+                                        <label for="sunday-end-time-1">End Time</label>
+                                        <input type="time" id="sunday-end-time-1" class="time signup" />
+                                    </div>
+                                </div>
+                                <button id="addTimeSlotButton-Sunday">Add Time Slot</button>
+                                <button id="notesButton-Sunday">Notes</button>
+                                <div id="notesContainer-Sunday"></div>
+                            </div>
+                        </div>
+
+                        <label for="principal-contact-method">Preferred Method of Contact</label>
+                        <select id="principal-contact-method" class="contact-method signup">
+                            <option value="">Select your preferred contact method</option>
+                            <option value="email">Email</option>
+                            <option value="phone">Phone</option>
+                            <!-- Add more options as needed -->
+                        </select>
+
+                        <label for="principal-contact-notes">Additional Notes</label>
+                        <textarea id="principal-contact-notes" class="notes signup"></textarea>
+                    </section>
+                    <section>
+                        <h3>My Contacts</h3>
+                        <label for="principal-notary">Preferred Notary</label>
+                        <input type="text" id="principal-notary" class="notary signup" />
+                    </section>
+
+                    <section>
+                        <h3>My Documents</h3>
+                        <h4>Unsigned</h4>
+                        <ul>
+                            <li>Doc A (unsigned)</li>
+                            <li>Doc B (unsigned)</li>
+                            <li>Doc C (unsigned)</li>
+                        </ul>
+                        <h4>Signed</h4>
+                        <ul>
+                            <li>Doc D (signed)</li>
+                            <li>Doc E (signed)</li>
+                            <li>Doc F (signed)</li>
+                        </ul>
+
+                        <label for="principal-document">Upload document to be notarized</label>
+                        <input type="file" id="principal-document" class="upload" accept=".pdf" />
+                        <button id="submit">Submit</button>
+                    </section>
+                </form>
+                <form class="notary-signup">
+                    <h3>Notary Public Sign Up</h3>
+                    <label for="notary-first-name">First Name</label>
+                    <input type="text" id="notary-first-name" class="first-name signup" />
+
+                    <label for="notary-last-name">Last Name</label>
+                    <input type="text" id="notary-last-name" class="last-name signup" />
+
+                    <label for="notary-email">Email</label>
+                    <input type="email" id="notary-email" class="email signup" />
+
+                    <label for="notary-phone">Phone Number</label>
+                    <input type="tel" id="notary-phone" class="phone signup" />
+
+                    <label for="notary-address">Address</label>
+                    <input type="text" id="notary-address" class="address signup" />
+
+                    <label for="notary-license">Notary License Number</label>
+                    <input type="text" id="notary-license" class="license signup" />
+
+                    <label for="notary-expiry">Notary License Expiry Date</label>
+                    <input type="date" id="notary-expiry" class="expiry signup" />
+
+                    <label for="notary-schedule">Availability Schedule</label>
+                    <input type="text" id="notary-schedule" class="schedule signup" />
+
+                    <label for="notary-contact">Preferred Method of Contact</label>
+                    <select id="notary-contact" class="contact signup">
+                        <option value="google-meet">Google Meet</option>
+                        <option value="zoom">Zoom</option>
+                    </select>
+
+                    <label for="notary-picture">Profile Picture</label>
+                    <input type="file" id="notary-picture" class="upload" accept="image/*" capture="user" />
+                </form>
+                <section class="right">
+                    <img src="../../assets/NYS-flag-icon-128.png" alt="NYS Seal">
+                </section>
+            </section>
+        </main>
+        <footer class="footer">
+            footer
+        </footer>
+    </div>
+    <script src="settings.js"></script>
+</body>
+
+</html>

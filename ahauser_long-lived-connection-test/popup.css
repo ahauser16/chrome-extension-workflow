@@ -1,0 +1,14 @@
+body{
+    margin: 0;
+    padding: 0;
+    /* width: 600px; */
+
+    /* if you want to have the options displayed in the popup as well as a new tab then you can set the width to 100% and add a media query below.  Alternatively you can set up two different css files in the head of your popup.html file */
+    width: 100%
+}
+
+@media (max-width: 800px) {
+    body {
+        width: 600px;
+    }
+}

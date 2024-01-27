@@ -1,20 +1,41 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Google Meet Extension</title>
-</head>
-<body>
-  <h1>Google Meet Extension Test</h1>
-  <!-- Step 3= request the meeting ID from the background.js (meetingIdAcquisition) -->
-  <p>Current Meeting ID: <span id="meetingIdDisplay">Loading...</span></p>
-  
-  <h2>Upload Your Documents</h2>
-  <input type="file" id="documentInput" multiple>
-  <ul id="fileList"></ul>
-  <button id="uploadButton">Upload</button>
+<html lang="en">
 
-  
+<head>
+  <title>Settings</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>NYS E-Notary Services</h1>
+      <h2>Popup - main</h2>
+    </header>
+    <main class="content">
+      <section class="left">
+        <img src="assets/NYS-flag-icon-128.png" alt="NYS Seal">
+      </section>
+      <section class="middle">
+        <h3>Current Meeting ID: loading</h3>
+        <h3>Current Appointment</h3>
+        <h4>Name: </h4>
+        <h4>Document List: </h4>
+        <h5>Doc Name A</h5>
+        <h5>Doc Name B</h5>
+        <h5>Doc Name C</h5>
+      </section>
+
+      <section class="right">
+        <button id="settings-button">Settings</button>
+      </section>
+      </section>
+    </main>
+    <footer class="footer">
+      footer
+    </footer>
+  </div>
   <script src="popup.js"></script>
-  <!-- Step 3= request the meeting ID from the background.js (meetingIdAcquisition) -->
 </body>
+
 </html>
