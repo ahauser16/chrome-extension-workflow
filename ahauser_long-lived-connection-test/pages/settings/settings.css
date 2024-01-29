@@ -27,7 +27,8 @@ main.content {
     justify-content: space-between;
 }
 
-section.left, section.right {
+section.left,
+section.right {
     flex: 1;
     margin-right: 10px;
 }
@@ -47,12 +48,26 @@ section.middle section {
     padding: 5px;
 }
 
-form.principal-singup, form.notary-signup {
+.principal-signup-form {
+    border: 2px solid rgb(255, 0, 242);
+}
+
+.notary-signup-form {
+    border: 2px solid rgb(255, 115, 0);
+}
+
+form.principal-singup,
+form.notary-signup {
     display: flex;
     flex-direction: column;
 }
 
-input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="time"], select {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="time"],
+select {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
@@ -72,12 +87,131 @@ button:hover {
     background-color: #0056b3;
 }
 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid black;
+    /* Added rule to make the border 1px solid black */
+}
+
+table th,
+table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 12px;
+    /* Set font size to 12px for all table cells */
+    border: 1px solid darkgrey;
+    /* Added border to each td tag */
+}
+
+table th {
+    background-color: black;
+    /* Changed background color to black */
+    color: white;
+    /* Changed font color to white */
+    font-size: 16px;
+    /* Set font size to 16px for table headers */
+}
+
+table ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+table li {
+    margin-bottom: 4px;
+}
+
+table p {
+    margin: 0;
+}
+
+
+#principal-docs .split-section {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#principal-docs .left-column {
+    flex: 1;
+    padding-right: 20px;
+}
+
+#principal-docs .right-column {
+    flex: 1;
+    padding-left: 20px;
+}
+
+#principal-docs .left-column h3,
+#principal-docs .right-column h3 {
+    margin-top: 0;
+}
+
+#principal-docs .left-column label,
+#principal-docs .right-column label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#principal-docs .left-column input,
+#principal-docs .right-column input,
+#principal-docs .left-column textarea,
+#principal-docs .right-column textarea {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#principal-docs .left-column button,
+#principal-docs .right-column button {
+    margin-top: 10px;
+}
+
+#notarial-explanation p {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s ease-in-out;
+}
+
+#notarial-explanation h4:hover+p {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* ///////////////////// */
+
+#notarial-explanation label {
+    position: relative;
+}
+
+#notarial-explanation h4:hover + p {
+    visibility: visible;
+}
+
+#notarial-explanation p {
+    visibility: hidden;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    padding: 5px;
+    background-color: darkgrey;
+    color: white;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+
+/* ///////////////////// */
+
 @media (max-width: 768px) {
     main.content {
         flex-direction: column;
     }
 
-    section.left, section.right, section.middle {
+    section.left,
+    section.right,
+    section.middle {
         margin-right: 0;
         margin-bottom: 20px;
     }
