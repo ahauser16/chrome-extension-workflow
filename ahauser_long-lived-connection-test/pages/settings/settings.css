@@ -1,90 +1,145 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 5px;
-    display: flex;
-    flex-direction: column;
-    background-color: lightskyblue;
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Roboto", sans-serif;
+    font-size: 1.3rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-top: 0;
 }
 
 header {
+    background: darkblue;
+    padding: 1em 0;
+    text-align: center;
+}
+
+.nav {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 20px;
+    justify-content: flex-end;
+    height: auto;
+    position: relative;
 }
 
-main.content {
+.nav__list {
     display: flex;
-    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav__list--primary {
+    margin-bottom: 2em;
+}
+
+.nav__item {
+    margin: 0 0 0 1.5em;
+}
+
+.nav__link {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.nav__link--button {
+    padding: 0.25em 0.75em;
+    background: white;
+    color: #23424a;
+    border-radius: 100px;
+}
+
+.nav__link:hover,
+.nav__link:focus {
+    opacity: 0.65;
+}
+
+.section-title {
+    color: darkred;
+}
+
+.container {
+    width: 80%;
+    max-width: 1100px;
+    margin: 0 auto;
+    /* added for nav-toggle positioning */
+    position: relative;
+}
+
+.row {
+    display: flex;
     justify-content: space-between;
 }
 
-section.left,
-section.right {
-    flex: 1;
-    margin-right: 10px;
+
+
+.hero {
+    padding: 100px 0;
+    background-color: #23424a;
+    color: #fff;
 }
 
-section.middle {
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    background-color: antiquewhite;
+.hero__img {
+    width: 32%;
+    align-self: flex-start;
+    margin: 0;
 }
 
-section.middle section {
-    border: 2px solid blue;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
+.hero p {
+    margin-bottom: 3em;
 }
 
-.principal-signup-form {
-    border: 2px solid rgb(255, 0, 242);
+.hero__text {
+    width: 62%;
 }
 
-.notary-signup-form {
-    border: 2px solid rgb(255, 115, 0);
+.primary-content {
+    width: 62%;
 }
 
-form.principal-singup,
-form.notary-signup {
-    display: flex;
-    flex-direction: column;
+.main {
+    margin-top: 3em;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-input[type="date"],
-input[type="time"],
-select {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.sidebar {
+    width: 32%;
+    padding: 1em;
+    text-align: center;
+    color: #fff;
+    background-color: hsla(195, 53%, 65%, 1);
+    ;
 }
+
+/* ///////////////////// */
 
 button {
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    background-color: #007BFF;
-    color: white;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #23424a;
+    font-weight: 900;
+    background-color: #38cfd9;
+    padding: 0.75em 2em;
+    border-radius: 100px;
     cursor: pointer;
 }
 
-button:hover {
-    background-color: #0056b3;
+button:hover,
+button:focus {
+    opacity: 0.75;
 }
 
 table {
@@ -128,91 +183,25 @@ table p {
     margin: 0;
 }
 
-
-#principal-docs .split-section {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-#principal-docs .left-column {
-    flex: 1;
-    padding-right: 20px;
-}
-
-#principal-docs .right-column {
-    flex: 1;
-    padding-left: 20px;
-}
-
-#principal-docs .left-column h3,
-#principal-docs .right-column h3 {
+.principal-section,
+.notary-section {
     margin-top: 0;
-}
-
-#principal-docs .left-column label,
-#principal-docs .right-column label {
-    display: block;
-    margin-bottom: 5px;
-}
-
-#principal-docs .left-column input,
-#principal-docs .right-column input,
-#principal-docs .left-column textarea,
-#principal-docs .right-column textarea {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-#principal-docs .left-column button,
-#principal-docs .right-column button {
-    margin-top: 10px;
-}
-
-#notarial-explanation p {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s ease-in-out;
-}
-
-#notarial-explanation h4:hover+p {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* ///////////////////// */
-
-#notarial-explanation label {
+    border: 1px solid black;
+    border-radius: .25rem;
+    background-color: lightblue;
     position: relative;
+
 }
 
-#notarial-explanation h4:hover + p {
-    visibility: visible;
+.principal-section h2,
+.notary-section h2 {
+    margin: 0;
+    padding: 0;
+    background-color: darkred;
+    color: hsla(195, 53%, 80%, 1);
+    padding: 1rem;
+    border-radius: .25rem .25rem 0 0;
+    /* top: -50px; */
+    /* Add this line to move the element upward by 50px */
 }
 
-#notarial-explanation p {
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 100%;
-    padding: 5px;
-    background-color: darkgrey;
-    color: white;
-    border-radius: 5px;
-    white-space: nowrap;
-}
-
-/* ///////////////////// */
-
-@media (max-width: 768px) {
-    main.content {
-        flex-direction: column;
-    }
-
-    section.left,
-    section.right,
-    section.middle {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
-}

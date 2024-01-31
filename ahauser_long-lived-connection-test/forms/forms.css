@@ -1,0 +1,204 @@
+/* css reset code START*/
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+.formField {
+    --form-field-width: 30ch;
+
+    background-color: #fff;
+    border: 2px solid;
+    border-radius: var(--border-radius, 0.25em);
+    padding: 0.25em 0.5em;
+    /* these values are inherited from the :root location */
+    font-family: inherit;
+    font-family: inherit;
+    /* IOS text zoom prevention  */
+    /* fallback */
+    font-size: 16px;
+    font-size: max(16px, 1em);
+    max-width: 100%;
+    width: var(--form-field-width, 30ch);
+}
+
+.formField:not(textarea):not(.select--multiple) {
+    line-height: 1;
+    height: 2.25rem;
+}
+
+.formField select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1m 0 0;
+    margin: 0;
+    width: 100%;
+
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+    cursor: inherit;
+    line-height: inherit;
+    outline: none;
+}
+
+/* this removes the dropdown arrow in IE10 & IE11 */
+.formField::-ms-expand {
+    display: none;
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
+
+legend {
+    padding: 0;
+}
+
+
+
+/* css reset code END*/
+
+.formGroup {}
+
+.formGroup+.formGroup {
+    margin-top: 1.5em;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 1.15em;
+    font-weight: 500;
+    line-height: 1;
+}
+
+.formGroup label+.formField {
+    margin-top: 0.5em;
+}
+
+.formField {
+    /* WCAG guidelines state that the border color and the background must meet a 3:1 contrast ratio */
+    border-color: var(--default-color);
+}
+
+.formField:focus {
+    /* WCAG guidelines state that the border-color and the border-color when focused must meet a 3:1 contrast ratio */
+    border-color: var(--field-focus, var(--accent-primary));
+    box-shadow: 0 0 0.35em -0.1em var(--field-focus);
+    outline: 2px solid transparent;
+}
+
+.formField:disabled {
+    /* WCAG guidelines state that the border-color and the border-color when focused must meet a 3:1 contrast ratio */
+
+    /* NB--> screen readers and keyboards are not able to interact with disabled input elements */
+    border-color: var(--disabled-color-border);
+    background-color: var(--disabled-color-background);
+    color: rgba(black, 0.45);
+    cursor: not-allowed;
+}
+
+legend {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 0.65em;
+    color: darkblue;
+}
+
+fieldset+fieldset {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+section+section {
+    margin-top: 2rem;
+}
+
+/* the initial state of our formRow class is a Grid that creates columns of equal width that are intrinsicly responsive ased on the value of the '--minField-col-width' css variable.  */
+.formRow {
+    --minField-col-width: 20ch;
+
+    /* this css variable represents the minimum width of the zip code field */
+    --minField-width: 10ch;
+
+    display: grid;
+    grid-gap: 2rem;
+
+    /* the value assigned to the grid-template-columns property uses the  'repeat()' function and the auto-fit keyword which makes the grid algorithm to add columns as needed.  The 'minmax()' function is passed a css variable equal to 20ch which is the 'minimum allowed value' parameter and '1fr' as the 'maximum allowed value' parameter.  Once the formfields hit the minimum of 20ch the Grid algorithm drops those fields to their own row.  */
+    grid-template-columns: repeat(auto-fit,
+            minmax(var(--minField-col-width), 1fr));
+}
+
+.formRow .formGroup {
+    margin: 0;
+}
+
+.formRow .formField {
+    width: 100%;
+}
+
+.formRow+.formRow {
+    margin-top: 2rem;
+}
+
+.formRow--mixed {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+/* the "formRow--mixed" class is a modifier class that allows a mixed variety of field widths.  In this example another css variable was used to set the minimum width of the zip code field while its sibling 'formGroup' class divs were set to another css variable*/
+.formRow--mixed .formGroup {
+    flex: 1 1 var(--minField-col-width);
+}
+
+.formRow--mixed .formGroup--width-auto {
+    flex: 0 1 auto;
+}
+
+.formRow--mixed .formGroup--width-auto .formField,
+.formRow--mixed .formGroup--width-auto .formControl {
+    max-width: var(--minField-width, 0);
+}
+
+/* this '.formRow--variable' class allowed its child elements to take on a variable width.  */
+.formRow--variable {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+.fieldDescription {
+    display: block;
+    margin-top: 0.5em;
+    opacity: 0.75;
+    letter-spacing: 0.015em;
+    font-size: 0.9rem;
+}
+
+.fieldError {
+    --field-focus: var(--accent-error);
+    color: var(--accent-error);
+}
+
+.fieldError .formControl {
+    --default-color: var(--accent-error);
+}
+
+.fieldError .fieldDescription {
+    display: flex;
+    align-items: center;
+    opacity: 1;
+}
+
+.fieldError .fieldDescription:before {
+    content: "";
+    width: 0.8em;
+    height: 0.8em;
+    margin-right: 0.5em;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50' stroke='#{svgColor(error)}' stroke-width='10' stroke-linecap='round'%3E%3Cdefs/%3E%3Cpath d='M5 5l40 40M45 5L5 45'/%3E%3C/svg%3E");
+}

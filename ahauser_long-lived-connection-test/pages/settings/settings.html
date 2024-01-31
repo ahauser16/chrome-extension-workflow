@@ -4,102 +4,207 @@
 <head>
     <title>Settings</title>
     <link rel="stylesheet" href="settings.css">
+    <link rel="stylesheet" href="../../forms/forms.css">
 </head>
 
 <body>
-    <div class="container">
-        <header>
-            <h1>NYS E-Notary Services</h1>
-            <h2>Settings</h2>
-        </header>
-        <main class="content">
-            <section class="left">
-                <img src="../../assets/NYS-flag-icon-128.png" alt="NYS Seal">
+    <header>
+        <div class="container row">
+            <a class="logoContainer" href="#">
+                <img src="../../assets/NYS-flag-icon-128.png" class="col--img" alt="NYS Seal">
+            </a>
+            <nav>
+                <ul class="nav__list nav__list--primary">
+                    <li class="nav__item">
+                        <a href="#" class="nav__link"> Home </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link"> About </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link"> Settings </a>
+                    </li>
+                </ul>
+                <br />
+                <!-- <ul class="nav__list nav__list--secondary">
+                    <li class="nav__item">
+                        <a href="#" class="nav__link"> Sign In </a>
+                    </li>
+                    <li class="nav__item">
+                        <a href="#" class="nav__link nav__link--button"> Sign up </a>
+                    </li>
+                </ul> -->
+            </nav>
+        </div>
+    </header>
+    <main class="main container">
+        <h2>User Settings - Principal</h2>
+        <div class="principal-section">
+            <section class="row" id="principal-contact">
+                <h3 class="section-title">Principal Sign Up Form</h3>
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Contact Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>Arthur Hauser</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form id="principal-contact-form" class="primary-content">
+                    <fieldset>
+                        <legend class="legend-title">Your Name</legend>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="principal-first-name" class="form-label">First Name</label>
+                                <input type="text" id="principal-first-name" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="principal-last-name" class="form-label">Last Name</label>
+                                <input type="text" id="principal-last-name" class="formField" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="legend-title">Your Contact Information</legend>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="principal-email" class="form-label">Email</label>
+                                <input type="email" id="principal-email" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="principal-phone" class="form-label">Phone Number</label>
+                                <input type="tel" id="principal-phone" class="formField" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
             </section>
-            <section class="middle">
-                <form class="principal-signup-form">
-                    <section id="principal-contact">
-                        <h3>Principal Sign Up</h3>
-                        <label for="principal-first-name">First Name</label>
-                        <input type="text" id="principal-first-name" class="first-name signup" />
-
-                        <label for="principal-last-name">Last Name</label>
-                        <input type="text" id="principal-last-name" class="last-name signup" />
-
-                        <label for="principal-email">Email</label>
-                        <input type="email" id="principal-email" class="email signup" />
-
-                        <label for="principal-phone">Phone Number</label>
-                        <input type="tel" id="principal-phone" class="phone signup" />
-                    </section>
-                    <section id="principal-address">
-                        <h3>Address Information</h3>
-
-                        <label for="principal-address1">Address Line 1</label>
-                        <input type="text" id="principal-address1" class="address signup" />
-
-                        <label for="principal-address2">Address Line 2</label>
-                        <input type="text" id="principal-address2" class="address signup" />
-
-                        <label for="principal-city">City</label>
-                        <input type="text" id="principal-city" class="city signup" />
-
-                        <label for="principal-state">State</label>
-                        <input type="text" id="principal-state" class="state signup" />
-
-                        <label for="principal-zip">Zip Code</label>
-                        <input type="text" id="principal-zip" class="zip signup" />
-                    </section>
-                    <section id="principal-billing">
-                        <h3>Billing Information</h3>
-                        <label for="same-address">
-                            <input type="checkbox" id="same-address">
-                            Same as home address
-                        </label>
-
-                        <label for="card-name">Name on Card</label>
-                        <input type="text" id="card-name" class="card-name signup" />
-
-                        <label for="card-number">Card Number</label>
-                        <input type="text" id="card-number" class="card-number signup" />
-
-                        <label for="card-expiration">Expiration Date</label>
-                        <input type="text" id="card-expiration" class="card-expiration signup" />
-
-                        <label for="card-cvv">CVV</label>
-                        <input type="text" id="card-cvv" class="card-cvv signup" />
-
-                        <label for="billing-address1">Billing Address Line 1</label>
-                        <input type="text" id="billing-address1" class="address signup" />
-
-                        <label for="billing-address2">Billing Address Line 2</label>
-                        <input type="text" id="billing-address2" class="address signup" />
-
-                        <label for="billing-city">City</label>
-                        <input type="text" id="billing-city" class="city signup" />
-
-                        <label for="billing-state">State</label>
-                        <input type="text" id="billing-state" class="state signup" />
-
-                        <label for="billing-zip">Zip Code</label>
-                        <input type="text" id="billing-zip" class="zip signup" />
-                    </section>
-                    <section id="principal-scheduling">
-                        <h3>Scheduling Information</h3>
-
-                        <label for="principal-timezone">Choose Your Time Zone</label>
-                        <select id="principal-timezone" class="timezone signup">
-                            <option value="">Select your time zone</option>
-                            <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST)
-                            </option>
-                            <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
-                            <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
-                            <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
-                            <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
-                            <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                        </select>
-                        <br />
-                        <h4>Choose your availability</h4>
+            <section class="row" id="principal-address">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Address Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form id="principal-address-form" class="primary-content">
+                    <fieldset>
+                        <legend class="legend-title">Address</legend>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="principal-address1">Address Line 1</label>
+                                <input type="text" id="principal-address1" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="principal-address2">Address Line 2</label>
+                                <input type="text" id="principal-address2" class="formField" />
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed">
+                            <div class="formGroup">
+                                <label for="principal-city">City</label>
+                                <input type="text" id="principal-city" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="principal-state">State</label>
+                                <input type="text" id="principal-state" class="formField" />
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <label for="principal-zip">Zip Code</label>
+                                <input type="text" id="principal-zip" class="formField" maxlength="10" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+            <section class="row" id="principal-billing">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Billing Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-billing-form">
+                    <fieldset>
+                        <legend class="legend-title">Credit Card</legend>
+                        <div class="formGroup">
+                            <label for="same-address">
+                                <input type="checkbox" id="same-address" class="formField"> Same as home address </label>
+                        </div>
+                        <div class="formGroup">
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" class="formField" />
+                        </div>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="card-expiration">Expiration Date</label>
+                                <input type="text" id="card-expiration" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="card-cvv">CVV</label>
+                                <input type="text" id="card-cvv" class="formField" />
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend class="legend-title">Billing Address</legend>
+                        <div class="formGroup">
+                            <label for="billing-address1">Billing Address Line 1</label>
+                            <input type="text" id="billing-address1" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="billing-address2">Billing Address Line 2</label>
+                            <input type="text" id="billing-address2" class="formField" />
+                        </div>
+                        <div class="formRow formRow--mixed">
+                            <div class="formGroup">
+                                <label for="billing-city">City</label>
+                                <input type="text" id="billing-city" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="billing-state">State</label>
+                                <input type="text" id="billing-state" class="formField" />
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <label for="billing-zip">Zip Code</label>
+                                <input type="text" id="billing-zip" class="formField" />
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+            <section class="row" id="principal-scheduling">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Availability</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-scheduling-form">
+                    <fieldset>
+                        <legend class="legend-title">Scheduling</legend>
+                        <div class="formGroup">
+                            <label for="principal-timezone">Choose Your Time Zone</label>
+                            <select id="principal-timezone" class="timezone signup">
+                                <option value="">Select your time zone</option>
+                                <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
+                                <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
+                                <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
+                                <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
+                                <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
+                                <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
+                            </select>
+                        </div>
+                        <h3>Choose your availability</h3>
                         <div class="availability signup">
                             <!-- <div class="availability-day" id="Monday">
                                 <label><input type="checkbox" name="day" value="Monday"> Monday</label>
@@ -200,317 +305,462 @@
                                 <div id="notesContainer-Sunday"></div>
                             </div> -->
                         </div>
-
-                        <label for="principal-contact-method">Preferred Method of Contact</label>
-                        <select id="principal-contact-method" class="contact-method signup">
-                            <option value="">Select your preferred contact method</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Phone</option>
-                            <!-- Add more options as needed -->
-                        </select>
-
-                        <label for="principal-contact-notes">Additional Notes</label>
-                        <textarea id="principal-contact-notes" class="notes signup"></textarea>
-                    </section>
-                    <section id="principal-contacts">
-                        <h3>My Notaries</h3>
-                        <label for="principal-notary">Preferred Notary</label>
-                        <input type="text" id="principal-notary" class="notary signup" />
-                    </section>
-                    <section id="principal-docs" class="split-section">
-                        <div class="left-column">
-                            <h3>Create Project</h3>
-                            <label for="project-name">Project Name</label>
-                            <input type="text" id="project-name" class="project-name" />
-
-                            <label for="project-description">Project Description</label>
-                            <textarea id="project-description" class="project-description"></textarea>
-
-                            <div id="notarial-service-container">
-                                <div id="notarial-form">
-                                    <label for="notarial service">Notarial Service(s) Required</label>
-                                    <p>e.g. Administering oaths and affirmations, Taking affidavits and depositions,
-                                        Providing
-                                        certification of copies of documents and Keeping a record of notarial acts
-                                        performed
-                                    </p>
-                                    <textarea id="notarial service" class="notarial service"></textarea>
-                                </div>
-                                <div id="notarial-explanation">
-                                    <h4>What's the difference between a notarial service and a notarial act?</h4>
-                                    <p>The main difference between a notarial service and a notarial act is the scope.
-                                        Notarial
-                                        services refer to the comprehensive suite of functions a notary public offers,
-                                        while
-                                        notarial acts are the individual tasks performed as part of these services.</p>
-                                </div>
-                            </div>
-
-
-
-                            <label for="notarial act">Notarial Act(s) Required</label>
-                            <p>e.g. Acknowledgment: A notarial act in which an individual acknowledges to the notary
-                                that they have signed a document voluntarily for its intended purpose. Jurat: A
-                                certification by a notary that a signer has sworn to or affirmed the truthfulness of the
-                                contents of a document and has signed it in the notary's presence. Certification of a
-                                Copy: A notarial act in which the notary certifies that a copy of a document is a true
-                                and accurate reproduction of the original.</p>
-                            <textarea id="notarial service" class="notarial service"></textarea>
-
-                            <label for="private-project-note">Personal Note</label>
-                            <textarea id="private-project-note" class="private-project-note"></textarea>
-
-                            <label for="public-project-note">Note for Notary</label>
-                            <textarea id="public-project-note" class="public-project-note"></textarea>
-
-                            <button id="add-project">Add Project</button>
-
-
-
-
-                            <label for="document-quantity">Document Quantity</label>
-                            <input type="number" id="document-quantity" class="document-quantity" />
-
-                            <label for="personal-note">Personal Note</label>
-                            <textarea id="personal-note" class="personal-note"></textarea>
-
-                            <label for="note-for-notary">Note for Notary</label>
-                            <textarea id="note-for-notary" class="note-for-notary"></textarea>
-
+                    </fieldset>
+                    <fieldset>
+                        <legend class="legend-title">Contact</legend>
+                        <div class="formGroup">
+                            <label for="principal-contact-method">Preferred Method of Contact</label>
+                            <select id="principal-contact-method" class="contact-method signup">
+                                <option value="">Select your preferred contact method</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Phone</option>
+                                <!-- Add more options as needed -->
+                            </select>
                         </div>
-
-                        <div class="right-column">
-                            <h3>My Unsigned Documents</h3>
-                            <ul>
-                                <li>
-                                    <p>Doc A (unsigned)</p>
-                                </li>
-                                <li>
-                                    <p>Doc B (unsigned)</p>
-                                </li>
-                                <li>
-                                    <p>Doc C (unsigned)</p>
-                                </li>
-                            </ul>
-                            <h3>My Signed Documents</h3>
-                            <ul>
-                                <li>
-                                    <p>Doc D (signed)</p>
-                                </li>
-                                <li>
-                                    <p>Doc E (signed)</p>
-                                </li>
-                                <li>
-                                    <p>Doc F (signed)</p>
-                                </li>
-                            </ul>
-                            <h3>My Projects</h3>
-                            <ul>
-                                <li>
-                                    <p>Sample Project Name</p>
-                                </li>
-                            </ul>
-
-                            <label for="principal-document">Upload document to be notarized</label>
-                            <ul>Types of Documents typically notarized.
-                                <li>
-                                    <p>Acknowledgment</p>
-                                </li>
-                                <li>
-                                    <p>Affidavit</p>
-                                </li>
-                                <li>
-                                    <p>Affirmation</p>
-                                </li>
-                                <li>
-                                    <p>Apostile</p>
-                                </li>
-                                <li>
-                                    <p>Attestation</p>
-                                </li>
-                                <li>
-                                    <p>Bill of Sale</p>
-                                </li>
-                                <li>
-                                    <p>Certified Copy</p>
-                                </li>
-                                <li>
-                                    <p>Chattel Paper</p>
-                                </li>
-                                <li>
-                                    <p>Codicil</p>
-                                </li>
-                                <li>
-                                    <p>Contract</p>
-                                </li>
-                                <li>
-                                    <p>Conveyance (Deed)</p>
-                                </li>
-                                <li>
-                                    <p>County Clerk’s Certificate</p>
-                                </li>
-                                <li>
-                                    <p>Jurat</p>
-                                </li>
-                                <li>
-                                    <p>Lease</p>
-                                </li>
-                                <li>
-                                    <p>Mortgage On Real Property</p>
-                                </li>
-                                <li>
-                                    <p>Power of Attorney</p>
-                                </li>
-                                <li>
-                                    <p>Will</p>
-                                </li>
-                            </ul>
-                            <input type="file" id="principal-document" class="upload" accept=".pdf" />
-                            <button id="submit">Submit</button>
-
-                            <div id="project-list">
-                                <!-- Project list will be dynamically populated here -->
-                            </div>
+                        <div class="formGroup">
+                            <label for="principal-contact-notes">Additional Notes</label>
+                            <textarea id="principal-contact-notes" class="notes signup"></textarea>
                         </div>
-                    </section>
-                    <section id="principal-signature">
-                        <h3>Signature Information</h3>
-
-                        <label for="principal-signature">Signature</label>
-                        <input type="file" id="principal-signature" class="upload" accept="image/*" capture="user" />
-                        <button class="createSigBtn">Create your digital signature</button>
-                    </section>
+                    </fieldset>
                 </form>
-                <form class="notary-signup-form">
-                    <section id="notary-contact">
-                        <h3>Notary Public Sign Up</h3>
-                        <input type="checkbox" id="same-as-principal-contact" name="same-as-principal-contact">
-                        <label for="same-as-principal-contact">Is your contact information the same as the
-                            principal's?</label>
-                        <!-- Your contact inputs here -->
-                        <label for="notary-first-name">First Name</label>
-                        <input type="text" id="notary-first-name" class="first-name signup" />
-
-                        <label for="notary-last-name">Last Name</label>
-                        <input type="text" id="notary-last-name" class="last-name signup" />
-
-                        <label for="notary-email">Email</label>
-                        <input type="email" id="notary-email" class="email signup" />
-
-                        <label for="notary-phone">Phone Number</label>
-                        <input type="tel" id="notary-phone" class="phone signup" />
-                    </section>
-                    <section id="notary-address">
-                        <h3>Notary Address Information</h3>
-                        <label for="notary-address1">Address Line 1</label>
-                        <input type="text" id="notary-address1" class="address signup" />
-
-                        <label for="notary-address2">Address Line 2</label>
-                        <input type="text" id="notary-address2" class="address signup" />
-
-                        <label for="notary-city">City</label>
-                        <input type="text" id="notary-city" class="city signup" />
-
-                        <label for="notary-state">State</label>
-                        <input type="text" id="notary-state" class="state signup" />
-
-                        <label for="notary-zip">Zip Code</label>
-                        <input type="text" id="notary-zip" class="zip signup" />
-                    </section>
-                    <section id="notary-billing">
-                        <h3>Billing Information</h3>
-                        <input type="checkbox" id="same-as-principal-billing" name="same-as-principal-billing">
-                        <label for="same-as-principal-billing">Is your billing information the same as the
-                            principal's?</label>
-                        <!-- Your billing inputs here -->
-
-                        <label for="card-name">Name on Card</label>
-                        <input type="text" id="card-name" class="card-name signup" />
-
-                        <label for="card-number">Card Number</label>
-                        <input type="text" id="card-number" class="card-number signup" />
-
-                        <label for="card-expiration">Expiration Date</label>
-                        <input type="text" id="card-expiration" class="card-expiration signup" />
-
-                        <label for="card-cvv">CVV</label>
-                        <input type="text" id="card-cvv" class="card-cvv signup" />
-
-                        <label for="billing-address1">Billing Address Line 1</label>
-                        <input type="text" id="billing-address1" class="address signup" />
-
-                        <label for="billing-address2">Billing Address Line 2</label>
-                        <input type="text" id="billing-address2" class="address signup" />
-
-                        <label for="billing-city">City</label>
-                        <input type="text" id="billing-city" class="city signup" />
-
-                        <label for="billing-state">State</label>
-                        <input type="text" id="billing-state" class="state signup" />
-
-                        <label for="billing-zip">Zip Code</label>
-                        <input type="text" id="billing-zip" class="zip signup" />
-                    </section>
-                    <section id="notary-scheduling">
-                        <h3>Scheduling Information</h3>
-                        <label for="notary-timezone">Choose Your Time Zone</label>
-                        <select id="notary-timezone" class="timezone signup">
-                            <option value="">Select your time zone</option>
-                            <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST)
-                            </option>
-                            <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
-                            <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
-                            <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
-                            <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
-                            <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                        </select>
-                        <br />
-                        <h4>Choose your availability</h4>
-                        <div class="availability signup">
-
+            </section>
+            <section class="row" id="principal-contacts">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Contacts</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-contacts-form">
+                    <fieldset>
+                        <legend class="legend-title">My Notaries</legend>
+                        <div class="formGroup">
+                            <label for="principal-notary">Preferred Notary</label>
+                            <input type="text" id="principal-notary" class="formField" />
+                            <button>SUBMIT</button>
                         </div>
-
-                        <label for="notary-contact-method">Preferred Method of Contact</label>
-                        <select id="notary-contact-method" class="contact-method signup">
-                            <option value="">Select your preferred contact method</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Phone</option>
-                            <!-- Add more options as needed -->
-                        </select>
-
+                    </fieldset>
+                </form>
+            </section>
+            <section class="row" id="principal-projectsAndDocs">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Projects & Documents</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-projectsAndDocs-form">
+                    <fieldset>
+                        <legend class="legend-title">Create a Project</legend>
+                        <div id="project-name-container" class="row">
+                            <div id="project-name-form" class="formGroup">
+                                <label for="project-name">Project Name</label>
+                                <input type="text" id="project-name" class="formField" />
+                            </div>
+                            <div id="project-name-explanation">
+                                <h3>Uniqueness</h3>
+                                <p>Enter a unique name for this project.</p>
+                                <h3>Descriptiveness</h3>
+                                <p>Choose a name that describes the nature of this project.</p>
+                                <h3>Brevity</h3>
+                                <p>Keep the project name short and concise.</p>
+                                <h3>No Special Characters</h3>
+                                <p>Use only alphanumeric characters and spaces.</p>
+                                <h3>Relevance</h3>
+                                <p>Choose a name relevant to the documents or the notarization process.</p>
+                            </div>
+                        </div>
+                        <div id="project-description-container" class="row">
+                            <div id="project-description-form" class="formGroup">
+                                <label for="project-description">Project Description</label>
+                                <textarea id="project-description" class="project-description"></textarea>
+                            </div>
+                            <div id="project-description-explanation">
+                                <h3>Purpose of the Project</h3>
+                                <p>Describe the purpose of this project. Are these documents for a real estate transaction, a legal proceeding, or something else?</p>
+                                <h3>Documents Involved</h3>
+                                <p>List the types of documents included in this project, such as contracts, deeds, affidavits, etc.</p>
+                                <h3>Notarization Requirements</h3>
+                                <p>Specify if you need a specific type of notarization, like acknowledgment, jurat, etc.</p>
+                                <h3>Important Dates</h3>
+                                <p>Mention any important dates or deadlines associated with this project.</p>
+                                <h3>Additional Information</h3>
+                                <p>Include any other information that the notary should know about this project.</p>
+                            </div>
+                        </div>
+                        <div id="service-vs-act-container" class="row">
+                            <h3>What's the difference between a notarial service and a notarial act?</h3>
+                            <p>The main difference between a notarial service and a notarial act is the scope. Notarial services refer to the comprehensive suite of functions a notary public offers, while notarial acts are the individual tasks performed as part of these services.</p>
+                        </div>
+                        <div id="notarial-service-container" class="row">
+                            <div id="notarial-service-form">
+                                <label for="notarial-service">Notarial Service(s) Required</label>
+                                <textarea id="notarial-service" class="notarial-service"></textarea>
+                            </div>
+                            <div id="notarial-service-explanation">
+                                <h3>Type of Notarial Service</h3>
+                                <p>Specify the type of notarial service you require, such as acknowledgment, jurat, etc.</p>
+                                <h3>Purpose of the Service</h3>
+                                <p>Describe why you need this notarial service. Is it for a real estate transaction, a legal proceeding, or something else?</p>
+                                <h3>Documents Involved</h3>
+                                <p>List the types of documents involved in this notarial service, such as contracts, deeds, affidavits, etc.</p>
+                                <h3>Important Dates</h3>
+                                <p>Mention any important dates or deadlines associated with this notarial service. </p>
+                                <h3>Additional Information</h3>
+                                <p>Include any other information that the notary should know about this notarial service.</p>
+                            </div>
+                        </div>
+                        <div id="notarial-act-container" class="row">
+                            <div id="notarial-act-form" class="formGroup">
+                                <label for="notarial-act">Notarial Act(s) Required</label>
+                                <textarea id="notarial service" class="notarial service"></textarea>
+                            </div>
+                            <div id="notarial-act-explanation">
+                                <h3> Type of Notarial Act</h3>
+                                <p>Specify the type of notarial act you require, such as acknowledgment, jurat, etc. </p>
+                                <h3>Purpose of the Act</h3>
+                                <p>Describe why you need this notarial act. Is it for a real estate transaction, a legal proceeding, or something else?</p>
+                                <h3>Documents Involved</h3>
+                                <p>List the types of documents involved in this notarial act, such as contracts, deeds, affidavits, etc.</p>
+                                <h3>Important Dates</h3>
+                                <p>Mention any important dates or deadlines associated with this notarial act.</p>
+                                <h3>Additional Information</h3>
+                                <p>Include any other information that the notary should know about this notarial act.</p>
+                            </div>
+                        </div>
+                        <div id="document-upload-container" class="row">
+                            <div id="document-upload-form">
+                                <label for="document-upload">Upload your document</label>
+                                <input type="file" id="document-upload" class="formField" />
+                                <ul id="uploaded-document-list">
+                                    <h3>Document List</h3>
+                                    <li class="uploaded-doc">sample uploaded document name</li>
+                                </ul>
+                            </div>
+                            <div id="document-upload-explanation">
+                                <h3>Type of Documents</h3>
+                                <p>Upload the documents that require notarization, such as contracts, deeds, affidavits, etc. </p>
+                                <h3>File Format</h3>
+                                <p>Currently the only supported document format is PDF. </p>
+                                <h3>File Size</h3>
+                                <p>Ensure each file is no larger than [5MB].</p>
+                                <h3>Number of Files</h3>
+                                <p>You can upload up to 10 documents.</p>
+                                <h3>Security</h3>
+                                <p>Your documents are securely stored and only accessible to the notary during the Google Meet session.</p>
+                                <h3>Electronic Signature</h3>
+                                <p>You will be signing these documents electronically during a live Google Meet session with the notary.</p>
+                                <h3>Preparation</h3>
+                                <p>Please have these documents ready for signing during the Google Meet session.</p>
+                            </div>
+                        </div>
+                        <button id="add-project">Create Project</button>
+                    </fieldset>
+                </form>
+            </section>
+            <section class="row" id="principal-signature">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Signature</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-signature-form">
+                    <h3 class="section-title">Signature Information</h3>
+                    <label for="principal-signature">Signature</label>
+                    <input type="file" id="principal-signature" class="formField" accept="image/*" capture="user" />
+                    <button class="createSigBtn">Create your digital signature</button>
+                </form>
+            </section>
+            <section class="row" id="principal-profile-pic">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Profile Picture</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="principal-profile-pic-form">
+                    <h3 class="section-title">Profile Picture</h3>
+                    <label for="profile-picture">Upload your profile picture</label>
+                    <input type="file" id="profile-picture" class="formField" accept="image/*" capture="user" />
+                </form>
+            </section>
+        </div>
+        <div class="notary-section">
+            <h2>User Settings - Notary</h2>
+            <section class="row" id="notary-contact">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Contact Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-contact-form">
+                    <h3 class="section-title">Notary Public Sign Up</h3>
+                    <div class="formGroup">
+                        <input type="checkbox" id="same-as-principal-contact" name="same-as-principal-contact" class="formField">
+                        <label for="same-as-principal-contact">Is your contact information the same as the principal's?</label>
+                    </div>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-first-name">First Name</label>
+                            <input type="text" id="notary-first-name" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-last-name">Last Name</label>
+                            <input type="text" id="notary-last-name" class="formField" />
+                        </div>
+                    </div>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-email">Email</label>
+                            <input type="email" id="notary-email" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-phone">Phone Number</label>
+                            <input type="tel" id="notary-phone" class="formField" />
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-address">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Address</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-address-form">
+                    <h3 class="section-title">Notary Address Information</h3>
+                    <div class="formGroup">
+                        <label for="notary-address1">Address Line 1</label>
+                        <input type="text" id="notary-address1" class="formField" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="notary-address2">Address Line 2</label>
+                        <input type="text" id="notary-address2" class="formField" />
+                    </div>
+                    <div class="formRow formRow--mixed">
+                        <div class="formGroup">
+                            <label for="notary-city">City</label>
+                            <input type="text" id="notary-city" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-state">State</label>
+                            <input type="text" id="notary-state" class="formField" />
+                        </div>
+                        <div class="formGroup formGroup--width-auto">
+                            <label for="notary-zip">Zip Code</label>
+                            <input type="text" id="notary-zip" class="formField" />
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-billing">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Billing Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-billing-form">
+                    <h3 class="section-title">Billing Information</h3>
+                    <div class="formGroup">
+                        <input type="checkbox" id="same-as-principal-billing" name="same-as-principal-billing" class="formField">
+                        <label for="same-as-principal-billing">Is your billing information the same as the principal's?</label>
+                    </div>
+                    <div class="formGroup">
+                        <label for="card-name">Name on Card</label>
+                        <input type="text" id="card-name" class="formField" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" class="formField" />
+                    </div>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="card-expiration">Expiration Date</label>
+                            <input type="text" id="card-expiration" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="card-cvv">CVV</label>
+                            <input type="text" id="card-cvv" class="formField" />
+                        </div>
+                    </div>
+                    <div class="formGroup">
+                        <label for="billing-address1">Billing Address Line 1</label>
+                        <input type="text" id="billing-address1" class="formField" />
+                    </div>
+                    <div class="formGroup">
+                        <label for="billing-address2">Billing Address Line 2</label>
+                        <input type="text" id="billing-address2" class="formField" />
+                    </div>
+                    <div class="formRow formRow--mixed">
+                        <div class="formGroup">
+                            <label for="billing-city">City</label>
+                            <input type="text" id="billing-city" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="billing-state">State</label>
+                            <input type="text" id="billing-state" class="formField" />
+                        </div>
+                        <div class="formGroup formGroup--width-auto">
+                            <label for="billing-zip">Zip Code</label>
+                            <input type="text" id="billing-zip" class="formField" />
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-scheduling">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Availability</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-scheduling-form">
+                    <h3 class="section-title">Scheduling Information</h3>
+                    <label for="notary-timezone">Choose Your Time Zone</label>
+                    <select id="notary-timezone" class="timezone signup">
+                        <option value="">Select your time zone</option>
+                        <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
+                        <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
+                        <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
+                        <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
+                        <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
+                        <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
+                    </select>
+                    <br />
+                    <h3>Choose your availability</h3>
+                    <div class="availability signup">
+                    </div>
+                    <label for="notary-contact-method">Preferred Method of Contact</label>
+                    <select id="notary-contact-method" class="contact-method signup">
+                        <option value="">Select your preferred contact method</option>
+                        <option value="email">Email</option>
+                        <option value="phone">Phone</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                    <div class="formGroup">
                         <label for="notary-contact-notes">Additional Notes</label>
                         <textarea id="notary-contact-notes" class="notes signup"></textarea>
-
-                    </section>
-                    <section id="notary-contacts">
-                        <h3>My clients</h3>
-                    </section>
-                    <section id="notary-commission">
-                        <h3>Notary Commission Information</h3>
-
-                        <p>My commission is registered with:</p>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-contacts">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Clients</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-contacts-form">
+                    <h3 class="section-title">My clients</h3>
+                    <div class="client-info">
+                        <div class="formGroup">
+                            <label for="client-name">Client Name</label>
+                            <input type="text" id="client-name" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="client-email">Client Email</label>
+                            <input type="email" id="client-email" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="client-phone">Client Phone Number</label>
+                            <input type="tel" id="client-phone" class="formField" />
+                        </div>
+                        <button>SUBMIT</button>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-commission">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Commission Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-commission-form">
+                    <h3 class="section-title">Notary Commission Information</h3>
+                    <h3>What's the difference between registering and filing your signature?</h3>
+                    <p>blah blab blah</p>
+                    <h3>Registration</h3>
+                    <p>My commission is registered with the state:</p>
+                    <div class="formGroup">
+                        <label></label>
                         <select name="states" id="states">
                         </select>
-
-                        <p>Notary Commission registered with NYS county:</p>
-                        <p>tip: to make multiple selections from the dropdown menu hold down the control key (on
-                            Windows) or command key (on Mac) while clicking options</p>
+                    </div>
+                    <p>My Commission is registered with NYS county:</p>
+                    <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
+                    <div class="formGroup">
+                        <label></label>
                         <select name="newYorkCounties-reg" id="newYorkCounties-reg">
                         </select>
-
-                        <p>My signature is filed in the following counties:</p>
+                    </div>
+                    <h3>Filing</h3>
+                    <p>My signature is filed in the following counties:</p>
+                    <div class="formGroup">
+                        <label></label>
                         <select name="newYorkCounties-filed" id="newYorkCounties-filed">
                         </select>
-
+                    </div>
+                    <h3>Commission Identification Number</h3>
+                    <div class="formGroup">
                         <label for="notary-license">Notary License Number</label>
-                        <input type="text" id="notary-license" class="license signup" />
-
-                        <label for="notary-issuance">Notary License Issuance Date</label>
-                        <input type="date" id="notary-issuance" class="issuance signup" />
-
-                        <label for="notary-expiry">Notary License Expiration Date</label>
-                        <input type="date" id="notary-expiry" class="expiry signup" />
-
+                        <input type="text" id="notary-license" class="formField" />
+                    </div>
+                    <h3>Issuance and Expiration Dates</h3>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-issuance">Notary License Issuance Date</label>
+                            <input type="date" id="notary-issuance" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-expiry">Notary License Expiration Date</label>
+                            <input type="date" id="notary-expiry" class="formField" />
+                        </div>
+                    </div>
+                    <h3>Identification</h3>
+                    <div class="formGroup">
                         <label for="govt-id-type">Type of Government Issued ID</label>
                         <select id="govt-id-type" name="govt-id-type">
                             <option value="passport">Passport</option>
@@ -519,310 +769,305 @@
                             <option value="military-id">Military ID</option>
                             <!-- Add more options as needed -->
                         </select>
-
+                    </div>
+                    <div class="formRow">
                         <label for="govt-id-front">Upload Front of ID</label>
-                        <input type="file" id="govt-id-front" name="govt-id-front" class="id-upload signup">
-
-                        <label for="govt-id-back" id="back-label" style="display: none;">Upload Back of ID</label>
-                        <input type="file" id="govt-id-back" name="govt-id-back" class="id-upload signup"
-                            style="display: none;">
-                    </section>
-                    <section id="notary-logbook">
-                        <h3>Notary Logbook Information</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Traditional Notary Journal</th>
-                                    <th>Electronic Notary Journal</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>date</p>
-                                            </li>
-                                            <li>
-                                                <p>time</p>
-                                            </li>
-                                            <li>
-                                                <p>notarial act type</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>date</p>
-                                            </li>
-                                            <li>
-                                                <p>time</p>
-                                            </li>
-                                            <li>
-                                                <p>notarial act type</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>principal's name</p>
-                                            </li>
-                                            <li>
-                                                <p>principal's address</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>principal's name</p>
-                                            </li>
-                                            <li>
-                                                <p>principal's address</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>number of notarial services provided</p>
-                                            </li>
-                                            <li>
-                                                <p>type of notarial services provided</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>number of notarial services provided</p>
-                                            </li>
-                                            <li>
-                                                <p>type of notarial services provided</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>credential type used to identify principal</p>
-                                    </td>
-                                    <td>
-                                        <p>credential type used to identify principal</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <p>the verification procedures used for any personal appearance before the
-                                            notary public.</p>
-                                    </td>
-                                    <td>
-                                        <p>the verification procedures used for any personal appearance before the
-                                            notary public.</p>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>*not applicable</td>
-                                    <td>
-                                        <ul>
-                                            <li>
-                                                <p>identification of the communication technology</p>
-                                            </li>
-                                            <li>
-                                                <p>certification authority</p>
-                                            </li>
-                                            <li>
-                                                <p>verification providers used</p>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>*not applicable</td>
-                                    <td>
-                                        <p>an actual audio/video recording of the act</p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-
-                    <section id="notary-docs">My Documents Info Here</section>
-
-
-
-
-
-                    <section id="notary-signature">Signature Info Here</section>
-
-
-                    <section>
-                        <h3>Notary Scheduling Information</h3>
-
-                        <label for="principal-timezone">Choose Your Time Zone</label>
-                        <select id="principal-timezone" class="timezone signup">
-                            <option value="">Select your time zone</option>
-                            <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST)
-                            </option>
-                            <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
-                            <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
-                            <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
-                            <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
-                            <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                        </select>
-                        <br />
-                        <h4>Choose your availability</h4>
-                        <div class="availability signup">
-                            <div class="availability-day" id="Monday">
-                                <label><input type="checkbox" name="day" value="Monday"> Monday</label>
-                                <div id="monday-times">
-                                    <div class="time-slot">
-                                        <label for="monday-start-time-1">Start Time</label>
-                                        <input type="time" id="monday-start-time-1" class="time signup" />
-                                        <label for="monday-end-time-1">End Time</label>
-                                        <input type="time" id="monday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Monday">Add Time Slot</button>
-                                <button id="notesButton-Monday">Notes</button>
-                                <div id="notesContainer-Monday"></div>
-                            </div>
-                            <div class="availability-day" id="Tuesday">
-                                <label><input type="checkbox" name="day" value="Tuesday"> Tuesday</label>
-                                <div id="tuesday-times">
-                                    <div class="time-slot">
-                                        <label for="tuesday-start-time-1">Start Time</label>
-                                        <input type="time" id="tuesday-start-time-1" class="time signup" />
-                                        <label for="tuesday-end-time-1">End Time</label>
-                                        <input type="time" id="tuesday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Tuesday">Add Time Slot</button>
-                                <button id="notesButton-Tuesday">Notes</button>
-                                <div id="notesContainer-Tuesday"></div>
-                            </div>
-                            <div class="availability-day" id="Wednesday">
-                                <label><input type="checkbox" name="day" value="Wednesday"> Wednesday</label>
-                                <div id="wednesday-times">
-                                    <div class="time-slot">
-                                        <label for="wednesday-start-time-1">Start Time</label>
-                                        <input type="time" id="wednesday-start-time-1" class="time signup" />
-                                        <label for="wednesday-end-time-1">End Time</label>
-                                        <input type="time" id="wednesday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Wednesday">Add Time Slot</button>
-                                <button id="notesButton-Wednesday">Notes</button>
-                                <div id="notesContainer-Wednesday"></div>
-                            </div>
-                            <div class="availability-day" id="Thursday">
-                                <label><input type="checkbox" name="day" value="Thursday"> Thursday</label>
-                                <div id="thursday-times">
-                                    <div class="time-slot">
-                                        <label for="thursday-start-time-1">Start Time</label>
-                                        <input type="time" id="thursday-start-time-1" class="time signup" />
-                                        <label for="thursday-end-time-1">End Time</label>
-                                        <input type="time" id="thursday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Thursday">Add Time Slot</button>
-                                <button id="notesButton-Thursday">Notes</button>
-                                <div id="notesContainer-Thursday"></div>
-                            </div>
-                            <div class="availability-day" id="Friday">
-                                <label><input type="checkbox" name="day" value="Friday"> Friday</label>
-                                <div id="friday-times">
-                                    <div class="time-slot">
-                                        <label for="friday-start-time-1">Start Time</label>
-                                        <input type="time" id="friday-start-time-1" class="time signup" />
-                                        <label for="friday-end-time-1">End Time</label>
-                                        <input type="time" id="friday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Friday">Add Time Slot</button>
-                                <button id="notesButton-Friday">Notes</button>
-                                <div id="notesContainer-Friday"></div>
-                            </div>
-                            <div class="availability-day" id="Saturday">
-                                <label><input type="checkbox" name="day" value="Saturday"> Saturday</label>
-                                <div id="saturday-times">
-                                    <div class="time-slot">
-                                        <label for="saturday-start-time-1">Start Time</label>
-                                        <input type="time" id="saturday-start-time-1" class="time signup" />
-                                        <label for="saturday-end-time-1">End Time</label>
-                                        <input type="time" id="saturday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Saturday">Add Time Slot</button>
-                                <button id="notesButton-Saturday">Notes</button>
-                                <div id="notesContainer-Saturday"></div>
-                            </div>
-                            <div class="availability-day" id="Sunday">
-                                <label><input type="checkbox" name="day" value="Sunday"> Sunday</label>
-                                <div id="sunday-times">
-                                    <div class="time-slot">
-                                        <label for="sunday-start-time-1">Start Time</label>
-                                        <input type="time" id="sunday-start-time-1" class="time signup" />
-                                        <label for="sunday-end-time-1">End Time</label>
-                                        <input type="time" id="sunday-end-time-1" class="time signup" />
-                                    </div>
-                                </div>
-                                <button id="addTimeSlotButton-Sunday">Add Time Slot</button>
-                                <button id="notesButton-Sunday">Notes</button>
-                                <div id="notesContainer-Sunday"></div>
-                            </div>
-                        </div>
-
-                        <label for="notary-contact-method">Preferred Method of Contact</label>
-                        <select id="notary-contact-method" class="contact-method signup">
-                            <option value="">Select your preferred contact method</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Phone</option>
-                            <!-- Add more options as needed -->
-                        </select>
-
-                        <label for="notary-contact-notes">Additional Notes</label>
-                        <textarea id="notary-contact-notes" class="notes signup"></textarea>
-
-
-
-
-                        <label for="notary-schedule">Availability Schedule</label>
-                        <input type="text" id="notary-schedule" class="schedule signup" />
-
-                        <label for="preferred-video-conference-platform">Preferred Method of Contact</label>
-                        <select id="preferred-video-conference-platform" class="contact signup">
-                            <option value="google-meet">Google Meet</option>
-                            <option value="zoom">Zoom</option>
-                        </select>
-                    </section>
-
-                    <label for="notary-picture">Profile Picture</label>
-                    <input type="file" id="notary-picture" class="upload" accept="image/*" capture="user" />
-
-                    <section>
-                        <h3>Electronic Notary Signature Information</h3>
-
-                        <label for="principal-signature">Upload Signature</label>
-                        <input type="file" id="principal-signature" class="upload" accept="image/*" capture="user" />
-                        <button class="createSigBtn">Create your electronic notary signature</button>
-                    </section>
-
+                        <input type="file" id="govt-id-front" name="govt-id-front" class="formField">
+                        <label for="govt-id-back">Upload Back of ID</label>
+                        <input type="file" id="govt-id-back" name="govt-id-back" class="formField">
+                    </div>
                 </form>
-                <section class="right">
-                    <img src="../../assets/NYS-flag-icon-128.png" alt="NYS Seal">
-                </section>
             </section>
-        </main>
-        <footer class="footer">
-            footer
-        </footer>
+            <section class="row" id="notary-logbook">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Logbook Info</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-logbook-form">
+                    <h3 class="section-title">Notary Logbook Information</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Traditional Notary Journal</th>
+                                <th>Electronic Notary Journal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>date</p>
+                                        </li>
+                                        <li>
+                                            <p>time</p>
+                                        </li>
+                                        <li>
+                                            <p>notarial act type</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>date</p>
+                                        </li>
+                                        <li>
+                                            <p>time</p>
+                                        </li>
+                                        <li>
+                                            <p>notarial act type</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>principal's name</p>
+                                        </li>
+                                        <li>
+                                            <p>principal's address</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>principal's name</p>
+                                        </li>
+                                        <li>
+                                            <p>principal's address</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>number of notarial services provided</p>
+                                        </li>
+                                        <li>
+                                            <p>type of notarial services provided</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>number of notarial services provided</p>
+                                        </li>
+                                        <li>
+                                            <p>type of notarial services provided</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>credential type used to identify principal</p>
+                                </td>
+                                <td>
+                                    <p>credential type used to identify principal</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <p>the verification procedures used for any personal appearance before the notary public.</p>
+                                </td>
+                                <td>
+                                    <p>the verification procedures used for any personal appearance before the notary public.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>*not applicable</td>
+                                <td>
+                                    <ul>
+                                        <li>
+                                            <p>identification of the communication technology</p>
+                                        </li>
+                                        <li>
+                                            <p>certification authority</p>
+                                        </li>
+                                        <li>
+                                            <p>verification providers used</p>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>*not applicable</td>
+                                <td>
+                                    <p>an actual audio/video recording of the act</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </section>
+            <section class="row" id="notary-docs">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Documents</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-docs-form">
+                    <h3 class="section-title">Notary Documents</h3>
+                    <div id="document-upload-container">
+                        <div id="document-upload-form">
+                            <label for="document-upload">Upload your document</label>
+                            <input type="file" id="document-upload" class="formField" />
+                            <ul id="uploaded-document-list">
+                                <h3>Document List</h3>
+                                <li class="uploaded-doc">sample uploaded document name</li>
+                            </ul>
+                        </div>
+                        <div id="document-upload-explanation">
+                            <h3>Useful Documents</h3>
+                            <h5>Acknowledgment Form</h5>
+                            <p>This is a statement by the notary public that the signer of a document appeared before them and acknowledged signing for its stated purpose.</p>
+                            <h5>Jurat Form</h5>
+                            <p>This is a statement from the notary public that a signer has sworn to or affirmed the truthfulness of a document.</p>
+                            <h5>Copy Certification Form</h5>
+                            <p>This is a form used when a notary certifies that a copy of a document is a true and accurate reproduction of the original.</p>
+                            <h5>Oath or Affirmation Form</h5>
+                            <p>This is a form used when a notary administers an oath or affirmation.</p>
+                            <h5>Signature Witnessing Form</h5>
+                            <p>This is a form used when a notary witnesses a signature.</p>
+                            <h5>Deposition Form</h5>
+                            <p>This is a form used when a notary takes a deposition.</p>
+                            <h5>Protest Form</h5>
+                            <p>This is a form used when a notary protests a bill of exchange.</p>
+                            <h5>Notarial Register</h5>
+                            <p>This is a record where the notary keeps track of all notarial acts performed.</p>
+                            <h5>Notarial Certificate</h5>
+                            <p>This is a form that the notary completes and signs to document the notarial act.</p>
+                            <h5>Corporate Acknowledgment Form</h5>
+                            <p>This is a form used when a corporate officer acknowledges signing a document on behalf of the corporation.</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+            <section class="row" id="notary-signature">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Signature</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-docs-form">
+                    <h3 class="section-title">Signature Information</h3>
+                    <label for="notary-signature">Signature</label>
+                    <input type="file" id="notary-signature" class="formField" accept="image/*" capture="user" />
+                    <button class="createSigBtn">Create your digital signature</button>
+                </form>
+            </section>
+            <section class="row" id="notary-stamp">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Stamp</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-stamp-form">
+                    <h3 class="section-title">Stamp Information</h3>
+                    <h3>Upload your stamp:</h3>
+                    <label for="notary-stamp">Stamp</label>
+                    <input type="file" id="notary-stamp" class="formField" accept="image/*" capture="user" />
+                    <h3>Create your stamp by adding the following information:</h3>
+                    <h3>Registration & Filing</h3>
+                    <div class="formRow">
+                        <label for="states">My commission is registered with the state of:</label>
+                        <select name="states" id="states">
+                        </select>
+                        <label for="newYorkCounties-reg">My Commission is registered with NYS county:</label>
+                        <select name="newYorkCounties-reg" id="newYorkCounties-reg">
+                        </select>
+                        <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
+                        <label for="newYorkCounties-filed">My signature is filed in the following counties:</label>
+                        <select name="newYorkCounties-filed" id="newYorkCounties-filed">
+                        </select>
+                    </div>
+                    <h3>Commission Identification Number</h3>
+                    <div class="formGroup">
+                        <label for="notary-license">Notary License Number</label>
+                        <input type="text" id="notary-license" class="formField" />
+                    </div>
+                    <div class="formRow">
+                        <h3>Issuance and Expiration Dates</h3>
+                        <div class="formGroup">
+                            <label for="notary-issuance">Notary License Issuance Date</label>
+                            <input type="date" id="notary-issuance" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-expiry">Notary License Expiration Date</label>
+                            <input type="date" id="notary-expiry" class="formField" />
+                        </div>
+                    </div>
+                    <button class="createSigBtn">Create your digital stamp</button>
+                </form>
+            </section>
+            <section class="row" id="notary-profile-pic">
+                <aside class="sidebar">
+                    <h3 class="sidebar-title">My Profile Picture</h3>
+                    <ul class="sidebar-list">
+                        <li class="sidebar-item">
+                            <p>item 1</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 2</p>
+                        </li>
+                        <li class="sidebar-item">
+                            <p>item 3</p>
+                        </li>
+                    </ul>
+                </aside>
+                <form class="primary-content" id="notary-profile-pic-form">
+                    <h3 class="section-title">Profile Picture</h3>
+                    <label for="notary-picture">Upload your profile picture</label>
+                    <input type="file" id="notary-picture" class="formField" accept="image/*" capture="user" />
+                </form>
+            </section>
+        </div>
+    </main>
+    <footer class="footer"> footer </footer>
     </div>
     <script src="settings.js"></script>
 </body>
