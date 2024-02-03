@@ -41,7 +41,7 @@
         <h2>User Settings - Principal</h2>
         <div class="principal-section">
             <section class="row" id="principal-contact">
-                <h3 class="section-title">Principal Sign Up Form</h3>
+                <!-- <h3 class="section-title row">Principal Sign Up Form</h3> -->
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Contact Info</h3>
                     <ul class="sidebar-list">
@@ -77,8 +77,10 @@
                             </div>
                         </div>
                     </fieldset>
+                    <button>SUBMIT</button>
                 </form>
             </section>
+            <br class="br" />
             <section class="row" id="principal-address">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Address Info</h3>
@@ -130,24 +132,28 @@
                 <form class="primary-content" id="principal-billing-form">
                     <fieldset>
                         <legend class="legend-title">Credit Card</legend>
-                        <div class="formGroup">
-                            <label for="same-address">
-                                <input type="checkbox" id="same-address" class="formField"> Same as home address </label>
-                        </div>
-                        <div class="formGroup">
-                            <label for="card-name">Name on Card</label>
-                            <input type="text" id="card-name" class="formField" />
-                        </div>
-                        <div class="formGroup">
-                            <label for="card-number">Card Number</label>
-                            <input type="text" id="card-number" class="formField" />
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="same-address">
+                                    <input type="checkbox" id="same-address" class="formField"> Same as home address </label>
+                            </div>
                         </div>
                         <div class="formRow">
                             <div class="formGroup">
-                                <label for="card-expiration">Expiration Date</label>
-                                <input type="text" id="card-expiration" class="formField" />
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" class="formField" />
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed">
+                            <div class="formGroup">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" class="formField" />
                             </div>
                             <div class="formGroup">
+                                <label for="card-expiration">Expiration Date</label>
+                                <input type="text formGroup--width-auto" id="card-expiration" class="formField" />
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="card-cvv">CVV</label>
                                 <input type="text" id="card-cvv" class="formField" />
                             </div>
@@ -155,13 +161,15 @@
                     </fieldset>
                     <fieldset>
                         <legend class="legend-title">Billing Address</legend>
-                        <div class="formGroup">
-                            <label for="billing-address1">Billing Address Line 1</label>
-                            <input type="text" id="billing-address1" class="formField" />
-                        </div>
-                        <div class="formGroup">
-                            <label for="billing-address2">Billing Address Line 2</label>
-                            <input type="text" id="billing-address2" class="formField" />
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="billing-address1">Billing Address Line 1</label>
+                                <input type="text" id="billing-address1" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="billing-address2">Billing Address Line 2</label>
+                                <input type="text" id="billing-address2" class="formField" />
+                            </div>
                         </div>
                         <div class="formRow formRow--mixed">
                             <div class="formGroup">
@@ -192,20 +200,29 @@
                 <form class="primary-content" id="principal-scheduling-form">
                     <fieldset>
                         <legend class="legend-title">Scheduling</legend>
-                        <div class="formGroup">
-                            <label for="principal-timezone">Choose Your Time Zone</label>
-                            <select id="principal-timezone" class="timezone signup">
-                                <option value="">Select your time zone</option>
-                                <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
-                                <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
-                                <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
-                                <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
-                                <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
-                                <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                            </select>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <!-- <label for="principal-timezone">Choose Your Time Zone</label> -->
+                                <label for="principal-time-zone-select">Choose Your Time Zone</label>
+                                <!-- <div class="select"> -->
+                                <div class="select">
+                                    <!-- <select id="principal-timezone" class="timezone select"> -->
+                                    <select id="principal-time-zone-select">
+                                        <option value="">Select your time zone</option>
+                                        <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
+                                        <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
+                                        <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
+                                        <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
+                                        <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
+                                        <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
+                                        <option value="Eastern Standard Time (EST)">This option is a demonstration of an asburdly long value that's hard to fit in a Select's option element</option>
+                                    </select>
+                                    <span class="focus"></span>
+                                </div>
+                            </div>
                         </div>
                         <h3>Choose your availability</h3>
-                        <div class="availability signup">
+                        <div class="availability formRow">
                             <!-- <div class="availability-day" id="Monday">
                                 <label><input type="checkbox" name="day" value="Monday"> Monday</label>
                                 <div id="monday-times">
@@ -308,18 +325,23 @@
                     </fieldset>
                     <fieldset>
                         <legend class="legend-title">Contact</legend>
-                        <div class="formGroup">
-                            <label for="principal-contact-method">Preferred Method of Contact</label>
-                            <select id="principal-contact-method" class="contact-method signup">
-                                <option value="">Select your preferred contact method</option>
-                                <option value="email">Email</option>
-                                <option value="phone">Phone</option>
-                                <!-- Add more options as needed -->
-                            </select>
-                        </div>
-                        <div class="formGroup">
-                            <label for="principal-contact-notes">Additional Notes</label>
-                            <textarea id="principal-contact-notes" class="notes signup"></textarea>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="principal-contact-method">Preferred Method of Contact</label>
+                                <div class="select">
+                                    <select id="principal-contact-method">
+                                        <option value="">Select your preferred contact method</option>
+                                        <option value="email">Email</option>
+                                        <option value="phone">Phone</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                    <span class="focus"></span>
+                                </div>
+                            </div>
+                            <div class="formGroup">
+                                <label for="principal-contact-notes">Additional Notes</label>
+                                <textarea id="principal-contact-notes"></textarea>
+                            </div>
                         </div>
                     </fieldset>
                 </form>
@@ -336,10 +358,12 @@
                 <form class="primary-content" id="principal-contacts-form">
                     <fieldset>
                         <legend class="legend-title">My Notaries</legend>
-                        <div class="formGroup">
-                            <label for="principal-notary">Preferred Notary</label>
-                            <input type="text" id="principal-notary" class="formField" />
-                            <button>SUBMIT</button>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="principal-notary">Preferred Notary</label>
+                                <input type="text" id="principal-notary" class="formField" />
+                                <button>SUBMIT</button>
+                            </div>
                         </div>
                     </fieldset>
                 </form>
@@ -347,21 +371,20 @@
             <section class="row" id="principal-projectsAndDocs">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Projects & Documents</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
+                    <ul id="uploaded-document-list">
+                        <h3>Document List</h3>
+                        <li class="uploaded-doc">sample uploaded document name</li>
                     </ul>
                 </aside>
                 <form class="primary-content" id="principal-projectsAndDocs-form">
                     <fieldset>
                         <legend class="legend-title">Create a Project</legend>
-                        <div id="project-name-container" class="row">
+                        <div id="project-name-container" class="formRow">
                             <div id="project-name-form" class="formGroup">
                                 <label for="project-name">Project Name</label>
                                 <input type="text" id="project-name" class="formField" />
                             </div>
-                            <div id="project-name-explanation">
+                            <div id="project-name-explanation" class="formGroup">
                                 <h3>Uniqueness</h3>
                                 <p>Enter a unique name for this project.</p>
                                 <h3>Descriptiveness</h3>
@@ -374,12 +397,12 @@
                                 <p>Choose a name relevant to the documents or the notarization process.</p>
                             </div>
                         </div>
-                        <div id="project-description-container" class="row">
+                        <div id="project-description-container" class="formRow">
                             <div id="project-description-form" class="formGroup">
                                 <label for="project-description">Project Description</label>
                                 <textarea id="project-description" class="project-description"></textarea>
                             </div>
-                            <div id="project-description-explanation">
+                            <div id="project-description-explanation" class="formGroup">
                                 <h3>Purpose of the Project</h3>
                                 <p>Describe the purpose of this project. Are these documents for a real estate transaction, a legal proceeding, or something else?</p>
                                 <h3>Documents Involved</h3>
@@ -392,16 +415,16 @@
                                 <p>Include any other information that the notary should know about this project.</p>
                             </div>
                         </div>
-                        <div id="service-vs-act-container" class="row">
+                        <div id="service-vs-act-container" class="formRow">
                             <h3>What's the difference between a notarial service and a notarial act?</h3>
                             <p>The main difference between a notarial service and a notarial act is the scope. Notarial services refer to the comprehensive suite of functions a notary public offers, while notarial acts are the individual tasks performed as part of these services.</p>
                         </div>
-                        <div id="notarial-service-container" class="row">
-                            <div id="notarial-service-form">
+                        <div id="notarial-service-container" class="formRow">
+                            <div id="notarial-service-form" class="formGroup">
                                 <label for="notarial-service">Notarial Service(s) Required</label>
                                 <textarea id="notarial-service" class="notarial-service"></textarea>
                             </div>
-                            <div id="notarial-service-explanation">
+                            <div id="notarial-service-explanation" class="formGroup">
                                 <h3>Type of Notarial Service</h3>
                                 <p>Specify the type of notarial service you require, such as acknowledgment, jurat, etc.</p>
                                 <h3>Purpose of the Service</h3>
@@ -414,12 +437,12 @@
                                 <p>Include any other information that the notary should know about this notarial service.</p>
                             </div>
                         </div>
-                        <div id="notarial-act-container" class="row">
+                        <div id="notarial-act-container" class="formRow">
                             <div id="notarial-act-form" class="formGroup">
                                 <label for="notarial-act">Notarial Act(s) Required</label>
                                 <textarea id="notarial service" class="notarial service"></textarea>
                             </div>
-                            <div id="notarial-act-explanation">
+                            <div id="notarial-act-explanation" class="formGroup">
                                 <h3> Type of Notarial Act</h3>
                                 <p>Specify the type of notarial act you require, such as acknowledgment, jurat, etc. </p>
                                 <h3>Purpose of the Act</h3>
@@ -432,14 +455,10 @@
                                 <p>Include any other information that the notary should know about this notarial act.</p>
                             </div>
                         </div>
-                        <div id="document-upload-container" class="row">
-                            <div id="document-upload-form">
+                        <div id="document-upload-container" class="formRow">
+                            <div id="document-upload-form" class="formGroup">
                                 <label for="document-upload">Upload your document</label>
                                 <input type="file" id="document-upload" class="formField" />
-                                <ul id="uploaded-document-list">
-                                    <h3>Document List</h3>
-                                    <li class="uploaded-doc">sample uploaded document name</li>
-                                </ul>
                             </div>
                             <div id="document-upload-explanation">
                                 <h3>Type of Documents</h3>
@@ -471,14 +490,16 @@
                         </li>
                     </ul>
                 </aside>
-                <form class="primary-content" id="principal-signature-form">
+                <form class="primary-content formRow" id="principal-signature-form">
                     <h3 class="section-title">Signature Information</h3>
-                    <label for="principal-signature">Signature</label>
-                    <input type="file" id="principal-signature" class="formField" accept="image/*" capture="user" />
+                    <div class="formGroup">
+                        <label for="principal-signature">Signature</label>
+                        <input type="file" id="principal-signature" class="formField" accept="image/*" capture="user" />
+                    </div>
                     <button class="createSigBtn">Create your digital signature</button>
                 </form>
             </section>
-            <section class="row" id="principal-profile-pic">
+            <section class="form" id="principal-profile-pic">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Profile Picture</h3>
                     <ul class="sidebar-list">
@@ -487,10 +508,12 @@
                         </li>
                     </ul>
                 </aside>
-                <form class="primary-content" id="principal-profile-pic-form">
+                <form class="primary-content formRow" id="principal-profile-pic-form">
                     <h3 class="section-title">Profile Picture</h3>
-                    <label for="profile-picture">Upload your profile picture</label>
-                    <input type="file" id="profile-picture" class="formField" accept="image/*" capture="user" />
+                    <div class="formGroup">
+                        <label for="profile-picture">Upload your profile picture</label>
+                        <input type="file" id="profile-picture" class="formField" accept="image/*" capture="user" />
+                    </div>
                 </form>
             </section>
         </div>
@@ -507,9 +530,11 @@
                 </aside>
                 <form class="primary-content" id="notary-contact-form">
                     <h3 class="section-title">Notary Public Sign Up</h3>
-                    <div class="formGroup">
-                        <input type="checkbox" id="same-as-principal-contact" name="same-as-principal-contact" class="formField">
-                        <label for="same-as-principal-contact">Is your contact information the same as the principal's?</label>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <input type="checkbox" id="same-as-principal-contact" name="same-as-principal-contact" class="formField">
+                            <label for="same-as-principal-contact">Is your contact information the same as the principal's?</label>
+                        </div>
                     </div>
                     <div class="formRow">
                         <div class="formGroup">
@@ -544,13 +569,15 @@
                 </aside>
                 <form class="primary-content" id="notary-address-form">
                     <h3 class="section-title">Notary Address Information</h3>
-                    <div class="formGroup">
-                        <label for="notary-address1">Address Line 1</label>
-                        <input type="text" id="notary-address1" class="formField" />
-                    </div>
-                    <div class="formGroup">
-                        <label for="notary-address2">Address Line 2</label>
-                        <input type="text" id="notary-address2" class="formField" />
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-address1">Address Line 1</label>
+                            <input type="text" id="notary-address1" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-address2">Address Line 2</label>
+                            <input type="text" id="notary-address2" class="formField" />
+                        </div>
                     </div>
                     <div class="formRow formRow--mixed">
                         <div class="formGroup">
@@ -579,35 +606,41 @@
                 </aside>
                 <form class="primary-content" id="notary-billing-form">
                     <h3 class="section-title">Billing Information</h3>
-                    <div class="formGroup">
-                        <input type="checkbox" id="same-as-principal-billing" name="same-as-principal-billing" class="formField">
-                        <label for="same-as-principal-billing">Is your billing information the same as the principal's?</label>
-                    </div>
-                    <div class="formGroup">
-                        <label for="card-name">Name on Card</label>
-                        <input type="text" id="card-name" class="formField" />
-                    </div>
-                    <div class="formGroup">
-                        <label for="card-number">Card Number</label>
-                        <input type="text" id="card-number" class="formField" />
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <input type="checkbox" id="same-as-principal-billing" name="same-as-principal-billing" class="formField">
+                            <label for="same-as-principal-billing">Is your billing information the same as the principal's?</label>
+                        </div>
                     </div>
                     <div class="formRow">
                         <div class="formGroup">
-                            <label for="card-expiration">Expiration Date</label>
-                            <input type="text" id="card-expiration" class="formField" />
+                            <label for="card-name">Name on Card</label>
+                            <input type="text" id="card-name" class="formField" />
+                        </div>
+                    </div>
+                    <div class="formRow formRow--mixed">
+                        <div class="formGroup">
+                            <label for="card-number">Card Number</label>
+                            <input type="text" id="card-number" class="formField" />
                         </div>
                         <div class="formGroup">
+                            <label for="card-expiration">Expiration Date</label>
+                            <input type="text" id="card-expiration" class="formField formGroup--width-auto" />
+                        </div>
+                        <div class="formGroup formGroup--width-auto">
                             <label for="card-cvv">CVV</label>
                             <input type="text" id="card-cvv" class="formField" />
                         </div>
                     </div>
-                    <div class="formGroup">
-                        <label for="billing-address1">Billing Address Line 1</label>
-                        <input type="text" id="billing-address1" class="formField" />
-                    </div>
-                    <div class="formGroup">
-                        <label for="billing-address2">Billing Address Line 2</label>
-                        <input type="text" id="billing-address2" class="formField" />
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="billing-address1">Billing Address Line 1</label>
+                            <input type="text" id="billing-address1" class="formField" />
+                        </div>
+                        <div class="formGroup">
+                            <label for="billing-address2">Billing Address Line 2</label>
+                            <input type="text" id="billing-address2" class="formField" />
+                        </div>
                     </div>
                     <div class="formRow formRow--mixed">
                         <div class="formGroup">
@@ -642,30 +675,47 @@
                 </aside>
                 <form class="primary-content" id="notary-scheduling-form">
                     <h3 class="section-title">Scheduling Information</h3>
-                    <label for="notary-timezone">Choose Your Time Zone</label>
-                    <select id="notary-timezone" class="timezone signup">
-                        <option value="">Select your time zone</option>
-                        <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
-                        <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
-                        <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
-                        <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
-                        <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
-                        <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                    </select>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-timezone-select">Choose Your Time Zone</label>
+                            <div class="select">
+                                <select id="notary-timezone-select">
+                                    <option value="">Select your time zone</option>
+                                    <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
+                                    <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
+                                    <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
+                                    <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
+                                    <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
+                                    <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
+                                </select>
+                                <span class="focus"></span>
+                            </div>
+                        </div>
+                    </div>
                     <br />
                     <h3>Choose your availability</h3>
-                    <div class="availability signup">
+                    <div class="availability formRow">
                     </div>
-                    <label for="notary-contact-method">Preferred Method of Contact</label>
-                    <select id="notary-contact-method" class="contact-method signup">
-                        <option value="">Select your preferred contact method</option>
-                        <option value="email">Email</option>
-                        <option value="phone">Phone</option>
-                        <!-- Add more options as needed -->
-                    </select>
-                    <div class="formGroup">
-                        <label for="notary-contact-notes">Additional Notes</label>
-                        <textarea id="notary-contact-notes" class="notes signup"></textarea>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-contact-method">Preferred Method of Contact</label>
+                            <div class="select">
+                                <select id="notary-contact-method">
+                                    <option value="">Select your preferred contact method</option>
+                                    <option value="email">Email</option>
+                                    <option value="phone">Phone</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-contact-notes">Additional Notes</label>
+                            <textarea id="notary-contact-notes" class="notes signup"></textarea>
+                        </div>
                     </div>
                 </form>
             </section>
@@ -686,7 +736,7 @@
                 </aside>
                 <form class="primary-content" id="notary-contacts-form">
                     <h3 class="section-title">My clients</h3>
-                    <div class="client-info">
+                    <div class="client-info formRow">
                         <div class="formGroup">
                             <label for="client-name">Client Name</label>
                             <input type="text" id="client-name" class="formField" />
@@ -720,33 +770,63 @@
                 </aside>
                 <form class="primary-content" id="notary-commission-form">
                     <h3 class="section-title">Notary Commission Information</h3>
-                    <h3>What's the difference between registering and filing your signature?</h3>
-                    <p>blah blab blah</p>
-                    <h3>Registration</h3>
-                    <p>My commission is registered with the state:</p>
-                    <div class="formGroup">
-                        <label></label>
-                        <select name="states" id="states">
-                        </select>
+                    <div class="formRow">
+                        <h3>What's the difference between registering and filing your signature?</h3>
+                        <p>blah blab blah</p>
                     </div>
-                    <p>My Commission is registered with NYS county:</p>
-                    <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
-                    <div class="formGroup">
-                        <label></label>
-                        <select name="newYorkCounties-reg" id="newYorkCounties-reg">
-                        </select>
+                    <h3>Registration</h3>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="USstatesReg">My commission is registered with the state of </label>
+                            <div class="select">
+                                <select name="USstatesReg" id="USstatesReg">
+                                    <!-- populated using JS -->
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="newYorkCounties-reg">My Commission is registered with the New York State county of</label>
+                            <div class="select">
+                                <select name="newYorkCounties-reg" id="newYorkCounties-reg">
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
                     </div>
                     <h3>Filing</h3>
-                    <p>My signature is filed in the following counties:</p>
-                    <div class="formGroup">
-                        <label></label>
-                        <select name="newYorkCounties-filed" id="newYorkCounties-filed">
-                        </select>
+                    <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <!-- <label for="newYorkCounties-filed">My signature is filed in the following counties:</label> -->
+                            <label for="newYorkCounties-filed">My signature is filed in the following counties:</label>
+                            <!-- <select name="newYorkCounties-filed" id="newYorkCounties-filed">
+                            </select> -->
+                            <div class="select select--multiple">
+                                <select id="newYorkCounties-filed" multiple>
+                                    <!-- <option value="Option 1">Option 1</option>
+                                  <option value="Option 2">Option 2</option>
+                                  <option value="Option 3">Option 3</option>
+                                  <option value="Option 4">Option 4</option>
+                                  <option value="Option 5">Option 5</option>
+                                  <option value="Option length">
+                                    Option that has too long of a value to fit
+                                  </option> -->
+                                </select>
+                                <span class="focus"></span>
+                            </div>
+                        </div>
                     </div>
                     <h3>Commission Identification Number</h3>
-                    <div class="formGroup">
-                        <label for="notary-license">Notary License Number</label>
-                        <input type="text" id="notary-license" class="formField" />
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-license">Notary License Number</label>
+                            <input type="text" id="notary-license" class="formField" />
+                        </div>
                     </div>
                     <h3>Issuance and Expiration Dates</h3>
                     <div class="formRow">
@@ -760,21 +840,31 @@
                         </div>
                     </div>
                     <h3>Identification</h3>
-                    <div class="formGroup">
-                        <label for="govt-id-type">Type of Government Issued ID</label>
-                        <select id="govt-id-type" name="govt-id-type">
-                            <option value="passport">Passport</option>
-                            <option value="drivers-license">Driver's License</option>
-                            <option value="state-id">State ID</option>
-                            <option value="military-id">Military ID</option>
-                            <!-- Add more options as needed -->
-                        </select>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="govt-id-type">Type of Government Issued ID</label>
+                            <div class="select">
+                                <select id="govt-id-type" name="govt-id-type">
+                                    <option value="passport">Passport</option>
+                                    <option value="drivers-license">Driver's License</option>
+                                    <option value="state-id">State ID</option>
+                                    <option value="military-id">Military ID</option>
+                                    <!-- Add more options as needed -->
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
                     </div>
                     <div class="formRow">
-                        <label for="govt-id-front">Upload Front of ID</label>
-                        <input type="file" id="govt-id-front" name="govt-id-front" class="formField">
-                        <label for="govt-id-back">Upload Back of ID</label>
-                        <input type="file" id="govt-id-back" name="govt-id-back" class="formField">
+                        <div class="formGroup">
+                            <label for="govt-id-front">Upload Front of ID</label>
+                            <input type="file" id="govt-id-front" name="govt-id-front" class="formField">
+                        </div>
+                        <div class="formGroup">
+                            <label for="govt-id-back">Upload Back of ID</label>
+                            <input type="file" id="govt-id-back" name="govt-id-back" class="formField">
+                        </div>
                     </div>
                 </form>
             </section>
@@ -920,28 +1010,17 @@
             <section class="row" id="notary-docs">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Documents</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
-                        <li class="sidebar-item">
-                            <p>item 2</p>
-                        </li>
-                        <li class="sidebar-item">
-                            <p>item 3</p>
-                        </li>
+                    <ul id="uploaded-document-list">
+                        <h3>Document List</h3>
+                        <li class="uploaded-doc">sample uploaded document name</li>
                     </ul>
                 </aside>
                 <form class="primary-content" id="notary-docs-form">
                     <h3 class="section-title">Notary Documents</h3>
-                    <div id="document-upload-container">
-                        <div id="document-upload-form">
+                    <div id="document-upload-container" class="formRow">
+                        <div id="document-upload-form" class="formGroup">
                             <label for="document-upload">Upload your document</label>
                             <input type="file" id="document-upload" class="formField" />
-                            <ul id="uploaded-document-list">
-                                <h3>Document List</h3>
-                                <li class="uploaded-doc">sample uploaded document name</li>
-                            </ul>
                         </div>
                         <div id="document-upload-explanation">
                             <h3>Useful Documents</h3>
@@ -986,9 +1065,13 @@
                 </aside>
                 <form class="primary-content" id="notary-docs-form">
                     <h3 class="section-title">Signature Information</h3>
-                    <label for="notary-signature">Signature</label>
-                    <input type="file" id="notary-signature" class="formField" accept="image/*" capture="user" />
-                    <button class="createSigBtn">Create your digital signature</button>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="notary-signature">Signature</label>
+                            <input type="file" id="notary-signature" class="formField" accept="image/*" capture="user" />
+                            <button class="createSigBtn">Create your digital signature</button>
+                        </div>
+                    </div>
                 </form>
             </section>
             <section class="row" id="notary-stamp">
@@ -1008,40 +1091,60 @@
                 </aside>
                 <form class="primary-content" id="notary-stamp-form">
                     <h3 class="section-title">Stamp Information</h3>
-                    <h3>Upload your stamp:</h3>
-                    <label for="notary-stamp">Stamp</label>
-                    <input type="file" id="notary-stamp" class="formField" accept="image/*" capture="user" />
-                    <h3>Create your stamp by adding the following information:</h3>
-                    <h3>Registration & Filing</h3>
                     <div class="formRow">
-                        <label for="states">My commission is registered with the state of:</label>
-                        <select name="states" id="states">
-                        </select>
-                        <label for="newYorkCounties-reg">My Commission is registered with NYS county:</label>
-                        <select name="newYorkCounties-reg" id="newYorkCounties-reg">
-                        </select>
-                        <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
-                        <label for="newYorkCounties-filed">My signature is filed in the following counties:</label>
-                        <select name="newYorkCounties-filed" id="newYorkCounties-filed">
-                        </select>
+                        <div class="formGroup">
+                            <label for="notary-stamp">Upload your stamp</label>
+                            <input type="file" id="notary-stamp" class="formField" accept="image/*" capture="user" />
+                        </div>
+                    </div>
+                    <h3>Create your stamp by adding the following information</h3>
+                    <div class="formRow">
+                        <div class="formGroup">
+                            <label for="USstatesStamp">My commission is registered with the state of</label>
+                            <div class="select">
+                                <select name="USstatesStamp" id="USstatesStamp">
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
+                        <div class="formGroup">
+                            <label for="newYorkCounties-regStamp">My Commission is registered with the NYS county</label>
+                            <div class="select">
+                                <select name="newYorkCounties-regStamp" id="newYorkCounties-regStamp">
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
+                        <div class="formGroup">
+                            <aside>tip: to make multiple selections from the dropdown menu hold down the control key (on Windows) or command key (on Mac) while clicking options</aside>
+                            <label for="newYorkCounties-regFiled">My signature is filed in the following NYS county (counties)</label>
+                            <div class="select select--multiple">
+                                <select name="newYorkCounties-regFiled" id="newYorkCounties-regFiled" multiple>
+                                </select>
+                                <span class="focus"></span>
+
+                            </div>
+                        </div>
                     </div>
                     <h3>Commission Identification Number</h3>
-                    <div class="formGroup">
-                        <label for="notary-license">Notary License Number</label>
-                        <input type="text" id="notary-license" class="formField" />
-                    </div>
-                    <div class="formRow">
+                    <div class="formRow formRow--mixed">
+                        <div class="formGroup ">
+                            <label for="notary-license">Notary License Number</label>
+                            <input type="text" id="notary-license" class="formField" />
+                        </div>
                         <h3>Issuance and Expiration Dates</h3>
-                        <div class="formGroup">
-                            <label for="notary-issuance">Notary License Issuance Date</label>
+                        <div class="formGroup formGroup--width-auto">
+                            <label for="notary-issuance">Issuance Date</label>
                             <input type="date" id="notary-issuance" class="formField" />
                         </div>
-                        <div class="formGroup">
-                            <label for="notary-expiry">Notary License Expiration Date</label>
+                        <div class="formGroup formGroup--width-auto">
+                            <label for="notary-expiry">Expiration Date</label>
                             <input type="date" id="notary-expiry" class="formField" />
                         </div>
+                        <button class="createSigBtn">Create your digital stamp</button>
                     </div>
-                    <button class="createSigBtn">Create your digital stamp</button>
                 </form>
             </section>
             <section class="row" id="notary-profile-pic">
@@ -1060,9 +1163,13 @@
                     </ul>
                 </aside>
                 <form class="primary-content" id="notary-profile-pic-form">
-                    <h3 class="section-title">Profile Picture</h3>
-                    <label for="notary-picture">Upload your profile picture</label>
-                    <input type="file" id="notary-picture" class="formField" accept="image/*" capture="user" />
+                    <div class="formRow">
+                        <h3 class="section-title">Profile Picture</h3>
+                        <div class="formGroup">
+                            <label for="notary-picture">Upload your profile picture</label>
+                            <input type="file" id="notary-picture" class="formField" accept="image/*" capture="user" />
+                        </div>
+                    </div>
                 </form>
             </section>
         </div>

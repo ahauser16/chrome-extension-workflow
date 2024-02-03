@@ -69,6 +69,7 @@ header {
 
 .section-title {
     color: darkred;
+    margin-top: 0;
 }
 
 .container {

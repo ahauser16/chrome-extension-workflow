@@ -1,15 +1,61 @@
-/* css reset code START*/
+:root {
+    --input-border: #8b8a8b;
+    --input-focus-h: 245;
+    --input-focus-s: 100%;
+    --input-focus-l: 42%;
+    --default-color: #8b8a8b;
+    --disabled-color-border: #ccc;
+    --disabled-color-background: #eee;
+    --accent-error: #ff0033;
+    --select-border: #777;
+    --select-focus: blue;
+    --select-arrow: var(--select-border);
+
+    --form-field-width: 30ch;
+    --border-radius: 0.25em;
+
+    --minField-col-width: 20ch;
+    --minField-width: 10ch;
+
+}
+
+/* css reset code for text and textarea input types START*/
+
 *,
 *:before,
 *:after {
     box-sizing: border-box;
 }
 
+input[type="file"] {
+    font-size: 0.9em;
+    padding-top: 0.35rem;
+}
+
+.formField[readonly] {
+    border-style: dotted;
+    cursor: not-allowed;
+    color: #777;
+}
+
+.input[disabled] {
+    border: 1px solid var(--input-border);
+    background-color: #eee;
+    cursor: not-allowed;
+}
+
+
+textarea.input {
+    resize: vertical;
+}
+
+/* //modern web dev refactor above */
+
+
 .formField {
-    --form-field-width: 30ch;
 
     background-color: #fff;
-    border: 2px solid;
+    border: 2px solid var(--input-border);
     border-radius: var(--border-radius, 0.25em);
     padding: 0.25em 0.5em;
     /* these values are inherited from the :root location */
@@ -28,7 +74,7 @@
     height: 2.25rem;
 }
 
-.formField select {
+/* .formField select {
     appearance: none;
     background-color: transparent;
     border: none;
@@ -42,7 +88,7 @@
     cursor: inherit;
     line-height: inherit;
     outline: none;
-}
+} */
 
 /* this removes the dropdown arrow in IE10 & IE11 */
 .formField::-ms-expand {
@@ -59,9 +105,8 @@ legend {
     padding: 0;
 }
 
+/* css reset code for text and textarea input types END*/
 
-
-/* css reset code END*/
 
 .formGroup {}
 
@@ -87,9 +132,11 @@ legend {
 
 .formField:focus {
     /* WCAG guidelines state that the border-color and the border-color when focused must meet a 3:1 contrast ratio */
-    border-color: var(--field-focus, var(--accent-primary));
-    box-shadow: 0 0 0.35em -0.1em var(--field-focus);
-    outline: 2px solid transparent;
+
+    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
+    box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
+    outline: 3px solid transparent;
+
 }
 
 .formField:disabled {
@@ -118,17 +165,12 @@ section+section {
     margin-top: 2rem;
 }
 
-/* the initial state of our formRow class is a Grid that creates columns of equal width that are intrinsicly responsive ased on the value of the '--minField-col-width' css variable.  */
+/* the initial state of our formRow class is a Grid that creates columns of equal width that are intrinsicly responsive ased on the value of the '--minField-col-width' css variable.*/
 .formRow {
-    --minField-col-width: 20ch;
-
-    /* this css variable represents the minimum width of the zip code field */
-    --minField-width: 10ch;
-
     display: grid;
     grid-gap: 2rem;
 
-    /* the value assigned to the grid-template-columns property uses the  'repeat()' function and the auto-fit keyword which makes the grid algorithm to add columns as needed.  The 'minmax()' function is passed a css variable equal to 20ch which is the 'minimum allowed value' parameter and '1fr' as the 'maximum allowed value' parameter.  Once the formfields hit the minimum of 20ch the Grid algorithm drops those fields to their own row.  */
+    /* the value assigned to the grid-template-columns property uses the 'repeat()' function and the auto-fit keyword which makes the grid algorithm add columns as needed.  The 'minmax()' function is passed a css variable equal to 20ch which is the 'minimum allowed value' parameter and '1fr' as the 'maximum allowed value' parameter.  Once the formfields hit the minimum of 20ch the Grid algorithm drops those fields to their own row.  */
     grid-template-columns: repeat(auto-fit,
             minmax(var(--minField-col-width), 1fr));
 }
@@ -165,7 +207,7 @@ section+section {
     max-width: var(--minField-width, 0);
 }
 
-/* this '.formRow--variable' class allowed its child elements to take on a variable width.  */
+/* this '.formRow--variable' class allowed its child elements to take on a variable width.  This is used in addition to the formRow class on the parent of the div with class name "formGroup" */
 .formRow--variable {
     display: flex;
     flex-wrap: wrap;
@@ -202,3 +244,116 @@ section+section {
     margin-right: 0.5em;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 50' stroke='#{svgColor(error)}' stroke-width='10' stroke-linecap='round'%3E%3Cdefs/%3E%3Cpath d='M5 5l40 40M45 5L5 45'/%3E%3C/svg%3E");
 }
+
+
+/* css reset code for select input types START*/
+
+select {
+    /* A reset of styles, including removing the default dropdown arrow */
+    appearance: none;
+    /* Additional resets for further consistency */
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+
+    /* Stack above custom arrow */
+    z-index: 1;
+
+    outline: none;
+
+}
+
+
+/* removes the arrow for lower IE versions */
+select::-ms-expand {
+    display: none;
+}
+
+/* css reset code for select input types END*/
+
+.select {
+    width: 100%;
+    /* The min-width and max-width values are mostly for this demo, and you may choose to drop or alter it for your use case. */
+    min-width: 15ch;
+    max-width: 30ch;
+
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+
+    /* Optional styles - remove for transparency */
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+
+    display: grid;
+    grid-template-areas: "select";
+    align-items: center;
+    position: relative;
+
+}
+
+.select::after {
+    content: "";
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+    justify-self: end;
+
+}
+
+select,
+.select:after {
+    grid-area: select;
+}
+
+select:focus+.focus {
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    right: -1px;
+    bottom: -1px;
+    border: 2px solid var(--select-focus);
+    border-radius: inherit;
+}
+
+.select:not(.select--multiple)::after {
+    content: "";
+    justify-self: end;
+    width: 0.8em;
+    height: 0.5em;
+    background-color: var(--select-arrow);
+    clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+
+select[multiple] {
+    padding-right: 0;
+    height: 6rem;
+}
+
+select[multiple] option {
+    white-space: normal;
+    outline-color: var(--select-focus);
+}
+
+.select--disabled {
+    cursor: not-allowed;
+    background-color: #eee;
+    background-image: linear-gradient(to top, #ddd, #eee 33%);
+}
+
+.select+label {
+    margin-top: 2rem;
+}
+
+/* css reset code for checkbox input types START*/
