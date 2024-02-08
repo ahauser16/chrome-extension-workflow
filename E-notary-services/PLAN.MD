@@ -31,6 +31,48 @@ After the signer has executed the document, it must be transmitted to the notary
 
 The electronic notarial process does not require transmission of paper records or ink signatures of either the signer (i.e., principal) or electronic notary.  The result of the process is an electronically created, electronically stored document that may be done online, and may be papered out for recording or other purposes.
 
+### Example of a Principal satisfying the Identity Assurance Level 2(IAL2) standards as outlined by the National Institute of Standards and Technology Digital Identity Guidelines.
+
+#### Scenario: Electronic Notarization Meeting IAL2 Standards
+
+Background: Alex needs to have a legal document notarized electronically. The document is a power of attorney granting Alex's sibling the authority to make decisions on Alex's behalf. Alex chooses an electronic notarization platform that complies with the Department of State regulations and meets IAL2 standards.
+
+Step 1: Initial Contact
+- Alex visits the electronic notarization platform and selects the option to notarize a document.
+- The platform provides an overview of the IAL2 requirements for identity proofing and explains the process.
+
+Step 2: Evidence Collection
+- Requirement: Two pieces of evidence, one being a government-issued photo ID.
+- Alex's Action: Alex uploads a scanned copy of their driver's license and passport.
+
+Step 3: Validation and Verification
+- Requirement: Validation of evidence to ensure it's genuine and verification against authoritative sources.
+- Platform's Action: The platform uses automated software to check the security features of the uploaded IDs against public records. It confirms both the driver's license and passport are valid and belong to Alex.
+
+Step 4: Presence Confirmation
+- Requirement: The individual must be physically present or participate in a remote, supervised process.
+- Alex's Action: Alex joins a live video call with an electronic notary. The notary uses the video call to confirm Alex's presence and visually compares Alex to the photo ID provided.
+
+Step 5: Address Confirmation
+- Requirement: Confirmation of the individual's address.
+- Alex's Action: Alex provides a recent utility bill with their address. The platform verifies the address against the one on the driver's license.
+
+Step 6: Biometric Collection (Optional)
+- Requirement: Optional collection of biometrics under privacy controls.
+- Alex's Action: The platform does not require biometric data for this transaction, focusing instead on document and live presence verification.
+
+Step 7: Document Signing and Notarization
+- Alex's Action: Alex electronically signs the document during the live video call. The notary, having verified Alex's identity to the IAL2 standard, electronically notarizes the document.
+
+Step 8: Recording and Backup
+- Requirement: An audio-visual recording of the notarization session must be made and kept for a minimum of 10 years.
+- Platform's Action: The platform records the video call, securely stores the recording, and ensures that backups are maintained.
+
+Step 9: Finalization
+- Alex's Action: Alex receives a digitally notarized copy of the document. The platform adds a statement to the jurat indicating that the notarial act involved remote online appearance using communication technology.
+
+Conclusion: Through this process, Alex successfully has their document notarized in compliance with IAL2 standards, ensuring a high level of identity assurance. The electronic notarization platform facilitated the collection, validation, and verification of Alex's identity evidence, conducted a live presence check, and securely recorded the notarization session, all while maintaining the required security and privacy standards.
+
 ## Background
 TLDR: Michael Markowitz's article [The Future Is Here](https://nysba.org/the-future-is-here-new-york-approves-remote-online-notarization/) is a good "primer" to the change in remote notarization law enacted in January 2023.
 
