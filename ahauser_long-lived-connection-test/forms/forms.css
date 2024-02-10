@@ -1,18 +1,76 @@
 :root {
+  /* GREEN for success messages or positive Confirmations. */
+  --green-100: hsl(144, 100%, 95%);
+  --green-200: hsl(144, 100%, 81.25%);
+  --green-300: hsl(144, 100%, 67.5%);
+  --green-400: hsl(144, 100%, 53.75%);
+  --green-500: hsl(144, 100%, 40%);
+  --green-600: hsl(144, 100%, 35%);
+  --green-700: hsl(144, 100%, 30%);
+  --green-800: hsl(144, 100%, 25%);
+  --green-900: hsl(144, 100%, 20%);
+
+  /* YELLOW/ORANGE for warning messages. */
+  --yellow-100: hsl(38, 99%, 95%);
+  --yellow-200: hsl(38, 99%, 83%);
+  --yellow-300: hsl(38, 99%, 71%);
+  --yellow-400: hsl(38, 99%, 59%);
+  --yellow-500: hsl(38, 99%, 47%);
+  --yellow-600: hsl(38, 99%, 40.25%);
+  --yellow-700: hsl(38, 99%, 33.5%);
+  --yellow-800: hsl(38, 99%, 26.75%);
+  --yellow-900: hsl(38, 99%, 20%);
+
+  /* RED for error messages. */
+  --red-100: hsl(357, 82%, 95%);
+  --red-200: hsl(357, 82%, 84.25%);
+  --red-300: hsl(357, 82%, 73.5%);
+  --red-400: hsl(357, 82%, 62.75%);
+  --red-500: hsl(357, 82%, 52%);
+  --red-600: hsl(357, 82%, 44%);
+  --red-700: hsl(357, 82%, 36%);
+  --red-800: hsl(357, 82%, 28%);
+  --red-900: hsl(357, 82%, 20%);
+
+  /* BLUE for neutral informational related messages. */
+  --blue-100: hsl(220, 84%, 95%);
+  --blue-200: hsl(220, 84%, 84%);
+  --blue-300: hsl(220, 84%, 73%);
+  --blue-400: hsl(220, 84%, 62%);
+  --blue-500: hsl(220, 84%, 51%);
+  --blue-600: hsl(220, 84%, 43.25%);
+  --blue-700: hsl(220, 84%, 35.5%);
+  --blue-800: hsl(220, 84%, 27.75%);
+  --blue-900: hsl(220, 84%, 20%);
+
+  /* Neutral color properties */
+  --grey-100: hsl(0, 0%, 90%);
+  --grey-200: hsl(0, 0%, 80%);
+  --grey-300: hsl(0, 0%, 70%);
+  --grey-400: hsl(0, 0%, 60%);
+  --grey-500: hsl(0, 0%, 50%);
+  --grey-600: hsl(0, 0%, 40%);
+  --grey-700: hsl(0, 0%, 30%);
+  --grey-800: hsl(0, 0%, 20%);
+  --grey-900: hsl(0, 0%, 10%);
+
+
     --input-border: #8b8a8b;
-    --input-focus-h: 245;
+    /* --input-focus-h: 245;
     --input-focus-s: 100%;
-    --input-focus-l: 42%;
+    --input-focus-l: 42%; */
     --default-color: #8b8a8b;
     --disabled-color-border: #ccc;
     --disabled-color-background: #eee;
     --accent-error: #ff0033;
     --select-border: #777;
-    --select-focus: blue;
+    --select-focus: var(--color-secondary-240);
     --select-arrow: var(--select-border);
+    --formControl-color: purple;
+    --formControl-disabled: #959495;
 
     --form-field-width: 30ch;
-    --border-radius: 0.25em;
+    --form-field-border-radius: 0.25em;
 
     --minField-col-width: 20ch;
     --minField-width: 10ch;
@@ -56,7 +114,7 @@ textarea.input {
 
     background-color: #fff;
     border: 2px solid var(--input-border);
-    border-radius: var(--border-radius, 0.25em);
+    border-radius: var(--form-field-border-radius, 0.25em);
     padding: 0.25em 0.5em;
     /* these values are inherited from the :root location */
     font-family: inherit;
@@ -96,8 +154,8 @@ textarea.input {
 }
 
 fieldset {
-    border: none;
-    padding: 0;
+    border: 1px solid var(--color-secondary-220);
+    padding: 1rem;
     margin: 0;
 }
 
@@ -108,10 +166,13 @@ legend {
 /* css reset code for text and textarea input types END*/
 
 
-.formGroup {}
+.formGroup {
+    /* if adding anything make sure to test slowly */
+    /* padding: 1em; */
+}
 
 .formGroup+.formGroup {
-    margin-top: 1.5em;
+    margin-top: .5em;
 }
 
 .formGroup label {
@@ -119,10 +180,11 @@ legend {
     font-size: 1.15em;
     font-weight: 500;
     line-height: 1;
+    color: var(--color-neutral-310);
 }
 
 .formGroup label+.formField {
-    margin-top: 0.5em;
+    margin-top: 0.125em;
 }
 
 .formField {
@@ -132,12 +194,11 @@ legend {
 
 .formField:focus {
     /* WCAG guidelines state that the border-color and the border-color when focused must meet a 3:1 contrast ratio */
-
-    border-color: hsl(var(--input-focus-h), var(--input-focus-s), var(--input-focus-l));
-    box-shadow: 0 0 0 3px hsla(var(--input-focus-h), var(--input-focus-s), calc(var(--input-focus-l) + 40%), 0.8);
+    border-color: var(--color-secondary-240);
+    box-shadow: 0 0 0 1.5px var(--color-secondary-220);
     outline: 3px solid transparent;
-
 }
+
 
 .formField:disabled {
     /* WCAG guidelines state that the border-color and the border-color when focused must meet a 3:1 contrast ratio */
@@ -149,11 +210,12 @@ legend {
     cursor: not-allowed;
 }
 
-legend {
+.legend-title {
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 0.65em;
-    color: darkblue;
+    color: var(--color-neutral-310);
+    /* border: 1px solid var(--color-secondary-220); */
 }
 
 fieldset+fieldset {
@@ -357,3 +419,85 @@ select[multiple] option {
 }
 
 /* css reset code for checkbox input types START*/
+
+/* this class targets labels of checkboxes */
+.formControl {
+    font-family: system-ui, sans-serif;
+    font-size: .85rem;
+    font-weight: bold;
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+}
+
+input[type="checkbox"] {
+    /* Add if not using autoprefixer */
+    -webkit-appearance: none;
+    appearance: none;
+    /* For iOS < 15 to remove gradient background */
+    background-color: #fff;
+    /* Not removed via appearance */
+    margin: 0;
+
+    font: inherit;
+    color: currentColor;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid currentColor;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+
+    /* To prepare for the pseudo element the display behavior of the input needs to be changed to use grid. */
+    display: grid;
+    place-content: center;
+}
+
+.formControl+.formControl {
+    margin-top: 1em;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em var(--formControl-color);
+
+    /* Windows High Contrast Mode */
+    background-color: CanvasText;
+
+    /* this re-shapes the default box by using the clip-path property. This property allows us to treat the pseudo element's box similar to a vector element being reshaped with the pen tool. */
+    transform-origin: bottom left;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+    outline: max(2px, 0.15em) solid currentColor;
+    outline-offset: max(2px, 0.15em);
+}
+
+input[type="checkbox"]:disabled {
+    --formControl-color: var(--formControl-disabled);
+
+    color: var(--formControl-disabled);
+    cursor: not-allowed;
+}
+
+.formControl--disabled {
+    color: var(--formControl-disabled);
+    cursor: not-allowed;
+}
+
+.resetBtn {
+    background-color: var(--red-500);
+}
+
+.saveBtn {
+    background-color: var(--green-500);
+}

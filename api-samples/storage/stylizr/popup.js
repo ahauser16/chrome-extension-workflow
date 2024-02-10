@@ -1,6 +1,11 @@
 // Store CSS data in the "local" storage area.
 const storage = chrome.storage.local;
 
+// Get at the DOM controls used in the sample.
+const resetButton = document.querySelector('button.reset');
+const submitButton = document.querySelector('button.submit');
+const textarea = document.querySelector('textarea');
+
 const message = document.querySelector('#message');
 
 // Check if there is CSS specified.

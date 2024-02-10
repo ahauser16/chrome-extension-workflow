@@ -38,21 +38,21 @@
         </div>
     </header>
     <main class="main container">
-        <h2>User Settings - Principal</h2>
+        <h2 class="user-settings-section-title">User Settings - Principal</h2>
         <div class="principal-section">
             <section class="row" id="principal-contact">
                 <!-- <h3 class="section-title row">Principal Sign Up Form</h3> -->
-                <aside class="sidebar">
+                <aside class="sidebar" id="princ-cont-sidebar-storage">
                     <h3 class="sidebar-title">My Contact Info</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>Arthur Hauser</p>
-                        </li>
-                    </ul>
+                    <h4 id="princFirstNameDisp"></h4>
+                    <h4 id="princLastNameDisp"></h4>
+                    <h4 id="princEmailDisp"></h4>
+                    <h4 id="princPhoneDisp"></h4>
+                    <span id="sidebarMessage_princContact"></span>
                 </aside>
                 <form id="principal-contact-form" class="primary-content">
                     <fieldset>
-                        <legend class="legend-title">Your Name</legend>
+                        <legend class="legend-title">Name</legend>
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="principal-first-name" class="form-label">First Name</label>
@@ -65,7 +65,7 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend class="legend-title">Your Contact Information</legend>
+                        <legend class="legend-title">Contact</legend>
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="principal-email" class="form-label">Email</label>
@@ -77,18 +77,20 @@
                             </div>
                         </div>
                     </fieldset>
-                    <button>SUBMIT</button>
+                    <button class="saveBtn" id="princ-contact-saveBtn">Save</button>
+                    <button class="resetBtn" id="princ-contact-resetBtn">Reset</button>
+                    <span id="primContMsg_princContact"></span>
                 </form>
             </section>
-            <br class="br" />
             <section class="row" id="principal-address">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Address Info</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
-                    </ul>
+                    <h4 id="princAddress1Disp"></h4>
+                    <h4 id="princAddress2Disp"></h4>
+                    <h4 id="princCityDisp"></h4>
+                    <h4 id="princStateDisp"></h4>
+                    <h4 id="princZipDisp"></h4>
+                    <span id="sidebarMessage_princAddr"></span>
                 </aside>
                 <form id="principal-address-form" class="primary-content">
                     <fieldset>
@@ -118,6 +120,9 @@
                             </div>
                         </div>
                     </fieldset>
+                    <button class="saveBtn" id="princ-address-saveBtn">Save</button>
+                    <button class="resetBtn" id="princ-address-resetBtn">Reset</button>
+                    <span id="primContMsg_princAddr"></span>
                 </form>
             </section>
             <section class="row" id="principal-billing">
@@ -133,10 +138,12 @@
                     <fieldset>
                         <legend class="legend-title">Credit Card</legend>
                         <div class="formRow">
-                            <div class="formGroup">
-                                <label for="same-address">
-                                    <input type="checkbox" id="same-address" class="formField"> Same as home address </label>
-                            </div>
+                            <label for="same-address" class="formControl">
+                                <input type="checkbox" name="checkbox" id="same-address-checkbox" />Same as your billing address? </label>
+                            <!-- <label for="same-address" class="formControl formControl--disabled">
+                                    <input type="checkbox" name="checkbox-disabled" disabled /> Checkbox </label>
+                                <label for="same-address" class="formControl formControl--disabled">
+                                    <input type="checkbox" name="checkbox-checked-disabled" checked disabled /> Checkbox - checked </label> -->
                         </div>
                         <div class="formRow">
                             <div class="formGroup">
@@ -221,7 +228,7 @@
                                 </div>
                             </div>
                         </div>
-                        <h3>Choose your availability</h3>
+                        <!-- <h3>Choose your availability</h3> -->
                         <div class="availability formRow">
                             <!-- <div class="availability-day" id="Monday">
                                 <label><input type="checkbox" name="day" value="Monday"> Monday</label>
@@ -518,7 +525,7 @@
             </section>
         </div>
         <div class="notary-section">
-            <h2>User Settings - Notary</h2>
+            <h2 class="user-settings-section-title">User Settings - Notary</h2>
             <section class="row" id="notary-contact">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Contact Info</h3>
@@ -529,33 +536,35 @@
                     </ul>
                 </aside>
                 <form class="primary-content" id="notary-contact-form">
-                    <h3 class="section-title">Notary Public Sign Up</h3>
-                    <div class="formRow">
-                        <div class="formGroup">
-                            <input type="checkbox" id="same-as-principal-contact" name="same-as-principal-contact" class="formField">
-                            <label for="same-as-principal-contact">Is your contact information the same as the principal's?</label>
+                    <fieldset>
+                        <legend class="section-title">Notary Public Sign Up</legend>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="same-contact-as-principal-checkbox" class="formControl">
+                                    <input type="checkbox" name="same-contact-as-principal-checkbox" id="same-contact-as-principal-checkbox" />Is your principal contact and notary contact info the same?</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="formRow">
-                        <div class="formGroup">
-                            <label for="notary-first-name">First Name</label>
-                            <input type="text" id="notary-first-name" class="formField" />
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-first-name">First Name</label>
+                                <input type="text" id="notary-first-name" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="notary-last-name">Last Name</label>
+                                <input type="text" id="notary-last-name" class="formField" />
+                            </div>
                         </div>
-                        <div class="formGroup">
-                            <label for="notary-last-name">Last Name</label>
-                            <input type="text" id="notary-last-name" class="formField" />
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-email">Email</label>
+                                <input type="email" id="notary-email" class="formField" />
+                            </div>
+                            <div class="formGroup">
+                                <label for="notary-phone">Phone Number</label>
+                                <input type="tel" id="notary-phone" class="formField" />
+                            </div>
                         </div>
-                    </div>
-                    <div class="formRow">
-                        <div class="formGroup">
-                            <label for="notary-email">Email</label>
-                            <input type="email" id="notary-email" class="formField" />
-                        </div>
-                        <div class="formGroup">
-                            <label for="notary-phone">Phone Number</label>
-                            <input type="tel" id="notary-phone" class="formField" />
-                        </div>
-                    </div>
+                    </fieldset>
                 </form>
             </section>
             <section class="row" id="notary-address">
@@ -607,10 +616,8 @@
                 <form class="primary-content" id="notary-billing-form">
                     <h3 class="section-title">Billing Information</h3>
                     <div class="formRow">
-                        <div class="formGroup">
-                            <input type="checkbox" id="same-as-principal-billing" name="same-as-principal-billing" class="formField">
-                            <label for="same-as-principal-billing">Is your billing information the same as the principal's?</label>
-                        </div>
+                        <label for="same-address" class="formControl">
+                            <input type="checkbox" name="checkbox" id="same-address-checkbox" />Same as your home address? </label>
                     </div>
                     <div class="formRow">
                         <div class="formGroup">
@@ -707,7 +714,6 @@
                                     <!-- Add more options as needed -->
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                     </div>
@@ -783,7 +789,6 @@
                                     <!-- populated using JS -->
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                     </div>
@@ -794,7 +799,6 @@
                                 <select name="newYorkCounties-reg" id="newYorkCounties-reg">
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                     </div>
@@ -852,7 +856,6 @@
                                     <!-- Add more options as needed -->
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                     </div>
@@ -1105,7 +1108,6 @@
                                 <select name="USstatesStamp" id="USstatesStamp">
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                         <div class="formGroup">
@@ -1114,7 +1116,6 @@
                                 <select name="newYorkCounties-regStamp" id="newYorkCounties-regStamp">
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                         <div class="formGroup">
@@ -1124,7 +1125,6 @@
                                 <select name="newYorkCounties-regFiled" id="newYorkCounties-regFiled" multiple>
                                 </select>
                                 <span class="focus"></span>
-
                             </div>
                         </div>
                     </div>

@@ -78,5 +78,55 @@ function handleMeetingId(msg) {
 //   }
 // });
 
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'storeFormData') {
+    const formData = event.data.data;
 
+    // Open a connection to the IndexedDB database
+    const request = self.indexedDB.open('formDataDB', 1);
 
+    request.onerror = (event) => {
+      console.error('Error opening database:', event.target.error);
+    };
+
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+
+      // Create an object store to store form data
+      const objectStore = db.createObjectStore('formDataStore', { keyPath: 'id', autoIncrement: true });
+
+      // Create an index for searching form data by a specific property
+      objectStore.createIndex('nameIndex', 'name', { unique: false });
+    };
+
+    request.onsuccess = (event) => {
+      const db = event.target.result;
+
+      // Store form data in the object store
+      const transaction = db.transaction('formDataStore', 'readwrite');
+      const objectStore = transaction.objectStore('formDataStore');
+
+      const addRequest = objectStore.add(formData);
+
+      addRequest.onsuccess = () => {
+        // Respond with a success message
+        self.clients.matchAll().then((clients) => {
+          clients.forEach((client) => {
+            client.postMessage({
+              type: 'formDataStored',
+              message: 'Form data stored successfully'
+            });
+          });
+        });
+      };
+
+      addRequest.onerror = (event) => {
+        console.error('Error storing form data:', event.target.error);
+      };
+
+      transaction.oncomplete = () => {
+        db.close();
+      };
+    };
+  }
+});

@@ -59,3 +59,127 @@ function retrieveFiles() {
   });
 }
 retrieveFiles();
+
+
+
+
+///////////notepad below
+
+async function loadChanges() {
+  storage.get(['user-data'], function (items) {
+      const userData = items['user-data'];
+      if (userData && userData['principal-contact-info']) {
+          const principalContactInfo = userData['principal-contact-info'];
+          if (principalContactInfo.princFirstNameStorage) {
+              princFirstNameField.value = principalContactInfo.princFirstNameStorage;
+              showMessage('Loaded saved user first name.');
+          }
+          if (principalContactInfo.princLastNameStorage) {
+              princLastNameField.value = principalContactInfo.princLastNameStorage;
+              showMessage('Loaded saved user last name.');
+          }
+          if (principalContactInfo.princEmailStorage) {
+              princEmailField.value = principalContactInfo.princEmailStorage;
+              showMessage('Loaded saved user email.');
+          }
+          if (principalContactInfo.princPhoneStorage) {
+              princPhoneField.value = principalContactInfo.princPhoneStorage;
+              showMessage('Loaded saved user phone number.');
+          }
+      }
+  });
+}
+
+async function displayChanges() {
+  const items = await storage.get(['user-data']);
+
+  const userData = items['user-data'];
+  if (userData && userData['principal-contact-info']) {
+      const principalContactInfo = userData['principal-contact-info'];
+      if (principalContactInfo.princFirstNameStorage) {
+          princFirstNameDisp.innerText = principalContactInfo.princFirstNameStorage;
+          showMessage('Displayed saved user first name.');
+      }
+      if (principalContactInfo.princLastNameStorage) {
+          princLastNameDisp.innerText = principalContactInfo.princLastNameStorage;
+          showMessage('Displayed saved user last name.');
+      }
+      if (principalContactInfo.princEmailStorage) {
+          princEmailDisp.innerText = principalContactInfo.princEmailStorage;
+          showMessage('Displayed saved user email.');
+      }
+      if (principalContactInfo.princPhoneStorage) {
+          princPhoneDisp.innerText = principalContactInfo.princPhoneStorage;
+          showMessage('Displayed saved user phone number.');
+      }
+  }
+}
+
+function showMessage(msg) {
+  clearTimeout(messageClearTimer);
+  const message = document.querySelector('.message');
+  message.innerText = msg;
+  messageClearTimer = setTimeout(function () {
+      message.innerText = '';
+  }, 3000);
+}
+
+
+
+//////
+function loadChanges() {
+  storage.get(['user-data'], function (items) {
+      const userData = items['user-data'];
+      let messages = []; // Array to store the messages
+
+      if (userData && userData['principal-contact-info']) {
+          const principalContactInfo = userData['principal-contact-info'];
+          if (principalContactInfo.princFirstNameStorage) {
+              princFirstNameField.value = principalContactInfo.princFirstNameStorage;
+              messages.push('Loaded saved user first name.');
+          }
+          if (principalContactInfo.princLastNameStorage) {
+              princLastNameField.value = principalContactInfo.princLastNameStorage;
+              messages.push('Loaded saved user last name.');
+          }
+          if (principalContactInfo.princEmailStorage) {
+              princEmailField.value = principalContactInfo.princEmailStorage;
+              messages.push('Loaded saved user email.');
+          }
+          if (principalContactInfo.princPhoneStorage) {
+              princPhoneField.value = principalContactInfo.princPhoneStorage;
+              messages.push('Loaded saved user phone number.');
+          }
+      }
+
+      showMessage(messages.join(' ')); // Concatenate the messages and display
+  });
+}
+
+async function displayChanges() {
+  const items = await storage.get(['user-data']);
+  const userData = items['user-data'];
+  let messages = []; // Array to store the messages
+
+  if (userData && userData['principal-contact-info']) {
+      const principalContactInfo = userData['principal-contact-info'];
+      if (principalContactInfo.princFirstNameStorage) {
+          princFirstNameDisp.innerText = principalContactInfo.princFirstNameStorage;
+          messages.push('Displayed saved user first name.');
+      }
+      if (principalContactInfo.princLastNameStorage) {
+          princLastNameDisp.innerText = principalContactInfo.princLastNameStorage;
+          messages.push('Displayed saved user last name.');
+      }
+      if (principalContactInfo.princEmailStorage) {
+          princEmailDisp.innerText = principalContactInfo.princEmailStorage;
+          messages.push('Displayed saved user email.');
+      }
+      if (principalContactInfo.princPhoneStorage) {
+          princPhoneDisp.innerText = principalContactInfo.princPhoneStorage;
+          messages.push('Displayed saved user phone number.');
+      }
+  }
+
+  showMessage(messages.join(' ')); // Concatenate the messages and display
+}
