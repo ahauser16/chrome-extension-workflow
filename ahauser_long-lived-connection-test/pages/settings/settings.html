@@ -128,11 +128,16 @@
             <section class="row" id="principal-billing">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Billing Info</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
-                    </ul>
+                    <h4 id="princCCnameDisp"></h4>
+                    <h4 id="princCCnumDisp"></h4>
+                    <h4 id="princCCexpDisp"></h4>
+                    <h4 id="princCCcvvDisp"></h4>
+                    <h4 id="princCCaddress1Disp"></h4>
+                    <h4 id="princCCaddress2Disp"></h4>
+                    <h4 id="princCCcityDisp"></h4>
+                    <h4 id="princCCstateDisp"></h4>
+                    <h4 id="princCCzipDisp"></h4>
+                    <span id="sidebarMessage_princBilling"></span>
                 </aside>
                 <form class="primary-content" id="principal-billing-form">
                     <fieldset>
@@ -140,29 +145,25 @@
                         <div class="formRow">
                             <label for="same-address" class="formControl">
                                 <input type="checkbox" name="checkbox" id="same-address-checkbox" />Same as your billing address? </label>
-                            <!-- <label for="same-address" class="formControl formControl--disabled">
-                                    <input type="checkbox" name="checkbox-disabled" disabled /> Checkbox </label>
-                                <label for="same-address" class="formControl formControl--disabled">
-                                    <input type="checkbox" name="checkbox-checked-disabled" checked disabled /> Checkbox - checked </label> -->
                         </div>
                         <div class="formRow">
                             <div class="formGroup">
-                                <label for="card-name">Name on Card</label>
-                                <input type="text" id="card-name" class="formField" />
+                                <label for="name-on-credit-card">Name on Card</label>
+                                <input type="text" id="name-on-credit-card" class="formField" />
                             </div>
                         </div>
                         <div class="formRow formRow--mixed">
                             <div class="formGroup">
-                                <label for="card-number">Card Number</label>
-                                <input type="text" id="card-number" class="formField" />
+                                <label for="credit-card-number">Card Number</label>
+                                <input type="text" id="credit-card-number" class="formField" />
                             </div>
                             <div class="formGroup">
-                                <label for="card-expiration">Expiration Date</label>
-                                <input type="text formGroup--width-auto" id="card-expiration" class="formField" />
+                                <label for="credit-card-expiration">Expiration Date</label>
+                                <input type="text formGroup--width-auto" id="credit-card-expiration" class="formField" />
                             </div>
                             <div class="formGroup formGroup--width-auto">
-                                <label for="card-cvv">CVV</label>
-                                <input type="text" id="card-cvv" class="formField" />
+                                <label for="credit-card-cvv">CVV</label>
+                                <input type="text" id="credit-card-cvv" class="formField" />
                             </div>
                         </div>
                     </fieldset>
@@ -170,29 +171,32 @@
                         <legend class="legend-title">Billing Address</legend>
                         <div class="formRow">
                             <div class="formGroup">
-                                <label for="billing-address1">Billing Address Line 1</label>
-                                <input type="text" id="billing-address1" class="formField" />
+                                <label for="princ-credit-card-address1">Billing Address Line 1</label>
+                                <input type="text" id="princ-credit-card-address1" class="formField" />
                             </div>
                             <div class="formGroup">
-                                <label for="billing-address2">Billing Address Line 2</label>
-                                <input type="text" id="billing-address2" class="formField" />
+                                <label for="princ-credit-card-address2">Billing Address Line 2</label>
+                                <input type="text" id="princ-credit-card-address2" class="formField" />
                             </div>
                         </div>
                         <div class="formRow formRow--mixed">
                             <div class="formGroup">
-                                <label for="billing-city">City</label>
-                                <input type="text" id="billing-city" class="formField" />
+                                <label for="princ-credit-card-city">City</label>
+                                <input type="text" id="princ-credit-card-city" class="formField" />
                             </div>
                             <div class="formGroup">
-                                <label for="billing-state">State</label>
-                                <input type="text" id="billing-state" class="formField" />
+                                <label for="princ-credit-card-state">State</label>
+                                <input type="text" id="princ-credit-card-state" class="formField" />
                             </div>
                             <div class="formGroup formGroup--width-auto">
-                                <label for="billing-zip">Zip Code</label>
-                                <input type="text" id="billing-zip" class="formField" />
+                                <label for="princ-credit-card-zip">Zip Code</label>
+                                <input type="text" id="princ-credit-card-zip" class="formField" />
                             </div>
                         </div>
                     </fieldset>
+                    <button class="saveBtn" id="princ-credit-card-saveBtn">Save</button>
+                    <button class="resetBtn" id="princ-credit-card-resetBtn">Reset</button>
+                    <span id="primContMsg_princCreditCard"></span>
                 </form>
             </section>
             <section class="row" id="principal-scheduling">
@@ -1066,7 +1070,7 @@
                         </li>
                     </ul>
                 </aside>
-                <form class="primary-content" id="notary-docs-form">
+                <form class="primary-content" id="notary-sig-form">
                     <h3 class="section-title">Signature Information</h3>
                     <div class="formRow">
                         <div class="formGroup">

@@ -54,3 +54,39 @@ function message(msg) {
     message.innerText = '';
   }, 3000);
 }
+//////////
+function loadChanges() {
+  storage.get(['userData'], function (items) {
+      const userData = items['userData'];
+
+      let messages = []; // Array to store the messages
+
+      if (userData) {
+          const principalContactInfo = userData['principal-contact-info'];
+
+          if (principalContactInfo) {
+              if (principalContactInfo.princFirstNameStorage) {
+                  princFirstNameField.value = principalContactInfo.princFirstNameStorage;
+                  messages.push('Loaded saved user first name.');
+              }
+
+              if (principalContactInfo.princLastNameStorage) {
+                  princLastNameField.value = principalContactInfo.princLastNameStorage;
+                  messages.push('Loaded saved user last name.');
+              }
+
+              if (principalContactInfo.princEmailStorage) {
+                  princEmailField.value = principalContactInfo.princEmailStorage;
+                  messages.push('Loaded saved user email.');
+              }
+
+              if (principalContactInfo.princPhoneStorage) {
+                  princPhoneField.value = principalContactInfo.princPhoneStorage;
+                  messages.push('Loaded saved user phone number.');
+              }
+          }
+      }
+
+      showLoadMessages(messages.join(' '));
+  });
+}

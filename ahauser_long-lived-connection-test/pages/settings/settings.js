@@ -32,17 +32,58 @@ const princZipDisp = document.querySelector("#princZipDisp");
 const princAddressSubmitButton = document.querySelector('#princ-address-saveBtn');
 const princAddressResetButton = document.querySelector('#princ-address-resetBtn');
 
+// principal billing info related
+const princCCnameField = document.querySelector('#name-on-credit-card');
+const princCCnumField = document.querySelector('#credit-card-number');
+const princCCexpField = document.querySelector('#credit-card-expiration');
+const princCCcvvField = document.querySelector('#credit-card-cvv');
+const princCCaddress1Field = document.querySelector('#princ-credit-card-address1');
+const princCCaddress2Field = document.querySelector('#princ-credit-card-address2');
+const princCCcityField = document.querySelector('#princ-credit-card-city');
+const princCCstateField = document.querySelector('#princ-credit-card-state');
+const princCCzipField = document.querySelector('#princ-credit-card-zip');
+
+const princCCnameDisp = document.querySelector("#princCCnameDisp");
+const princCCnumDisp = document.querySelector("#princCCnumDisp");
+const princCCexpDisp = document.querySelector("#princCCexpDisp");
+const princCCcvvDisp = document.querySelector("#princCCcvvDisp");
+const princCCaddress1Disp = document.querySelector("#princCCAddress1Disp");
+const princCCaddress2Disp = document.querySelector("#princCCAddress2Disp");
+const princCCcityDisp = document.querySelector("#princCCCityDisp");
+const princCCstateDisp = document.querySelector("#princCCStateDisp");
+const princCCzipDisp = document.querySelector("#princCCZipDisp");
+
+const princCCSubmitButton = document.querySelector('#princ-credit-card-saveBtn');
+const princCCResetButton = document.querySelector('#princ-credit-card-resetBtn');
+
+
+
+
+////////////////
 // Load any user data that may have previously been saved.
-loadChanges();
-displayChanges();
+// loadChanges();
+loadPrincContChanges();
+loadPrincAddressChanges();
+loadPrincCCchanges();
+// displayChanges();
+displayPrincContactChanges();
+displayPrincAddressChanges();
+displayPrincCCchanges();
 
-princContactSubmitButton.addEventListener('click', saveChanges);
-princContactResetButton.addEventListener('click', reset);
+princContactSubmitButton.addEventListener('click', savePrincContChanges);
+princContactResetButton.addEventListener('click', resetPrincCont);
 
-async function saveChanges() {
+princAddressSubmitButton.addEventListener('click', savePrincAddressChanges);
+princAddressResetButton.addEventListener('click', resetPrincAddress);
+
+princCCsubmitButton.addEventListener('click', savePrincCCchanges);
+princCCresetButton.addEventListener('click', resetPrincCC);
+
+
+async function savePrincContChanges() {
     console.log('Submit button clicked');
 
-    // Get the current user data from the form.
+    // Get the current contact-user data from the form.
     const princFirstNameVal = princFirstNameField.value;
     const princLastNameVal = princLastNameField.value;
     const princEmailVal = princEmailField.value;
@@ -50,67 +91,234 @@ async function saveChanges() {
 
     // Check that all values are present.
     if (!princFirstNameVal || !princLastNameVal || !princEmailVal || !princPhoneVal) {
-        showLoadMessages('Error: Missing required fields');
+        showLoadMessages('Error: Missing required contact data');
         return;
     }
 
     // Save the data using the Chrome extension storage API.
     await storage.set({
-        'user-data': {
-            'principal-contact-info': {
-                princFirstNameStorage: princFirstNameVal,
-                princLastNameStorage: princLastNameVal,
-                princEmailStorage: princEmailVal,
-                princPhoneStorage: princPhoneVal
-            }
+        princContactData: {
+            princFirstNameStorage: princFirstNameVal,
+            princLastNameStorage: princLastNameVal,
+            princEmailStorage: princEmailVal,
+            princPhoneStorage: princPhoneVal,
         }
     });
-
-    showLoadMessages('Settings saved');
-    displayChanges();
+    showLoadMessages_princContact('Settings saved');
+    displayPrincContactChanges();
 }
 
-function loadChanges() {
-    storage.get(['user-data'], function (items) {
-        const userData = items['user-data'];
+async function savePrincAddressChanges() {
+    console.log('Submit button clicked');
+
+    // Get the current contact-user data from the form.
+    const princAddress1Val = princAddress1Field.value;
+    const princAddress2Val = princAddress2Field.value;
+    const princCityVal = princCityField.value;
+    const princStateVal = princStateField.value;
+    const princZipVal = princZipField.value;
+
+    // Check that all values are present.
+    if (!princAddress1Val || !princAddress2Val || !princCityVal || !princStateVal || !princZipVal) {
+        showLoadMessages('Error: Missing required address data');
+        return;
+    }
+
+    // Save the data using the Chrome extension storage API.
+    await storage.set({
+        princAddressData: {
+            princAddressLine1Storage: princAddress1Val,
+            princAddressLine2Storage: princAddress2Val,
+            princCityStorage: princCityVal,
+            princStateStorage: princStateVal,
+            princZipStorage: princZipVal
+        }
+    });
+    showLoadMessages_princAddress('Settings saved');
+    displayPrincAddressChanges();
+}
+
+async function savePrincCCchanges() {
+    console.log('Submit button clicked');
+
+    // Get the current contact-user data from the form.
+    const princCCnameVal = princCCnameField.value;
+    const princCCnumVal = princCCnumField.value;
+    const princCCexpVal = princCCexpField.value;
+    const princCCcvvVal = princCCcvvField.value;
+    const princCCaddress1Val = princCCaddress1Field.value;
+    const princCCaddress2Val = princCCaddress2Field.value;
+    const princCCcityVal = princCCcityField.value;
+    const princCCstateVal = princCCstateField.value;
+    const princCCzipVal = princCCzipField.value;
+
+
+    // Check that all values are present.
+    if (!princCCnameVal || !princCCnumVal || !princCCexpVal || !princCCcvvVal || !princCCaddress1Val || !princCCaddress2Val || !princCCcityVal || !princCCstateVal || !princCCzipVal) {
+        showLoadMessages('Error: Missing required credit card data');
+        return;
+    }
+
+    // Save the data using the Chrome extension storage API.
+    await storage.set({
+        princCreditCardData: {
+            princCCnameStorage: princCCnameVal,
+            princCCnumStorage: princCCnumVal,
+            princCCexpStorage: princCCexpVal,
+            princCCcvvStorage: princCCcvvVal,
+            princCCaddress1Storage: princCCaddress1Val,
+            princCCaddress2Storage: princCCaddress2Val,
+            princCCcityStorage: princCCcityVal,
+            princCCstateStorage: princCCstateVal,
+            princCCzipStorage: princCCzipVal
+        }
+    });
+    showLoadMessages_princCC('Settings saved');
+    displayPrincCCchanges();
+}
+
+
+
+
+
+
+
+
+
+
+
+////////////////////
+function loadPrincContChanges() {
+    storage.get(['princContactData'], function (items) {
+        userDataFromStorage = items['princContactData'];
 
         let messages = []; // Array to store the messages
 
-        if (userData && userData['principal-contact-info']) {
-            const principalContactInfo = userData['principal-contact-info'];
-            if (principalContactInfo.princFirstNameStorage) {
-                princFirstNameField.value = principalContactInfo.princFirstNameStorage;
-                // showMessage('Loaded saved user first name.');
+        if (userDataFromStorage) {
+            if (userDataFromStorage.princFirstNameStorage) {
+                princFirstNameField.value = userDataFromStorage.princFirstNameStorage;
                 messages.push('Loaded saved user first name.');
             }
 
-            if (principalContactInfo.princLastNameStorage) {
-                princLastNameField.value = principalContactInfo.princLastNameStorage;
-                // showMessage('Loaded saved user last name.');
+            if (userDataFromStorage.princLastNameStorage) {
+                princLastNameField.value = userDataFromStorage.princLastNameStorage;
                 messages.push('Loaded saved user last name.');
             }
 
-            if (principalContactInfo.princEmailStorage) {
-                princEmailField.value = principalContactInfo.princEmailStorage;
-                // showMessage('Loaded saved user email.');
+            if (userDataFromStorage.princEmailStorage) {
+                princEmailField.value = userDataFromStorage.princEmailStorage;
                 messages.push('Loaded saved user email.');
-
             }
-            if (principalContactInfo.princPhoneStorage) {
-                princPhoneField.value = principalContactInfo.princPhoneStorage;
-                // showMessage('Loaded saved user phone number.');
-                messages.push('Loaded saved user phone number.');
 
+            if (userDataFromStorage.princPhoneStorage) {
+                princPhoneField.value = userDataFromStorage.princPhoneStorage;
+                messages.push('Loaded saved user phone number.');
             }
         }
-        showLoadMessages(messages.join(' ')); // Concatenate the messages and display
+        showLoadMessages_princContact(messages.join(' '));
     });
 }
 
-async function reset() {
+
+function loadPrincAddressChanges() {
+    storage.get(['princAddressData'], function (items) {
+        userDataFromStorage = items['princAddressData'];
+
+        let messages = []; // Array to store the messages
+
+        if (userDataFromStorage) {
+            if (userDataFromStorage.princAddressLine1Storage) {
+                princAddress1Field.value = userDataFromStorage.princAddressLine1Storage;
+                messages.push('Loaded saved user address (line 1).');
+            }
+            if (userDataFromStorage.princAddressLine2Storage) {
+                princAddress2Field.value = userDataFromStorage.princAddressLine2Storage;
+                messages.push('Loaded saved user address (line 2).');
+            }
+            if (userDataFromStorage.princCityStorage) {
+                princCityField.value = userDataFromStorage.princCityStorage;
+                messages.push('Loaded saved user City.');
+            }
+            if (userDataFromStorage.princStateStorage) {
+                princStateField.value = userDataFromStorage.princStateStorage;
+                messages.push('Loaded saved user State.');
+            }
+            if (userDataFromStorage.princZipStorage) {
+                princZipField.value = userDataFromStorage.princZipStorage;
+                messages.push('Loaded saved user zip code.');
+            }
+        }
+        showLoadMessages_princAddress(messages.join(' '));
+    });
+}
+
+
+function loadPrincCCchanges() {
+    storage.get(['princCreditCardData'], function (items) {
+        userDataFromStorage = items['princCreditCardData'];
+
+        let messages = []; // Array to store the messages
+
+        if (userDataFromStorage) {
+            if (userDataFromStorage.princCCnameStorage) {
+                princCCnameField.value = userDataFromStorage.princCCnameStorage;
+                messages.push('Loaded saved user name as displayed on credit card.');
+            }
+            if (userDataFromStorage.princCCnumStorage) {
+                princCCnumField.value = userDataFromStorage.princCCnumStorage;
+                messages.push('Loaded saved user credit card number.');
+            }
+            if (userDataFromStorage.princCCexpStorage) {
+                princCCexpField.value = userDataFromStorage.princCCexpStorage;
+                messages.push('Loaded saved user credit card expiration date.');
+            }
+            if (userDataFromStorage.princCCcvvStorage) {
+                princCCcvvField.value = userDataFromStorage.princCCcvvStorage;
+                messages.push('Loaded saved user credit card CVV.');
+            }
+            if (userDataFromStorage.princCCaddress1Storage) {
+                princCCaddress1Field.value = userDataFromStorage.princCCaddress1Storage;
+                messages.push('Loaded saved user credit card address (line 1).');
+            }
+            if (userDataFromStorage.princCCaddress2Storage) {
+                princCCaddress2Field.value = userDataFromStorage.princCCaddress2Storage;
+                messages.push('Loaded saved user credit card address (line 2).');
+            }
+            if (userDataFromStorage.princCCcityStorage) {
+                princCCcityField.value = userDataFromStorage.princCCcityStorage;
+                messages.push('Loaded saved user credit card city.');
+            }
+            if (userDataFromStorage.princCCstateStorage) {
+                princCCstateField.value = userDataFromStorage.princCCstateStorage;
+                messages.push('Loaded saved user credit card state.');
+            }
+            if (userDataFromStorage.princCCzipStorage) {
+                princCCzipField.value = userDataFromStorage.princCCzipStorage;
+                messages.push('Loaded saved user credit card zip code.');
+            }
+
+            
+        }
+        showLoadMessages_princCC(messages.join(' '));
+    });
+}
+
+
+
+
+
+
+
+
+
+//////////////////////////////
+
+
+
+async function resetPrincCont() {
     // Remove the saved values from storage.
-    await storage.remove(['user-data']);
-    showLoadMessages('Reset stored data');
+    await storage.remove(['princContactData']);
+    showLoadMessages_princContact('Reset stored principal contact data');
     // Refresh the text field area.
     princFirstNameField.value = '';
     princLastNameField.value = '';
@@ -122,67 +330,186 @@ async function reset() {
     princLastNameDisp.innerText = '';
     princEmailDisp.innerText = '';
     princPhoneDisp.innerText = '';
-
 }
 
-async function displayChanges() {
-    const items = await storage.get(['user-data']);
-    const userData = items['user-data'];
+async function resetPrincAddress() {
+    // Remove the saved values from storage.
+    await storage.remove(['princAddressData']);
+    showLoadMessages_princAddress('Reset stored principal address data');
+    // Refresh the text field area.
+    princAddress1Field.value = '';
+    princAddress2Field.value = '';
+    princCityField.value = '';
+    princStateField.value = '';
+    princZipField.value = '';
+
+    // Refresh the sidebar area.
+    princAddress1Disp.innerText = '';
+    princAddress2Disp.innerText = '';
+    princCityDisp.innerText = '';
+    princStateDisp.innerText = '';
+    princZipDisp.innerText = '';
+}
+
+async function resetPrincCC() {
+    // Remove the saved values from storage.
+    await storage.remove(['princCreditCardData']);
+    showLoadMessages_princAddress('Reset stored principal credit card data');
+    // Refresh the text field area.
+    princCCnameField.value = '';
+    princCCnumField.value = '';
+    princCCexpField.value = '';
+    princCCcvvField.value = '';
+    princCCaddress1Field.value = '';
+    princCCaddress2Field.value = '';
+    princCCcityField.value = '';
+    princCCstateField.value = '';
+    princCCzipField.value = '';
+    
+    // Refresh the sidebar area.
+    princCCnameDisp.innerText = '';
+    princCCnumDisp.innerText = '';
+    princCCexpDisp.innerText = '';
+    princCCcvvDisp.innerText = '';
+    princCCaddress1Disp.innerText = '';
+    princCCaddress2Disp.innerText = '';
+    princCCcityDisp.innerText = '';
+    princCCstateDisp.innerText = '';
+    princCCzipDisp.innerText = '';
+}
+
+
+
+
+////////////////////////
+
+
+async function displayPrincContactChanges() {
+    const items = await storage.get(['princContactData']);
+    userDataFromStorage = items['princContactData'];
 
     let messages = []; // Array to store the messages
 
-
-    if (userData && userData['principal-contact-info']) {
-        const principalContactInfo = userData['principal-contact-info'];
-        if (principalContactInfo.princFirstNameStorage) {
-            princFirstNameDisp.innerText = principalContactInfo.princFirstNameStorage;
+    if (userDataFromStorage) {
+        if (userDataFromStorage.princFirstNameStorage) {
+            princFirstNameDisp.innerText = userDataFromStorage.princFirstNameStorage;
             // showMessage('Displayed saved user first name.');
             messages.push('Displayed saved user first name.');
 
         }
-        if (principalContactInfo.princLastNameStorage) {
-            princLastNameDisp.innerText = principalContactInfo.princLastNameStorage;
+        if (userDataFromStorage.princLastNameStorage) {
+            princLastNameDisp.innerText = userDataFromStorage.princLastNameStorage;
             // showMessage('Displayed saved user last name.');
             messages.push('Displayed saved user last name.');
 
         }
-        if (principalContactInfo.princEmailStorage) {
-            princEmailDisp.innerText = principalContactInfo.princEmailStorage;
+        if (userDataFromStorage.princEmailStorage) {
+            princEmailDisp.innerText = userDataFromStorage.princEmailStorage;
             // showMessage('Displayed saved user email.');
             messages.push('Displayed saved user email.');
 
         }
-        if (principalContactInfo.princPhoneStorage) {
-            princPhoneDisp.innerText = principalContactInfo.princPhoneStorage;
+        if (userDataFromStorage.princPhoneStorage) {
+            princPhoneDisp.innerText = userDataFromStorage.princPhoneStorage;
             // showMessage('Displayed saved user phone number.');
             messages.push('Displayed saved user phone number.');
 
         }
     }
-    showDisplayMessages(messages.join(' ')); 
+    showDisplayMessages_princContact(messages.join(' '));
+}
+
+async function displayPrincAddressChanges() {
+    const items = await storage.get(['princAddressData']);
+    userDataFromStorage = items['princAddressData'];
+
+    let messages = []; // Array to store the messages
+
+    if (userDataFromStorage) {
+        if (userDataFromStorage.princAddressLine1Storage) {
+            princAddress1Disp.innerText = userDataFromStorage.princAddressLine1Storage;
+            // showMessage('Displayed saved user first name.');
+            messages.push("Displayed saved user's address (line 1).");
+
+        }
+        if (userDataFromStorage.princAddressLine2Storage) {
+            princAddress2Disp.innerText = userDataFromStorage.princAddressLine2Storage;
+            // showMessage('Displayed saved user last name.');
+            messages.push("Displayed saved user's address (line 2).");
+
+        }
+        if (userDataFromStorage.princCityStorage) {
+            princCityDisp.innerText = userDataFromStorage.princCityStorage;
+            // showMessage('Displayed saved user email.');
+            messages.push("Displayed saved user's City.");
+
+        }
+        if (userDataFromStorage.princStateStorage) {
+            princStateDisp.innerText = userDataFromStorage.princStateStorage;
+            // showMessage('Displayed saved user phone number.');
+            messages.push("Displayed saved user's State location.");
+        }
+        if (userDataFromStorage.princZipStorage) {
+            princZipDisp.innerText = userDataFromStorage.princZipStorage;
+            // showMessage('Displayed saved user phone number.');
+            messages.push("Displayed saved user's zip code.");
+        }
+    }
+    showDisplayMessages_princAddr(messages.join(' '));
 }
 
 
-let loadMessageClearTimer;
-function showLoadMessages(msg) {
-    clearTimeout(loadMessageClearTimer);
+
+
+
+
+
+
+
+//////////////////////////////////
+let loadMessageClearTimer_princContact;
+function showLoadMessages_princContact(msg) {
+    clearTimeout(loadMessageClearTimer_princContact);
     const message = document.querySelector('#primContMsg_princContact');
     message.innerText = msg;
-    loadMessageClearTimer = setTimeout(function () {
+    loadMessageClearTimer_princContact = setTimeout(function () {
         message.innerText = '';
     }, 3000);
 }
 
-let displayMessageClearTimer;
-function showDisplayMessages(msg) {
-    clearTimeout(displayMessageClearTimer);
+let loadMessageClearTimer_princAddress;
+function showLoadMessages_princAddress(msg) {
+    clearTimeout(loadMessageClearTimer_princAddress);
+    const message = document.querySelector('#primContMsg_princAddr');
+    message.innerText = msg;
+    loadMessageClearTimer_princAddress = setTimeout(function () {
+        message.innerText = '';
+    }, 3000);
+}
+
+//*//
+
+let displayMessageClearTimer_princContact;
+function showDisplayMessages_princContact(msg) {
+    clearTimeout(displayMessageClearTimer_princContact);
     const message = document.querySelector('#sidebarMessage_princContact');
     message.innerText = msg;
-    displayMessageClearTimer = setTimeout(function () {
+    displayMessageClearTimer_princContact = setTimeout(function () {
         message.innerText = '';
     }, 3000);
 }
 
+let displayMessageClearTimer_princAddr;
+function showDisplayMessages_princAddr(msg) {
+    clearTimeout(displayMessageClearTimer_princAddr);
+    const message = document.querySelector('#sidebarMessage_princAddr');
+    message.innerText = msg;
+    displayMessageClearTimer_princAddr = setTimeout(function () {
+        message.innerText = '';
+    }, 3000);
+}
+
+//////////////////////////////////////////
 
 
 
@@ -191,6 +518,61 @@ function showDisplayMessages(msg) {
 
 
 
+
+
+////////////////////////////////////
+// Get the principal contact form element
+const form__princContact = document.getElementById('principal-contact-form');
+
+// Add event listener for form submission
+form__princContact.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    // Get the form data
+    const formData = new FormData(form__princContact);
+
+    // Convert form data to JSON object
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+
+    // Send message to service worker
+    navigator.serviceWorker.controller.postMessage({
+        type: 'storeFormData',
+        data: data
+    });
+});
+
+// Get the principal address form element
+const form__princAddress = document.getElementById('principal-address-form');
+
+// Add event listener for form submission
+form__princAddress.addEventListener('submit', (event) => {
+    event.preventDefault(); // Prevent form submission
+
+    // Get the form data
+    const formData = new FormData(form__princAddress);
+
+    // Convert form data to JSON object
+    const data = {};
+    for (let [key, value] of formData.entries()) {
+        data[key] = value;
+    }
+
+    // Send message to service worker
+    navigator.serviceWorker.controller.postMessage({
+        type: 'storeFormData',
+        data: data
+    });
+});
+
+
+
+
+
+
+////////////////////////////////////////
 document.getElementById('govt-id-type').addEventListener('change', function () {
     var backLabel = document.getElementById('back-label');
     var backInput = document.getElementById('govt-id-back');
@@ -203,20 +585,6 @@ document.getElementById('govt-id-type').addEventListener('change', function () {
         backInput.style.display = 'none';
     }
 });
-
-// document.getElementById('same-as-principal-contact').addEventListener('change', function () {
-//     if (this.checked) {
-//         document.getElementById('principal-first-name').value = document.getElementById('notary-first-name').value;
-//         document.getElementById('principal-last-name').value = document.getElementById('notary-last-name').value;
-//         document.getElementById('principal-email').value = document.getElementById('notary-email').value;
-//         document.getElementById('principal-phone').value = document.getElementById('principal-phone').value;
-//     } else {
-//         document.getElementById('notary-first-name').value = '';
-//         document.getElementById('notary-last-name').value = '';
-//         document.getElementById('notary-email').value = '';
-//         document.getElementById('principal-phone').value = '';
-//     }
-// });
 
 const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -280,25 +648,3 @@ function populateNewYorkCounties() {
 populateStates();
 populateNewYorkCounties();
 
-// Get the form element
-const form = document.getElementById('principal-contact-form');
-
-// Add event listener for form submission
-form.addEventListener('submit', (event) => {
-    event.preventDefault(); // Prevent form submission
-
-    // Get the form data
-    const formData = new FormData(form);
-
-    // Convert form data to JSON object
-    const data = {};
-    for (let [key, value] of formData.entries()) {
-        data[key] = value;
-    }
-
-    // Send message to service worker
-    navigator.serviceWorker.controller.postMessage({
-        type: 'storeFormData',
-        data: data
-    });
-});
