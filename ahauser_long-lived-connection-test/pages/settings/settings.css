@@ -277,3 +277,21 @@ table p {
     margin: 0;
 }
 
+
+
+.devNote{
+    font-size: .85rem;
+}
+
+
+
+
+#princNotaryContactList {
+    list-style-type: none;
+}
+
+
+
+#queriedNotaryProf {
+    font-size: .75rem;
+}

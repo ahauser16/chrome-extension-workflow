@@ -1,58 +1,58 @@
 :root {
-  /* GREEN for success messages or positive Confirmations. */
-  --green-100: hsl(144, 100%, 95%);
-  --green-200: hsl(144, 100%, 81.25%);
-  --green-300: hsl(144, 100%, 67.5%);
-  --green-400: hsl(144, 100%, 53.75%);
-  --green-500: hsl(144, 100%, 40%);
-  --green-600: hsl(144, 100%, 35%);
-  --green-700: hsl(144, 100%, 30%);
-  --green-800: hsl(144, 100%, 25%);
-  --green-900: hsl(144, 100%, 20%);
+    /* GREEN for success messages or positive Confirmations. */
+    --green-100: hsl(144, 100%, 95%);
+    --green-200: hsl(144, 100%, 81.25%);
+    --green-300: hsl(144, 100%, 67.5%);
+    --green-400: hsl(144, 100%, 53.75%);
+    --green-500: hsl(144, 100%, 40%);
+    --green-600: hsl(144, 100%, 35%);
+    --green-700: hsl(144, 100%, 30%);
+    --green-800: hsl(144, 100%, 25%);
+    --green-900: hsl(144, 100%, 20%);
 
-  /* YELLOW/ORANGE for warning messages. */
-  --yellow-100: hsl(38, 99%, 95%);
-  --yellow-200: hsl(38, 99%, 83%);
-  --yellow-300: hsl(38, 99%, 71%);
-  --yellow-400: hsl(38, 99%, 59%);
-  --yellow-500: hsl(38, 99%, 47%);
-  --yellow-600: hsl(38, 99%, 40.25%);
-  --yellow-700: hsl(38, 99%, 33.5%);
-  --yellow-800: hsl(38, 99%, 26.75%);
-  --yellow-900: hsl(38, 99%, 20%);
+    /* YELLOW/ORANGE for warning messages. */
+    --yellow-100: hsl(38, 99%, 95%);
+    --yellow-200: hsl(38, 99%, 83%);
+    --yellow-300: hsl(38, 99%, 71%);
+    --yellow-400: hsl(38, 99%, 59%);
+    --yellow-500: hsl(38, 99%, 47%);
+    --yellow-600: hsl(38, 99%, 40.25%);
+    --yellow-700: hsl(38, 99%, 33.5%);
+    --yellow-800: hsl(38, 99%, 26.75%);
+    --yellow-900: hsl(38, 99%, 20%);
 
-  /* RED for error messages. */
-  --red-100: hsl(357, 82%, 95%);
-  --red-200: hsl(357, 82%, 84.25%);
-  --red-300: hsl(357, 82%, 73.5%);
-  --red-400: hsl(357, 82%, 62.75%);
-  --red-500: hsl(357, 82%, 52%);
-  --red-600: hsl(357, 82%, 44%);
-  --red-700: hsl(357, 82%, 36%);
-  --red-800: hsl(357, 82%, 28%);
-  --red-900: hsl(357, 82%, 20%);
+    /* RED for error messages. */
+    --red-100: hsl(357, 82%, 95%);
+    --red-200: hsl(357, 82%, 84.25%);
+    --red-300: hsl(357, 82%, 73.5%);
+    --red-400: hsl(357, 82%, 62.75%);
+    --red-500: hsl(357, 82%, 52%);
+    --red-600: hsl(357, 82%, 44%);
+    --red-700: hsl(357, 82%, 36%);
+    --red-800: hsl(357, 82%, 28%);
+    --red-900: hsl(357, 82%, 20%);
 
-  /* BLUE for neutral informational related messages. */
-  --blue-100: hsl(220, 84%, 95%);
-  --blue-200: hsl(220, 84%, 84%);
-  --blue-300: hsl(220, 84%, 73%);
-  --blue-400: hsl(220, 84%, 62%);
-  --blue-500: hsl(220, 84%, 51%);
-  --blue-600: hsl(220, 84%, 43.25%);
-  --blue-700: hsl(220, 84%, 35.5%);
-  --blue-800: hsl(220, 84%, 27.75%);
-  --blue-900: hsl(220, 84%, 20%);
+    /* BLUE for neutral informational related messages. */
+    --blue-100: hsl(220, 84%, 95%);
+    --blue-200: hsl(220, 84%, 84%);
+    --blue-300: hsl(220, 84%, 73%);
+    --blue-400: hsl(220, 84%, 62%);
+    --blue-500: hsl(220, 84%, 51%);
+    --blue-600: hsl(220, 84%, 43.25%);
+    --blue-700: hsl(220, 84%, 35.5%);
+    --blue-800: hsl(220, 84%, 27.75%);
+    --blue-900: hsl(220, 84%, 20%);
 
-  /* Neutral color properties */
-  --grey-100: hsl(0, 0%, 90%);
-  --grey-200: hsl(0, 0%, 80%);
-  --grey-300: hsl(0, 0%, 70%);
-  --grey-400: hsl(0, 0%, 60%);
-  --grey-500: hsl(0, 0%, 50%);
-  --grey-600: hsl(0, 0%, 40%);
-  --grey-700: hsl(0, 0%, 30%);
-  --grey-800: hsl(0, 0%, 20%);
-  --grey-900: hsl(0, 0%, 10%);
+    /* Neutral color properties */
+    --grey-100: hsl(0, 0%, 90%);
+    --grey-200: hsl(0, 0%, 80%);
+    --grey-300: hsl(0, 0%, 70%);
+    --grey-400: hsl(0, 0%, 60%);
+    --grey-500: hsl(0, 0%, 50%);
+    --grey-600: hsl(0, 0%, 40%);
+    --grey-700: hsl(0, 0%, 30%);
+    --grey-800: hsl(0, 0%, 20%);
+    --grey-900: hsl(0, 0%, 10%);
 
 
     --input-border: #8b8a8b;
@@ -105,6 +105,13 @@ input[type="file"] {
 
 textarea.input {
     resize: vertical;
+
+    overflow: auto;
+    /* padding: .5rem; */
+    border: 1px solid var(--input-border);
+    font-family: Arial, sans-serif;
+    font-size: .85rem;
+
 }
 
 /* //modern web dev refactor above */
@@ -500,4 +507,8 @@ input[type="checkbox"]:disabled {
 
 .saveBtn {
     background-color: var(--green-500);
+}
+
+.searchBtn{
+    background-color: var(--blue-500);
 }

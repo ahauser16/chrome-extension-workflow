@@ -137,9 +137,9 @@
                     <h4 id="princCCcityDisp"></h4>
                     <h4 id="princCCstateDisp"></h4>
                     <h4 id="princCCzipDisp"></h4>
-                    <span id="sidebarMessage_princBilling"></span>
+                    <span id="sidebarMessage_princCC"></span>
                 </aside>
-                <form class="primary-content" id="principal-billing-form">
+                <form class="primary-content" id="principal-credit-card-form">
                     <fieldset>
                         <legend class="legend-title">Credit Card</legend>
                         <div class="formRow">
@@ -196,17 +196,16 @@
                     </fieldset>
                     <button class="saveBtn" id="princ-credit-card-saveBtn">Save</button>
                     <button class="resetBtn" id="princ-credit-card-resetBtn">Reset</button>
-                    <span id="primContMsg_princCreditCard"></span>
+                    <span id="primContMsg_princCC"></span>
                 </form>
             </section>
             <section class="row" id="principal-scheduling">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Availability</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
-                    </ul>
+                    <h4 id="princTimeZoneDisp"></h4>
+                    <h4 id="princPrefContactMethDisp"></h4>
+                    <p id="princContactNotesPublicDisp"></p>
+                    <span id="sidebarMessage_princSched"></span>
                 </aside>
                 <form class="primary-content" id="principal-scheduling-form">
                     <fieldset>
@@ -219,14 +218,13 @@
                                 <div class="select">
                                     <!-- <select id="principal-timezone" class="timezone select"> -->
                                     <select id="principal-time-zone-select">
-                                        <option value="">Select your time zone</option>
+                                        <option value="select">Select your time zone</option>
                                         <option value="Hawaii-Aleutian Standard Time (HST)">Hawaii-Aleutian Standard Time (HST) </option>
                                         <option value="Alaska Standard Time (AKST)">Alaska Standard Time (AKST)</option>
                                         <option value="Pacific Standard Time (PST)">Pacific Standard Time (PST)</option>
                                         <option value="Mountain Standard Time (MST)">Mountain Standard Time (MST)</option>
                                         <option value="Central Standard Time (CST)">Central Standard Time (CST)</option>
                                         <option value="Eastern Standard Time (EST)">Eastern Standard Time (EST)</option>
-                                        <option value="Eastern Standard Time (EST)">This option is a demonstration of an asburdly long value that's hard to fit in a Select's option element</option>
                                     </select>
                                     <span class="focus"></span>
                                 </div>
@@ -335,13 +333,13 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <legend class="legend-title">Contact</legend>
+                        <legend class="legend-title">Contact Method</legend>
                         <div class="formRow">
                             <div class="formGroup">
-                                <label for="principal-contact-method">Preferred Method of Contact</label>
+                                <label for="principal-contact-method">Preference</label>
                                 <div class="select">
-                                    <select id="principal-contact-method">
-                                        <option value="">Select your preferred contact method</option>
+                                    <select id="principal-pref-contact-method">
+                                        <option value="contact-method">contact method</option>
                                         <option value="email">Email</option>
                                         <option value="phone">Phone</option>
                                         <!-- Add more options as needed -->
@@ -350,19 +348,31 @@
                                 </div>
                             </div>
                             <div class="formGroup">
-                                <label for="principal-contact-notes">Additional Notes</label>
-                                <textarea id="principal-contact-notes"></textarea>
+                                <label for="principal-contact-notes-public">Notes (public)</label>
+                                <textarea class="input formfield" id="principal-contact-notes-public" placeholder="e.g. I don't check my email on Sundays." rows="8" cols="35" maxlength="200" wrap="hard" spellcheck="true" autofocus required></textarea>
                             </div>
                         </div>
                     </fieldset>
+                    <button class="saveBtn" id="princ-scheduling-saveBtn">Save</button>
+                    <button class="resetBtn" id="princ-scheduling-resetBtn">Reset</button>
+                    <span id="primContMsg_princSched"></span>
                 </form>
             </section>
             <section class="row" id="principal-contacts">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Contacts</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
+                    <p class="devNote">api endpoint below:</p>
+                    <p class="devNote">https://data.ny.gov/resource/rwbv-mz6z.json</p>
+                    <p class="devNote">api documentation:</p>
+                    <p class="devNote">https://dev.socrata.com/foundry/data.ny.gov/rwbv-mz6z</p>
+                    <ul id="princNotaryContactList">
+                        <li id="queriedNotaryProf">
+                            <p>"commission_holder_name": "0CTAVIA CARPENTER",</p>
+                            <p>"commission_number_uid": "01CA6406708",</p>
+                            <p>"commissioned_county": "Erie",</p>
+                            <p>"commission_type_traditional_or_electronic": "Traditional",</p>
+                            <p>"term_issue_date": "2020-04-06T00:00:00.000",</p>
+                            <p>"term_expiration_date": "2024-04-06T00:00:00.000"</p>
                         </li>
                     </ul>
                 </aside>
@@ -371,9 +381,12 @@
                         <legend class="legend-title">My Notaries</legend>
                         <div class="formRow">
                             <div class="formGroup">
-                                <label for="principal-notary">Preferred Notary</label>
-                                <input type="text" id="principal-notary" class="formField" />
-                                <button>SUBMIT</button>
+                                <label for="principal-notary">Notary Search</label>
+                                <input placeholder="name" type="text" id="commission-holder-search" class="formField" />
+                                <button class="searchBtn" id="princ-notary-searchBtn">Search</button>
+                                <button class="saveBtn" id="princ-scheduling-saveBtn">Save</button>
+                                <button class="resetBtn" id="princ-scheduling-resetBtn">Reset</button>
+                                <span id="primContMsg_princNotarySearch"></span>
                             </div>
                         </div>
                     </fieldset>
