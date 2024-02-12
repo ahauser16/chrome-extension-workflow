@@ -64,8 +64,20 @@
     --color-support-580: hsla(360, 82%, 89%, 1);
     --color-support-590: hsla(360, 100%, 97%, 1);
 
-
     --border-radius: 1rem;
+
+    .primary {
+        fill: var(--blue-500);
+    }
+
+    .secondary {
+        fill: var(--blue-800);
+    }
+
+    .icon{
+        width: 1.85rem;
+        cursor: pointer;
+    }
 }
 
 *,
@@ -156,6 +168,12 @@ header {
     justify-content: space-between;
 }
 
+.column {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+
+}
 
 /* 
 .hero {
@@ -221,28 +239,25 @@ table {
     width: 100%;
     border-collapse: collapse;
     border: 1px solid black;
-    /* Added rule to make the border 1px solid black */
-}
-
-table th,
-table td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-    font-size: 12px;
-    /* Set font size to 12px for all table cells */
-    border: 1px solid darkgrey;
-    /* Added border to each td tag */
+    background-color: var(--color-neutral-390);
+    color: black;
 }
 
 table th {
-    background-color: var(--color-neutral-360);
+    text-align: center;
     /* Changed background color to black */
-    color: var(--color-primary-190);
+    color: black;
     /* Changed font color to white */
-    font-size: 16px;
+    font-size: 1.25rem;
     /* Set font size to 16px for table headers */
 }
+
+table td {
+    padding: 8px;
+    text-align: left;
+    font-size: 1rem;
+}
+
 
 table ul {
     margin: 0;
@@ -277,11 +292,21 @@ table p {
     margin: 0;
 }
 
+/* .api-table{
+    background-color: var(--color-neutral-390);
+    font-size: 1.25rem;
+    margin: 0;
+    padding: 0;
+    color: black;
+} */
 
-
-.devNote{
-    font-size: .85rem;
-}
+/* .api-table-full-width {
+    background-color: var(--color-neutral-390);
+    color: black;
+    display:flex;
+    justify-content: center;
+    flex-direction: row;
+} */
 
 
 

@@ -69,10 +69,90 @@ const princSchedSubmitButton = document.querySelector('#princ-scheduling-saveBtn
 const princSchedResetButton = document.querySelector('#princ-scheduling-resetBtn');
 
 //principal's notary contacts related
-
-const princNotarySearchSubmitButton = document.querySelector('#princ-notary-searchBtn');
+const princElectronicNotarySearchSubmitButton = document.querySelector('#princ-elect-notary-searchBtn');
 const princNotarySaveButton = document.querySelector('#princ-scheduling-saveBtn');
-const princNotarySearchResetButton = document.querySelector('#princ-scheduling-resetBtn');
+const princNotarySearchResetButton = document.querySelector('#saved-notaries-resetBtn');
+
+const commission_holder_name_1 = document.querySelector('#commission_holder_name_1');
+const commission_number_uid_1 = document.querySelector('#commission_number_uid_1');
+const commissioned_county_1 = document.querySelector('#commissioned_county_1');
+const commission_type_traditional_or_electronic_1 = document.querySelector('#commission_type_traditional_or_electronic_1');
+const term_issue_date_1 = document.querySelector('#term_issue_date_1');
+const term_expiration_date_1 = document.querySelector('#term_expiration_date_1');
+
+const commission_holder_name_2 = document.querySelector('#commission_holder_name_2');
+const commission_number_uid_2 = document.querySelector('#commission_number_uid_2');
+const commissioned_county_2 = document.querySelector('#commissioned_county_2');
+const commission_type_traditional_or_electronic_2 = document.querySelector('#commission_type_traditional_or_electronic_2');
+const term_issue_date_2 = document.querySelector('#term_issue_date_2');
+const term_expiration_date_2 = document.querySelector('#term_expiration_date_2');
+
+const commission_holder_name_3 = document.querySelector('#commission_holder_name_3');
+const commission_number_uid_3 = document.querySelector('#commission_number_uid_3');
+const commissioned_county_3 = document.querySelector('#commissioned_county_3');
+const commission_type_traditional_or_electronic_3 = document.querySelector('#commission_type_traditional_or_electronic_3');
+const term_issue_date_3 = document.querySelector('#term_issue_date_3');
+const term_expiration_date_3 = document.querySelector('#term_expiration_date_3');
+
+const commission_holder_name_4 = document.querySelector('#commission_holder_name_4');
+const commission_number_uid_4 = document.querySelector('#commission_number_uid_4');
+const commissioned_county_4 = document.querySelector('#commissioned_county_4');
+const commission_type_traditional_or_electronic_4 = document.querySelector('#commission_type_traditional_or_electronic_4');
+const term_issue_date_4 = document.querySelector('#term_issue_date_4');
+const term_expiration_date_4 = document.querySelector('#term_expiration_date_4');
+
+const commission_holder_name_5 = document.querySelector('#commission_holder_name_5');
+const commission_number_uid_5 = document.querySelector('#commission_number_uid_5');
+const commissioned_county_5 = document.querySelector('#commissioned_county_5');
+const commission_type_traditional_or_electronic_5 = document.querySelector('#commission_type_traditional_or_electronic_5');
+const term_issue_date_5 = document.querySelector('#term_issue_date_5');
+const term_expiration_date_5 = document.querySelector('#term_expiration_date_5');
+
+const commission_holder_name_6 = document.querySelector('#commission_holder_name_6');
+const commission_number_uid_6 = document.querySelector('#commission_number_uid_6');
+const commissioned_county_6 = document.querySelector('#commissioned_county_6');
+const commission_type_traditional_or_electronic_6 = document.querySelector('#commission_type_traditional_or_electronic_6');
+const term_issue_date_6 = document.querySelector('#term_issue_date_6');
+const term_expiration_date_6 = document.querySelector('#term_expiration_date_6');
+
+const commission_holder_name_7 = document.querySelector('#commission_holder_name_7');
+const commission_number_uid_7 = document.querySelector('#commission_number_uid_7');
+const commissioned_county_7 = document.querySelector('#commissioned_county_7');
+const commission_type_traditional_or_electronic_7 = document.querySelector('#commission_type_traditional_or_electronic_7');
+const term_issue_date_7 = document.querySelector('#term_issue_date_7');
+const term_expiration_date_7 = document.querySelector('#term_expiration_date_7');
+
+const commission_holder_name_8 = document.querySelector('#commission_holder_name_8');
+const commission_number_uid_8 = document.querySelector('#commission_number_uid_8');
+const commissioned_county_8 = document.querySelector('#commissioned_county_8');
+const commission_type_traditional_or_electronic_8 = document.querySelector('#commission_type_traditional_or_electronic_8');
+const term_issue_date_8 = document.querySelector('#term_issue_date_8');
+const term_expiration_date_8 = document.querySelector('#term_expiration_date_8');
+
+const commission_holder_name_9 = document.querySelector('#commission_holder_name_9');
+const commission_number_uid_9 = document.querySelector('#commission_number_uid_9');
+const commissioned_county_9 = document.querySelector('#commissioned_county_9');
+const commission_type_traditional_or_electronic_9 = document.querySelector('#commission_type_traditional_or_electronic_9');
+const term_issue_date_9 = document.querySelector('#term_issue_date_9');
+const term_expiration_date_9 = document.querySelector('#term_expiration_date_9');
+
+const commission_holder_name_10 = document.querySelector('#commission_holder_name_10');
+const commission_number_uid_10 = document.querySelector('#commission_number_uid_10');
+const commissioned_county_10 = document.querySelector('#commissioned_county_10');
+const commission_type_traditional_or_electronic_10 = document.querySelector('#commission_type_traditional_or_electronic_10');
+const term_issue_date_10 = document.querySelector('#term_issue_date_10');
+const term_expiration_date_10 = document.querySelector('#term_expiration_date_10');
+
+const princeNotarySearchResultRow1SaveBtn = document.querySelector('#princeNotarySearchResultRow1saveBtn');
+const princeNotarySearchResultRow2SaveBtn = document.querySelector('#princeNotarySearchResultRow2saveBtn');
+const princeNotarySearchResultRow3SaveBtn = document.querySelector('#princeNotarySearchResultRow3saveBtn');
+const princeNotarySearchResultRow4SaveBtn = document.querySelector('#princeNotarySearchResultRow4saveBtn');
+const princeNotarySearchResultRow5SaveBtn = document.querySelector('#princeNotarySearchResultRow5saveBtn');
+const princeNotarySearchResultRow6SaveBtn = document.querySelector('#princeNotarySearchResultRow6saveBtn');
+const princeNotarySearchResultRow7SaveBtn = document.querySelector('#princeNotarySearchResultRow7saveBtn');
+const princeNotarySearchResultRow8SaveBtn = document.querySelector('#princeNotarySearchResultRow8saveBtn');
+const princeNotarySearchResultRow9SaveBtn = document.querySelector('#princeNotarySearchResultRow9saveBtn');
+const princeNotarySearchResultRow10SaveBtn = document.querySelector('#princeNotarySearchResultRow10saveBtn');
 
 
 
@@ -102,6 +182,48 @@ princSchedSubmitButton.addEventListener('click', savePrincSchedChanges);
 princSchedResetButton.addEventListener('click', resetPrincSched);
 
 
+princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
+
+princeNotarySearchResultRow1SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow1SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow2SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow2SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow3SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow3SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow4SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow4SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow5SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow5SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow6SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow6SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow7SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow7SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow8SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow8SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow9SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow9SaveBtn");
+    saveNotaryToContactList();
+});
+princeNotarySearchResultRow10SaveBtn.addEventListener('click', function () {
+    console.log("Clicked on princeNotarySearchResultRow10SaveBtn");
+    saveNotaryToContactList();
+});
 
 
 
@@ -833,19 +955,8 @@ form__princSched.addEventListener('submit', (event) => {
 
 
 
-////////////////////////////////////////
-document.getElementById('govt-id-type').addEventListener('change', function () {
-    var backLabel = document.getElementById('back-label');
-    var backInput = document.getElementById('govt-id-back');
 
-    if (this.value === 'drivers-license') {
-        backLabel.style.display = 'block';
-        backInput.style.display = 'block';
-    } else {
-        backLabel.style.display = 'none';
-        backInput.style.display = 'none';
-    }
-});
+////////////////////////////////////////
 
 const states = [
     "Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware",
@@ -910,10 +1021,10 @@ populateStates();
 populateNewYorkCounties();
 
 
+async function fetchElectronicNotaryList(event) {
+    event.preventDefault();
 
-function fetchDataByCommissionHolderName() {
-    const commissionHolderName = document.getElementById('commission-holder-name').value;
-    const apiUrl = `https://data.ny.gov/resource/rwbv-mz6z.json?commission_holder_name=${encodeURIComponent(commissionHolderName)}`;
+    const apiUrl = `https://data.ny.gov/resource/rwbv-mz6z.json?commission_type_traditional_or_electronic=Electronic`;
 
     console.log("Fetching data from API...");
 
@@ -927,11 +1038,87 @@ function fetchDataByCommissionHolderName() {
         .then(data => {
             console.log("Data retrieved successfully!");
             console.log("Retrieved " + data.length + " records from the dataset!");
-            console.log(data);
+
+            // Slice the first 10 objects from the response
+            const firstTen = data.slice(0, 10);
+
+            // Call the new function to populate the table
+            populateTable(firstTen);
         })
         .catch(error => {
             console.error("Error:", error);
         });
+
+    console.log("API call initiated...");
 }
 
-document.getElementById('commission-holder-search').addEventListener('click', fetchDataByCommissionHolderName);
+function populateTable(data) {
+
+    // Create an array of all the cell elements
+    const cells = [
+        [commission_holder_name_1, commission_number_uid_1, commissioned_county_1, commission_type_traditional_or_electronic_1, term_issue_date_1, term_expiration_date_1],
+        [commission_holder_name_2, commission_number_uid_2, commissioned_county_2, commission_type_traditional_or_electronic_2, term_issue_date_2, term_expiration_date_2],
+        [commission_holder_name_3, commission_number_uid_3, commissioned_county_3, commission_type_traditional_or_electronic_3, term_issue_date_3, term_expiration_date_3],
+        [commission_holder_name_4, commission_number_uid_4, commissioned_county_4, commission_type_traditional_or_electronic_4, term_issue_date_4, term_expiration_date_4],
+        [commission_holder_name_5, commission_number_uid_5, commissioned_county_5, commission_type_traditional_or_electronic_5, term_issue_date_5, term_expiration_date_5],
+        [commission_holder_name_6, commission_number_uid_6, commissioned_county_6, commission_type_traditional_or_electronic_6, term_issue_date_6, term_expiration_date_6],
+        [commission_holder_name_7, commission_number_uid_7, commissioned_county_7, commission_type_traditional_or_electronic_7, term_issue_date_7, term_expiration_date_7],
+        [commission_holder_name_8, commission_number_uid_8, commissioned_county_8, commission_type_traditional_or_electronic_8, term_issue_date_8, term_expiration_date_8],
+        [commission_holder_name_9, commission_number_uid_9, commissioned_county_9, commission_type_traditional_or_electronic_9, term_issue_date_9, term_expiration_date_9],
+        [commission_holder_name_10, commission_number_uid_10, commissioned_county_10, commission_type_traditional_or_electronic_10, term_issue_date_10, term_expiration_date_10]
+    ];
+
+    // For each object, populate the cells of the corresponding row with the object's properties
+    data.forEach((item, index) => {
+        const rowCells = cells[index];
+
+        rowCells[0].textContent = item.commission_holder_name;
+        rowCells[1].textContent = item.commission_number_uid;
+        rowCells[2].textContent = item.commissioned_county;
+        rowCells[3].textContent = item.commission_type_traditional_or_electronic;
+
+        // Parse and format the dates
+        const issueDate = new Date(item.term_issue_date);
+        rowCells[4].textContent = `${issueDate.getMonth() + 1}/${issueDate.getDate()}/${issueDate.getFullYear()}`;
+
+        const expirationDate = new Date(item.term_expiration_date);
+        rowCells[5].textContent = `${expirationDate.getMonth() + 1}/${expirationDate.getDate()}/${expirationDate.getFullYear()}`;
+    });
+}
+
+function saveNotaryToContactList(event) {
+    // Get the row number from the button's id
+    const rowNumber = event.target.id.replace('princeNotarySearchResultRow', '').replace('saveBtn', '');
+
+    // Get the cells for this row
+    const rowCells = cells[rowNumber - 1];
+
+    // Create an object with the data from the row
+    const notaryData = {
+        commission_holder_name: rowCells[0].textContent,
+        commission_number_uid: rowCells[1].textContent,
+        commissioned_county: rowCells[2].textContent,
+        commission_type_traditional_or_electronic: rowCells[3].textContent,
+        term_issue_date: rowCells[4].textContent,
+        term_expiration_date: rowCells[5].textContent
+    };
+
+    console.log('Saving notary data:', notaryData);
+
+    // Get the existing princNotaryContactList from local storage, or initialize it to an empty array if it doesn't exist
+    storage.get('princNotaryContactList', function (result) {
+        const princNotaryContactList = result.princNotaryContactList || [];
+
+        console.log('Existing princNotaryContactList:', princNotaryContactList);
+
+        // Add the new notary data to the list
+        princNotaryContactList.push(notaryData);
+
+        console.log('Updated princNotaryContactList:', princNotaryContactList);
+
+        // Save the updated list back to local storage
+        storage.set({ princNotaryContactList: princNotaryContactList }, function () {
+            console.log('princNotaryContactList saved successfully!');
+        });
+    });
+}

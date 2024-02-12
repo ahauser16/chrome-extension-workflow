@@ -361,34 +361,176 @@
             <section class="row" id="principal-contacts">
                 <aside class="sidebar">
                     <h3 class="sidebar-title">My Contacts</h3>
-                    <p class="devNote">api endpoint below:</p>
-                    <p class="devNote">https://data.ny.gov/resource/rwbv-mz6z.json</p>
-                    <p class="devNote">api documentation:</p>
-                    <p class="devNote">https://dev.socrata.com/foundry/data.ny.gov/rwbv-mz6z</p>
-                    <ul id="princNotaryContactList">
-                        <li id="queriedNotaryProf">
-                            <p>"commission_holder_name": "0CTAVIA CARPENTER",</p>
-                            <p>"commission_number_uid": "01CA6406708",</p>
-                            <p>"commissioned_county": "Erie",</p>
-                            <p>"commission_type_traditional_or_electronic": "Traditional",</p>
-                            <p>"term_issue_date": "2020-04-06T00:00:00.000",</p>
-                            <p>"term_expiration_date": "2024-04-06T00:00:00.000"</p>
-                        </li>
+                    <ul id="princSavedNotaryContactList">
                     </ul>
                 </aside>
-                <form class="primary-content" id="principal-contacts-form">
+                <form class="primary-content" id="principal-electronic-notary-search-form">
                     <fieldset>
                         <legend class="legend-title">My Notaries</legend>
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="principal-notary">Notary Search</label>
                                 <input placeholder="name" type="text" id="commission-holder-search" class="formField" />
-                                <button class="searchBtn" id="princ-notary-searchBtn">Search</button>
-                                <button class="saveBtn" id="princ-scheduling-saveBtn">Save</button>
-                                <button class="resetBtn" id="princ-scheduling-resetBtn">Reset</button>
+                            </div>
+                        </div>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <button class="searchBtn" id="princ-elect-notary-searchBtn">Search</button>
+                                <button class="saveBtn" id="princ-elect-notary-saveBtn">Save</button>
+                                <button class="resetBtn" id="saved-notaries-resetBtn">Reset</button>
                                 <span id="primContMsg_princNotarySearch"></span>
                             </div>
                         </div>
+                        <table class="api-table">
+                            <tr id="eNotaryResultsHeader">
+                                <th class="" id="commission_holder_name">NAME</th>
+                                <th class="" id="commission_number_uid">ID</th>
+                                <th class="" id="commissioned_county">COUNTY</th>
+                                <th class="" id="commission_type_traditional_or_electronic">TYPE</th>
+                                <th class="" id="term_issue_date">ISSUED</th>
+                                <th class="" id="term_expiration_date">EXPIRES</th>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow1">
+                                <td id="commission_holder_name_1"></td>
+                                <td id="commission_number_uid_1"></td>
+                                <td id="commissioned_county_1"></td>
+                                <td id="commission_type_traditional_or_electronic_1"></td>
+                                <td id="term_issue_date_1"></td>
+                                <td id="term_expiration_date_1"></td>
+                                <td id="eNotarySearchResultRow1save_entry_1">
+                                    <svg class="icon" id="princeNotarySearchResultRow1SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow2">
+                                <td id="commission_holder_name_2"></td>
+                                <td id="commission_number_uid_2"></td>
+                                <td id="commissioned_county_2"></td>
+                                <td id="commission_type_traditional_or_electronic_2"></td>
+                                <td id="term_issue_date_2"></td>
+                                <td id="term_expiration_date_2"></td>
+                                <td id="eNotarySearchResultRow1save_entry_2">
+                                    <svg class="icon" id="princeNotarySearchResultRow2SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow3">
+                                <td id="commission_holder_name_3"></td>
+                                <td id="commission_number_uid_3"></td>
+                                <td id="commissioned_county_3"></td>
+                                <td id="commission_type_traditional_or_electronic_3"></td>
+                                <td id="term_issue_date_3"></td>
+                                <td id="term_expiration_date_3"></td>
+                                <td id="eNotarySearchResultRow3save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow3SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow4">
+                                <td id="commission_holder_name_4"></td>
+                                <td id="commission_number_uid_4"></td>
+                                <td id="commissioned_county_4"></td>
+                                <td id="commission_type_traditional_or_electronic_4"></td>
+                                <td id="term_issue_date_4"></td>
+                                <td id="term_expiration_date_4"></td>
+                                <td id="eNotarySearchResultRow4save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow4SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow5">
+                                <td id="commission_holder_name_5"></td>
+                                <td id="commission_number_uid_5"></td>
+                                <td id="commissioned_county_5"></td>
+                                <td id="commission_type_traditional_or_electronic_5"></td>
+                                <td id="term_issue_date_5"></td>
+                                <td id="term_expiration_date_5"></td>
+                                <td id="eNotarySearchResultRow5save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow5SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow6">
+                                <td id="commission_holder_name_6"></td>
+                                <td id="commission_number_uid_6"></td>
+                                <td id="commissioned_county_6"></td>
+                                <td id="commission_type_traditional_or_electronic_6"></td>
+                                <td id="term_issue_date_6"></td>
+                                <td id="term_expiration_date_6"></td>
+                                <td id="eNotarySearchResultRow6save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow6SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow7">
+                                <td id="commission_holder_name_7"></td>
+                                <td id="commission_number_uid_7"></td>
+                                <td id="commissioned_county_7"></td>
+                                <td id="commission_type_traditional_or_electronic_7"></td>
+                                <td id="term_issue_date_7"></td>
+                                <td id="term_expiration_date_7"></td>
+                                <td id="eNotarySearchResultRow7save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow7SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow8">
+                                <td id="commission_holder_name_8"></td>
+                                <td id="commission_number_uid_8"></td>
+                                <td id="commissioned_county_8"></td>
+                                <td id="commission_type_traditional_or_electronic_8"></td>
+                                <td id="term_issue_date_8"></td>
+                                <td id="term_expiration_date_8"></td>
+                                <td id="eNotarySearchResultRow8save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow8SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow9">
+                                <td id="commission_holder_name_9"></td>
+                                <td id="commission_number_uid_9"></td>
+                                <td id="commissioned_county_9"></td>
+                                <td id="commission_type_traditional_or_electronic_9"></td>
+                                <td id="term_issue_date_9"></td>
+                                <td id="term_expiration_date_9"></td>
+                                <td id="eNotarySearchResultRow9save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow9SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                            <tr id="princeNotarySearchResultRow10">
+                                <td id="commission_holder_name_10"></td>
+                                <td id="commission_number_uid_10"></td>
+                                <td id="commissioned_county_10"></td>
+                                <td id="commission_type_traditional_or_electronic_10"></td>
+                                <td id="term_issue_date_10"></td>
+                                <td id="term_expiration_date_10"></td>
+                                <td id="eNotarySearchResultRow10save_entry">
+                                    <svg class="icon" id="princeNotarySearchResultRow10SaveBtn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                        <path class="primary" d="M9 11a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"></path>
+                                        <path class="secondary" d="M17 9V7a1 1 0 0 1 2 0v2h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2h-2a1 1 0 0 1 0-2h2zm-1 10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-1a5 5 0 0 1 5-5h4a5 5 0 0 1 5 5v1z"></path>
+                                    </svg>
+                                </td>
+                            </tr>
+                        </table>
                     </fieldset>
                 </form>
             </section>
