@@ -151,8 +151,14 @@ header {
 }
 
 .section-title {
-    color: darkred;
-    margin-top: 0;
+    color: var(--color-secondary-200);
+    padding-top: 1rem;
+    padding-left: 1rem;
+    background-color: var(--color-neutral-320);
+    color: var(--color-neutral-390);
+    padding: 1rem;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin: 0;
 }
 
 .container {
@@ -204,7 +210,7 @@ header {
 
 .main {
     margin-top: 3em;
-    color: var(--color-neutral-390);
+    /* color: var(--color-neutral-390); */
 }
 
 .sidebar {

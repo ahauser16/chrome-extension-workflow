@@ -161,8 +161,6 @@ textarea.input {
 }
 
 fieldset {
-    border: 1px solid var(--color-secondary-220);
-    padding: 1rem;
     margin: 0;
 }
 
@@ -221,8 +219,13 @@ legend {
     font-weight: bold;
     font-size: 1.5rem;
     margin-bottom: 0.65em;
-    color: var(--color-neutral-310);
-    /* border: 1px solid var(--color-secondary-220); */
+    color: var(--color-secondary-200);
+    border: 1px solid var(--color-secondary-200);
+}
+
+fieldset {
+    border: 1px solid var(--color-secondary-200);
+    padding: 1rem;
 }
 
 fieldset+fieldset {
@@ -509,6 +512,6 @@ input[type="checkbox"]:disabled {
     background-color: var(--green-500);
 }
 
-.searchBtn{
+.searchBtn {
     background-color: var(--blue-500);
 }
