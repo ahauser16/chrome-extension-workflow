@@ -469,3 +469,39 @@ form.addEventListener('submit', (event) => {
         data: data
     });
 });
+
+
+
+
+
+//////////////////////////////////////////
+function displayFormData(formId) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    storage.get([storageKey])
+        .then(items => {
+            const formData = items[storageKey];
+            let messages = []; // Array to store the messages
+
+            if (formData) {
+                const fieldMappings = Object.keys(formData)
+                    .filter(key => key.endsWith("-storage"))
+                    .reduce((mappings, key) => {
+                        const displayElementId = key.replace("-storage", "");
+                        mappings[key] = displayElementId;
+                        return mappings;
+                    }, {});
+
+                for (const [storageKey, displayElementId] of Object.entries(fieldMappings)) {
+                    const displayElement = document.getElementById(displayElementId);
+                    displayElement.innerText = formData[storageKey];
+                    messages.push(`Displayed saved ${storageKey.replace("-storage", "")}.`);
+                }
+            }
+
+            showDisplayMessages_princContact(messages.join(' '));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}

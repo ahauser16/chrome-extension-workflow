@@ -13,7 +13,7 @@ const princLastNameDisp = document.querySelector("#princLastNameDisp")
 const princEmailDisp = document.querySelector("#princEmailDisp")
 const princPhoneDisp = document.querySelector("#princPhoneDisp")
 
-const princContactSubmitButton = document.querySelector('#princ-contact-saveBtn');
+// const princContactSubmitButton = document.querySelector('#princ-contact-saveBtn');
 const princContactResetButton = document.querySelector('#princ-contact-resetBtn');
 
 // principal address info related
@@ -164,12 +164,18 @@ loadPrincAddressChanges();
 loadPrincCCchanges();
 loadPrincSchedChanges();
 // displayChanges();
-displayPrincContactChanges();
+
+document.addEventListener('DOMContentLoaded', () => {
+    displayFormData('principal-contact-form');
+    // Add more form IDs as needed
+});
+
+// displayPrincContactChanges();
 displayPrincAddressChanges();
 displayPrincCCchanges();
 displayPrincSchedChanges();
 
-princContactSubmitButton.addEventListener('click', savePrincContChanges);
+// princContactSubmitButton.addEventListener('click', savePrincContChanges);
 princContactResetButton.addEventListener('click', resetPrincCont);
 
 princAddressSubmitButton.addEventListener('click', savePrincAddressChanges);
@@ -184,76 +190,211 @@ princSchedResetButton.addEventListener('click', resetPrincSched);
 
 princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
 
-princeNotarySearchResultRow1SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow1SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow2SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow2SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow3SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow3SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow4SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow4SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow5SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow5SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow6SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow6SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow7SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow7SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow8SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow8SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow9SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow9SaveBtn");
-    saveNotaryToContactList();
-});
-princeNotarySearchResultRow10SaveBtn.addEventListener('click', function () {
-    console.log("Clicked on princeNotarySearchResultRow10SaveBtn");
-    saveNotaryToContactList();
-});
 
 
+// princeNotarySearchResultRow1SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow1SaveBtn");
+//     saveNotaryToContactList();
+// });
 
-async function savePrincContChanges() {
-    console.log('Submit button clicked');
+// princeNotarySearchResultRow2SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow2SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow3SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow3SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow4SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow4SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow5SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow5SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow6SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow6SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow7SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow7SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow8SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow8SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow9SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow9SaveBtn");
+//     saveNotaryToContactList();
+// });
+// princeNotarySearchResultRow10SaveBtn.addEventListener('click', function () {
+//     console.log("Clicked on princeNotarySearchResultRow10SaveBtn");
+//     saveNotaryToContactList();
+// });
 
-    // Get the current contact-user data from the form.
-    const princFirstNameVal = princFirstNameField.value;
-    const princLastNameVal = princLastNameField.value;
-    const princEmailVal = princEmailField.value;
-    const princPhoneVal = princPhoneField.value;
+const principalContactForm = document.getElementById('principal-contact-form');
+const submitButton = document.querySelector('#princ-contact-saveBtn');
 
-    // Check that all values are present.
-    if (!princFirstNameVal || !princLastNameVal || !princEmailVal || !princPhoneVal) {
+submitButton.addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+    saveFormData('principal-contact-form');
+});
+
+function saveFormData(formId) {
+    console.log(`${formId} submit button clicked`);
+
+    const form = document.getElementById(formId);
+    const dataToSave = {};
+    let isEmptyFieldPresent = false;
+
+    // Iterate over each input field in the form with the class "formInput"
+    for (let element of form.getElementsByClassName('formInput')) {
+        if (element.tagName === 'INPUT') { // Ensure we're only dealing with <input> elements
+            const key = element.id; // Use the input's id as the key
+            const value = element.value; // Get the input's current value
+
+            // Check if the input field is empty
+            if (!value) {
+                isEmptyFieldPresent = true;
+                break;
+            }
+
+            // Assign the value to the corresponding key in the dataToSave object
+            dataToSave[key] = value;
+        }
+    }
+
+    if (isEmptyFieldPresent) {
         showLoadMessages('Error: Missing required contact data');
         return;
     }
 
-    // Save the data using the Chrome extension storage API.
-    await storage.set({
-        princContactData: {
-            princFirstNameStorage: princFirstNameVal,
-            princLastNameStorage: princLastNameVal,
-            princEmailStorage: princEmailVal,
-            princPhoneStorage: princPhoneVal,
-        }
-    });
-    showLoadMessages_princContact('Settings saved');
-    displayPrincContactChanges();
+    // Dynamically generate the storage key based on the form's ID
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    storage.set({ [storageKey]: dataToSave })
+        .then(() => {
+            showLoadMessages_princContact('Settings saved');
+            // Optionally call a display function here, or handle it separately depending on the form
+            displayFormData(formId);
+        })
+        .catch((error) => {
+            console.error(error);
+            showLoadMessages_princContact('Error saving settings');
+        });
 }
+//////////////////////////////////////////////////////////
+
+// async function displayPrincContactChanges() {
+//     const items = await storage.get(['princContactData']);
+//     userDataFromStorage = items['princContactData'];
+
+//     let messages = []; // Array to store the messages
+
+//     if (userDataFromStorage) {
+//         if (userDataFromStorage.princFirstNameStorage) {
+//             princFirstNameDisp.innerText = userDataFromStorage.princFirstNameStorage;
+//             // showMessage('Displayed saved user first name.');
+//             messages.push('Displayed saved user first name.');
+
+//         }
+//         if (userDataFromStorage.princLastNameStorage) {
+//             princLastNameDisp.innerText = userDataFromStorage.princLastNameStorage;
+//             // showMessage('Displayed saved user last name.');
+//             messages.push('Displayed saved user last name.');
+
+//         }
+//         if (userDataFromStorage.princEmailStorage) {
+//             princEmailDisp.innerText = userDataFromStorage.princEmailStorage;
+//             // showMessage('Displayed saved user email.');
+//             messages.push('Displayed saved user email.');
+
+//         }
+//         if (userDataFromStorage.princPhoneStorage) {
+//             princPhoneDisp.innerText = userDataFromStorage.princPhoneStorage;
+//             // showMessage('Displayed saved user phone number.');
+//             messages.push('Displayed saved user phone number.');
+
+//         }
+//     }
+//     showDisplayMessages_princContact(messages.join(' '));
+// }
+
+/////////////////////////////////////
+function displayFormData(formId) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    console.log('storageKey:', storageKey);
+
+    storage.get([storageKey])
+        .then(items => {
+            console.log('items:', items);
+            const formData = items[storageKey];
+            console.log('formData:', formData);
+            let messages = []; // Array to store the messages
+
+            if (formData) {
+                const fieldMappings = Object.keys(formData)
+                    .reduce((mappings, key) => {
+                        const displayElementId = key.replace("-storage", "");
+                        mappings[key] = displayElementId;
+                        return mappings;
+                    }, {});
+
+                console.log('fieldMappings:', fieldMappings);
+
+                for (const [storageKey, displayElementId] of Object.entries(fieldMappings)) {
+                    console.log('storageKey:', storageKey);
+                    console.log('displayElementId:', displayElementId);
+                    const displayElement = document.getElementById(displayElementId);
+                    console.log('displayElement:', displayElement);
+                    displayElement.value = formData[storageKey];
+                    messages.push(`Displayed saved ${storageKey.replace("-storage", "")}.`);
+                }
+            }
+
+            console.log('messages:', messages);
+            showDisplayMessages_princContact(messages.join(' '));
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
+
+
+
+
+//////////////////////////////
+// async function savePrincContChanges() {
+//     console.log('Submit button clicked');
+
+//     // Get the current contact-user data from the form.
+//     const princFirstNameVal = princFirstNameField.value;
+//     const princLastNameVal = princLastNameField.value;
+//     const princEmailVal = princEmailField.value;
+//     const princPhoneVal = princPhoneField.value;
+
+//     // Check that all values are present.
+//     if (!princFirstNameVal || !princLastNameVal || !princEmailVal || !princPhoneVal) {
+//         showLoadMessages('Error: Missing required contact data');
+//         return;
+//     }
+
+//     // Save the data using the Chrome extension storage API.
+//     await storage.set({
+//         princContactData: {
+//             princFirstNameStorage: princFirstNameVal,
+//             princLastNameStorage: princLastNameVal,
+//             princEmailStorage: princEmailVal,
+//             princPhoneStorage: princPhoneVal,
+//         }
+//     });
+//     showLoadMessages_princContact('Settings saved');
+//     displayPrincContactChanges();
+// }
 
 async function savePrincAddressChanges() {
     console.log('Submit button clicked');
@@ -599,40 +740,40 @@ async function resetPrincSched() {
 
 ////////////////////////
 
-async function displayPrincContactChanges() {
-    const items = await storage.get(['princContactData']);
-    userDataFromStorage = items['princContactData'];
+// async function displayPrincContactChanges() {
+//     const items = await storage.get(['princContactData']);
+//     userDataFromStorage = items['princContactData'];
 
-    let messages = []; // Array to store the messages
+//     let messages = []; // Array to store the messages
 
-    if (userDataFromStorage) {
-        if (userDataFromStorage.princFirstNameStorage) {
-            princFirstNameDisp.innerText = userDataFromStorage.princFirstNameStorage;
-            // showMessage('Displayed saved user first name.');
-            messages.push('Displayed saved user first name.');
+//     if (userDataFromStorage) {
+//         if (userDataFromStorage.princFirstNameStorage) {
+//             princFirstNameDisp.innerText = userDataFromStorage.princFirstNameStorage;
+//             // showMessage('Displayed saved user first name.');
+//             messages.push('Displayed saved user first name.');
 
-        }
-        if (userDataFromStorage.princLastNameStorage) {
-            princLastNameDisp.innerText = userDataFromStorage.princLastNameStorage;
-            // showMessage('Displayed saved user last name.');
-            messages.push('Displayed saved user last name.');
+//         }
+//         if (userDataFromStorage.princLastNameStorage) {
+//             princLastNameDisp.innerText = userDataFromStorage.princLastNameStorage;
+//             // showMessage('Displayed saved user last name.');
+//             messages.push('Displayed saved user last name.');
 
-        }
-        if (userDataFromStorage.princEmailStorage) {
-            princEmailDisp.innerText = userDataFromStorage.princEmailStorage;
-            // showMessage('Displayed saved user email.');
-            messages.push('Displayed saved user email.');
+//         }
+//         if (userDataFromStorage.princEmailStorage) {
+//             princEmailDisp.innerText = userDataFromStorage.princEmailStorage;
+//             // showMessage('Displayed saved user email.');
+//             messages.push('Displayed saved user email.');
 
-        }
-        if (userDataFromStorage.princPhoneStorage) {
-            princPhoneDisp.innerText = userDataFromStorage.princPhoneStorage;
-            // showMessage('Displayed saved user phone number.');
-            messages.push('Displayed saved user phone number.');
+//         }
+//         if (userDataFromStorage.princPhoneStorage) {
+//             princPhoneDisp.innerText = userDataFromStorage.princPhoneStorage;
+//             // showMessage('Displayed saved user phone number.');
+//             messages.push('Displayed saved user phone number.');
 
-        }
-    }
-    showDisplayMessages_princContact(messages.join(' '));
-}
+//         }
+//     }
+//     showDisplayMessages_princContact(messages.join(' '));
+// }
 
 
 async function displayPrincAddressChanges() {

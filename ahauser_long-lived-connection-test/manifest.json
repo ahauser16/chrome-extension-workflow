@@ -24,7 +24,9 @@
         "js": ["contentScript.js"],
         "css": ["contentScript.css"]
       }
-    ],
+    ],"options_ui": {
+      "page": "/pages/settings/settings.html"
+    },
     "action": {
       "default_popup": "popup.html",
       "default_title": "Click for more options",
