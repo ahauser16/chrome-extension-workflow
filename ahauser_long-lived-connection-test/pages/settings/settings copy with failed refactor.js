@@ -475,33 +475,51 @@ form.addEventListener('submit', (event) => {
 
 
 //////////////////////////////////////////
-function displayFormData(formId) {
-    const storageKey = `${formId.replace("-form", "-storage")}`;
+function saveFormData(formId) {
+    console.log(`${formId} submit button clicked`);
 
-    storage.get([storageKey])
-        .then(items => {
-            const formData = items[storageKey];
-            let messages = []; // Array to store the messages
+    const form = document.getElementById(formId);
+    const dataToSave = {};
+    let isEmptyFieldPresent = false;
 
-            if (formData) {
-                const fieldMappings = Object.keys(formData)
-                    .filter(key => key.endsWith("-storage"))
-                    .reduce((mappings, key) => {
-                        const displayElementId = key.replace("-storage", "");
-                        mappings[key] = displayElementId;
-                        return mappings;
-                    }, {});
+    for (let element of form.getElementsByClassName('formInput')) {
+        const key = element.id;
+        const value = element.value;
 
-                for (const [storageKey, displayElementId] of Object.entries(fieldMappings)) {
-                    const displayElement = document.getElementById(displayElementId);
-                    displayElement.innerText = formData[storageKey];
-                    messages.push(`Displayed saved ${storageKey.replace("-storage", "")}.`);
-                }
+        if (element.type === 'file') {
+            // Handle file inputs
+            // ...
+        } else if (element.tagName === 'SELECT' && element.multiple) {
+            // Handle select inputs with "multiple" attribute
+            const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
+            if (selectedOptions.length === 0) {
+                isEmptyFieldPresent = true;
+                break;
             }
+            dataToSave[key] = selectedOptions;
+        } else {
+            // Handle other input types
+            if (!value) {
+                isEmptyFieldPresent = true;
+                break;
+            }
+            dataToSave[key] = value;
+        }
+    }
 
-            showDisplayMessages_princContact(messages.join(' '));
+    if (isEmptyFieldPresent) {
+        showLoadMessages('Error: Missing required contact data');
+        return;
+    }
+
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+    storage.set({ [storageKey]: dataToSave })
+        .then(() => {
+            showLoadMessages_princContact('Settings saved');
+            displayFormData(formId);
         })
-        .catch(error => {
+        .catch((error) => {
             console.error(error);
+            showLoadMessages_princContact('Error saving settings');
         });
 }

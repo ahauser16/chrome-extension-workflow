@@ -7,15 +7,6 @@ const princAddressResetButton = document.querySelector('#princ-address-resetBtn'
 
 const princCCresetButton = document.querySelector('#princ-credit-card-resetBtn');
 
-//principal scheduling info related
-// const princTimeZoneField = document.querySelector('#principal-time-zone-select');
-// const princPrefContactMethField = document.querySelector('#principal-pref-contact-method');
-// const princContactNotesPublicField = document.querySelector('#principal-contact-notes-public');
-
-// const princTimeZoneDisp = document.querySelector("#princTimeZoneDisp");
-// const princPrefContactMethDisp = document.querySelector("#princPrefContactMethDisp");
-// const princContactNotesPublicDisp = document.querySelector("#princContactNotesPublicDisp");
-
 // const princSchedSubmitButton = document.querySelector('#princ-scheduling-saveBtn');
 const princSchedResetButton = document.querySelector('#princ-scheduling-resetBtn');
 
@@ -34,6 +25,8 @@ const term_expiration_date_1 = document.querySelector('#term_expiration_date_1')
 ////////////////
 // Load any user data that may have previously been saved.
 document.addEventListener('DOMContentLoaded', () => {
+    populateStates();
+    populateNewYorkCounties();
     displayFormData('principal-contact-form');
     displayFormData('principal-address-form');
     displayFormData('principal-credit-card-form');
@@ -59,7 +52,7 @@ const principalContactForm = document.getElementById('principal-contact-form');
 const principalContactFormSubmitButton = document.querySelector('#princ-contact-saveBtn');
 
 principalContactFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('principal-contact-form');
 });
 
@@ -67,7 +60,7 @@ const principalAddressForm = document.getElementById('principal-address-form');
 const principalAddressFormSubmitButton = document.querySelector('#princ-address-saveBtn');
 
 principalAddressFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('principal-address-form');
 });
 
@@ -75,7 +68,7 @@ const principalCCForm = document.getElementById('principal-credit-card-form');
 const principalCCFormSubmitButton = document.querySelector('#princ-credit-card-saveBtn');
 
 principalCCFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('principal-credit-card-form');
 });
 
@@ -83,7 +76,7 @@ const principalSchedForm = document.getElementById('principal-scheduling-form');
 const principalSchedFormSubmitButton = document.querySelector('#princ-scheduling-saveBtn');
 
 principalSchedFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('principal-scheduling-form');
 });
 
@@ -91,7 +84,7 @@ const notaryContactForm = document.getElementById('notary-contact-form');
 const notaryContactFormSubmitButton = document.querySelector('#notary-contact-saveBtn');
 
 notaryContactFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-contact-form');
 });
 
@@ -99,7 +92,7 @@ const notaryAddressForm = document.getElementById('notary-address-form');
 const notaryAddressFormSubmitButton = document.querySelector('#notary-address-saveBtn');
 
 notaryAddressFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-address-form');
 });
 
@@ -107,7 +100,7 @@ const notaryCCForm = document.getElementById('notary-credit-card-form');
 const notaryCCFormSubmitButton = document.querySelector('#notary-credit-card-saveBtn');
 
 notaryCCFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-credit-card-form');
 });
 
@@ -115,7 +108,7 @@ const notarySchedulingForm = document.getElementById('notary-scheduling-form');
 const notarySchedulingFormSubmitButton = document.querySelector('#notary-scheduling-saveBtn');
 
 notarySchedulingFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-scheduling-form');
 });
 
@@ -123,7 +116,7 @@ const notaryClientsForm = document.getElementById('notary-clients-form');
 const notaryClientsFormSubmitButton = document.querySelector('#notary-clients-saveBtn');
 
 notaryClientsFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-clients-form');
 });
 /////
@@ -131,11 +124,9 @@ const notaryCommissionForm = document.getElementById('notary-commission-form');
 const notaryCommissionFormSubmitButton = document.querySelector('#notary-commission-saveBtn');
 
 notaryCommissionFormSubmitButton.addEventListener('click', function (event) {
-    event.preventDefault(); 
+    event.preventDefault();
     saveFormData('notary-commission-form');
 });
-
-
 
 
 function saveFormData(formId) {
@@ -148,45 +139,69 @@ function saveFormData(formId) {
     // Iterate over each input field in the form with the class "formInput"
     for (let element of form.getElementsByClassName('formInput')) {
         const key = element.id; // Use the input's id as the key
-        const value = element.value; // Get the input's current value
 
-        console.log(`Key: ${key}, Value: ${value}`); // Log the key and value
+        // Check if the input field is a file input
+        if (element.type === 'file') {
+            // If the file input is empty
+            if (element.files.length === 0) {
+                isEmptyFieldPresent = true;
+                break;
+            }
 
-        // Check if the input field is empty
-        if (!value) {
-            isEmptyFieldPresent = true;
-            break;
+            // Convert the file to a base64 string
+            const reader = new FileReader();
+            reader.readAsDataURL(element.files[0]);
+            reader.onload = function () {
+                const base64String = reader.result.replace('data:', '')
+                    .replace(/^.+,/, '');
+
+                // Assign the base64 string to the corresponding key in the dataToSave object
+                dataToSave[key] = base64String;
+
+                console.log(`File uploaded: ${key}`);
+
+                // Dynamically generate the storage key based on the form's ID
+                const storageKey = `${formId.replace("-form", "-storage")}`;
+
+                console.log(`Storage Key: ${storageKey}`); // Log the storage key
+
+                storage.set({ [storageKey]: dataToSave })
+                    .then(() => {
+                        showLoadMessages_princContact('Settings saved');
+                        // Optionally call a display function here, or handle it separately depending on the form
+                        displayFormData(formId);
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        showLoadMessages_princContact('Error saving settings');
+                    });
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        } else {
+            const value = element.value; // Get the input's current value
+
+            console.log(`Key: ${key}, Value: ${value}`); // Log the key and value
+
+            // Check if the input field is empty
+            if (!value) {
+                isEmptyFieldPresent = true;
+                break;
+            }
+
+            // Assign the value to the corresponding key in the dataToSave object
+            dataToSave[key] = value;
         }
-
-        // Assign the value to the corresponding key in the dataToSave object
-        dataToSave[key] = value;
-
     }
 
     if (isEmptyFieldPresent) {
         showLoadMessages('Error: Missing required contact data');
         return;
     }
-
-    // Dynamically generate the storage key based on the form's ID
-    const storageKey = `${formId.replace("-form", "-storage")}`;
-
-    console.log(`Storage Key: ${storageKey}`); // Log the storage key
-
-    storage.set({ [storageKey]: dataToSave })
-        .then(() => {
-            showLoadMessages_princContact('Settings saved');
-            // Optionally call a display function here, or handle it separately depending on the form
-            displayFormData(formId);
-        })
-        .catch((error) => {
-            console.error(error);
-            showLoadMessages_princContact('Error saving settings');
-        });
 }
 //////////////////////////////////////////////////////////
 
-/////////////////////////////////////
 function displayFormData(formId) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
 
@@ -214,7 +229,15 @@ function displayFormData(formId) {
                     console.log('displayElementId:', displayElementId);
                     const displayElement = document.getElementById(displayElementId);
                     console.log('displayElement:', displayElement);
-                    displayElement.value = formData[storageKey];
+
+                    // Check if the displayElement is an img tag
+                    if (displayElement.tagName === 'IMG') {
+                        // Set the src attribute to the base64 string of the uploaded file
+                        displayElement.src = 'data:image/png;base64,' + formData[storageKey];
+                    } else if (displayElement.type !== 'file') { // Skip file inputs
+                        displayElement.value = formData[storageKey];
+                    }
+
                     messages.push(`Displayed saved ${storageKey.replace("-storage", "")}.`);
                 }
             }
@@ -257,29 +280,29 @@ function displayFormData(formId) {
 //     displayPrincSchedChanges();
 // }
 
-function loadPrincSchedChanges() {
-    storage.get(['princSchedData'], function (items) {
-        userDataFromStorage = items['princSchedData'];
+// function loadPrincSchedChanges() {
+//     storage.get(['princSchedData'], function (items) {
+//         userDataFromStorage = items['princSchedData'];
 
-        let messages = []; // Array to store the messages
+//         let messages = []; // Array to store the messages
 
-        if (userDataFromStorage) {
-            if (userDataFromStorage.princTimeZoneStorage) {
-                princTimeZoneField.value = userDataFromStorage.princTimeZoneStorage;
-                messages.push('Loaded saved user time zone.');
-            }
-            if (userDataFromStorage.princPrefContactMethStorage) {
-                princPrefContactMethField.value = userDataFromStorage.princPrefContactMethStorage;
-                messages.push('Loaded saved user preferred contact method.');
-            }
-            if (userDataFromStorage.princContactNotesPublicStorage) {
-                princContactNotesPublicField.value = userDataFromStorage.princContactNotesPublicStorage;
-                messages.push('Loaded saved user credit card expiration date.');
-            }
-        }
-        showLoadMessages_princSched(messages.join(' '));
-    });
-}
+//         if (userDataFromStorage) {
+//             if (userDataFromStorage.princTimeZoneStorage) {
+//                 princTimeZoneField.value = userDataFromStorage.princTimeZoneStorage;
+//                 messages.push('Loaded saved user time zone.');
+//             }
+//             if (userDataFromStorage.princPrefContactMethStorage) {
+//                 princPrefContactMethField.value = userDataFromStorage.princPrefContactMethStorage;
+//                 messages.push('Loaded saved user preferred contact method.');
+//             }
+//             if (userDataFromStorage.princContactNotesPublicStorage) {
+//                 princContactNotesPublicField.value = userDataFromStorage.princContactNotesPublicStorage;
+//                 messages.push('Loaded saved user credit card expiration date.');
+//             }
+//         }
+//         showLoadMessages_princSched(messages.join(' '));
+//     });
+// }
 
 //////////////////////////////
 
@@ -340,85 +363,6 @@ function loadPrincSchedChanges() {
 //     }
 //     showDisplayMessages_princAddr(messages.join(' '));
 // }
-
-// async function displayPrincCCchanges() {
-//     const items = await storage.get(['princCreditCardData']);
-//     userDataFromStorage = items['princCreditCardData'];
-
-//     let messages = []; // Array to store the messages
-
-//     if (userDataFromStorage) {
-//         if (userDataFromStorage.princCCnameStorage) {
-//             princCCnameDisp.innerText = userDataFromStorage.princCCnameStorage;
-//             messages.push('Displayed saved user name as displayed on credit card.');
-//         }
-//         if (userDataFromStorage.princCCnumStorage) {
-//             princCCnumDisp.innerText = userDataFromStorage.princCCnumStorage;
-//             messages.push('Displayed saved user credit card number.');
-//         }
-//         if (userDataFromStorage.princCCexpStorage) {
-//             princCCexpDisp.innerText = userDataFromStorage.princCCexpStorage;
-//             messages.push('Displayed saved user credit card expiration date.');
-//         }
-//         if (userDataFromStorage.princCCcvvStorage) {
-//             princCCcvvDisp.innerText = userDataFromStorage.princCCcvvStorage;
-//             messages.push('Displayed saved user credit card CVV.');
-//         }
-//         if (userDataFromStorage.princCCaddress1Storage) {
-//             princCCaddress1Disp.innerText = userDataFromStorage.princCCaddress1Storage;
-//             messages.push('Displayed saved user credit card address (line 1).');
-//         }
-//         if (userDataFromStorage.princCCaddress2Storage) {
-//             princCCaddress2Disp.innerText = userDataFromStorage.princCCaddress2Storage;
-//             messages.push('Displayed saved user credit card address (line 2).');
-//         }
-//         if (userDataFromStorage.princCCcityStorage) {
-//             princCCcityDisp.innerText = userDataFromStorage.princCCcityStorage;
-//             messages.push('Displayed saved user credit card city.');
-//         }
-//         if (userDataFromStorage.princCCstateStorage) {
-//             princCCstateDisp.innerText = userDataFromStorage.princCCstateStorage;
-//             messages.push('Displayed saved user credit card state.');
-//         }
-//         if (userDataFromStorage.princCCzipStorage) {
-//             princCCzipDisp.innerText = userDataFromStorage.princCCzipStorage;
-//             messages.push('Displayed saved user credit card zip code.');
-//         }
-//         showDisplayMessages_princCC(messages.join(' '));
-//     }
-// }
-
-
-
-// async function displayPrincSchedChanges() {
-//     const items = await storage.get(['princSchedData']);
-//     userDataFromStorage = items['princSchedData'];
-
-//     let messages = []; // Array to store the messages
-
-//     if (userDataFromStorage) {
-//         if (userDataFromStorage.princTimeZoneStorage) {
-//             princTimeZoneDisp.innerText = userDataFromStorage.princTimeZoneStorage;
-//             messages.push('Displayed saved user time zone.');
-//         }
-//         if (userDataFromStorage.princPrefContactMethStorage) {
-//             princPrefContactMethDisp.innerText = userDataFromStorage.princPrefContactMethStorage;
-//             messages.push('Displayed saved user preferred contact method.');
-//         }
-//         if (userDataFromStorage.princContactNotesPublicStorage) {
-//             princContactNotesPublicDisp.innerText = userDataFromStorage.princContactNotesPublicStorage;
-//             messages.push('Displayed saved user scheduling public notes.');
-//         }
-
-//         showDisplayMessages_princSched(messages.join(' '));
-//     }
-// }
-
-
-
-
-
-
 
 //////////////////////////////////
 
@@ -508,15 +452,6 @@ function showDisplayMessages_princSched(msg) {
 
 //////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////
 // // Get the principal contact form element
 // const form__princContact = document.getElementById('principal-contact-form');
@@ -527,81 +462,6 @@ function showDisplayMessages_princSched(msg) {
 
 //     // Get the form data
 //     const formData = new FormData(form__princContact);
-
-//     // Convert form data to JSON object
-//     const data = {};
-//     for (let [key, value] of formData.entries()) {
-//         data[key] = value;
-//     }
-
-//     // Send message to service worker
-//     navigator.serviceWorker.controller.postMessage({
-//         type: 'storeFormData',
-//         data: data
-//     });
-// });
-
-
-
-// // Get the principal address form element
-// const form__princAddress = document.getElementById('principal-address-form');
-
-// // Add event listener for form submission
-// form__princAddress.addEventListener('submit', (event) => {
-//     event.preventDefault(); // Prevent form submission
-
-//     // Get the form data
-//     const formData = new FormData(form__princAddress);
-
-//     // Convert form data to JSON object
-//     const data = {};
-//     for (let [key, value] of formData.entries()) {
-//         data[key] = value;
-//     }
-
-//     // Send message to service worker
-//     navigator.serviceWorker.controller.postMessage({
-//         type: 'storeFormData',
-//         data: data
-//     });
-// });
-
-
-
-// Get the principal credit card form element
-// const form__princCC = document.getElementById('principal-credit-card-form');
-
-// // Add event listener for form submission
-// form__princCC.addEventListener('submit', (event) => {
-//     event.preventDefault(); // Prevent form submission
-
-//     // Get the form data
-//     const formData = new FormData(form__princCC);
-
-//     // Convert form data to JSON object
-//     const data = {};
-//     for (let [key, value] of formData.entries()) {
-//         data[key] = value;
-//     }
-
-//     // Send message to service worker
-//     navigator.serviceWorker.controller.postMessage({
-//         type: 'storeFormData',
-//         data: data
-//     });
-// });
-
-
-
-// Get the principal credit card form element
-// const form__princSched = document.getElementById('principal-scheduling-form');
-
-// // Add event listener for form submission
-// form__princSched.addEventListener('submit', (event) => {
-//     event.preventDefault(); // Prevent form submission
-
-//     // Get the form data
-//     const formData = new FormData(form__princSched);
 
 //     // Convert form data to JSON object
 //     const data = {};
@@ -677,8 +537,7 @@ function populateNewYorkCounties() {
     });
 }
 
-populateStates();
-populateNewYorkCounties();
+
 
 
 async function fetchElectronicNotaryList(event) {
@@ -782,3 +641,4 @@ function saveNotaryToContactList(event) {
         });
     });
 }
+
