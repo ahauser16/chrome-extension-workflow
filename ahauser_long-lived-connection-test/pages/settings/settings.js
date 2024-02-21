@@ -27,23 +27,27 @@ const term_expiration_date_1 = document.querySelector('#term_expiration_date_1')
 document.addEventListener('DOMContentLoaded', () => {
     populateStates();
     populateNewYorkCounties();
-    displayFormData('principal-contact-form');
-    displayFormData('principal-address-form');
-    displayFormData('principal-credit-card-form');
-    displayFormData('principal-scheduling-form');
-    displayFormData('notary-contact-form');
-    displayFormData('notary-address-form');
-    displayFormData('notary-credit-card-form');
-    displayFormData('notary-scheduling-form');
-    displayFormData('notary-clients-form');
-    displayFormData('notary-commission-form');
-    // Add more form IDs as needed
-});
 
-// displayPrincContactChanges();
-// displayPrincAddressChanges();
-// displayPrincCCchanges();
-// displayPrincSchedChanges();
+    const formIds = [
+        'principal-contact-form',
+        'principal-address-form',
+        'principal-credit-card-form',
+        'principal-scheduling-form',
+        'notary-contact-form',
+        'notary-address-form',
+        'notary-credit-card-form',
+        'notary-scheduling-form',
+        'notary-clients-form',
+        'notary-commission-form',
+        "principal-profile-pic-form"
+        // Add more form IDs as needed
+    ];
+
+    formIds.forEach(formId => {
+        displayFormData(formId);
+        displaySidePanelData(formId);
+    });
+});
 
 princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
 
@@ -78,6 +82,14 @@ const principalSchedFormSubmitButton = document.querySelector('#princ-scheduling
 principalSchedFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('principal-scheduling-form');
+});
+
+const principalProfilePicForm = document.getElementById('principal-profile-pic-form');
+const principalProfilePicSubmitButton = document.querySelector('#principal-profile-pic-saveBtn');
+
+principalProfilePicSubmitButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    saveFormData('principal-profile-pic-form');
 });
 
 const notaryContactForm = document.getElementById('notary-contact-form');
@@ -119,7 +131,7 @@ notaryClientsFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-clients-form');
 });
-/////
+
 const notaryCommissionForm = document.getElementById('notary-commission-form');
 const notaryCommissionFormSubmitButton = document.querySelector('#notary-commission-saveBtn');
 
@@ -127,14 +139,102 @@ notaryCommissionFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-commission-form');
 });
+/////
 
+
+
+function displayFormData(formId, data) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    const displayData = data => {
+        for (const [key, value] of Object.entries(data)) {
+            try {
+                const displayElement = document.getElementById(key);
+                if (!displayElement) {
+                    console.log(`Error: No element found with id ${key}`);
+                    continue;
+                }
+                if (displayElement.type === 'file') {
+                    const imgElement = document.getElementById(`${key}-display`);
+                    if (imgElement) {
+                        imgElement.src = 'data:image/png;base64,' + value;
+                    } else {
+                        console.log(`Error: No img element found with id ${key}-display`);
+                    }
+                } else {
+                    displayElement.value = value;
+                }
+            } catch (error) {
+                console.error('Error processing element. Key:', key, 'Error:', error);
+            }
+        }
+    };
+
+    if (data) {
+        displayData(data);
+    } else {
+        chrome.storage.local.get([storageKey], function (result) {
+            const formData = result[storageKey];
+            if (formData) {
+                displayData(formData);
+            } else {
+                console.log(`Error: No data found in local storage for key ${storageKey}`);
+            }
+        });
+    }
+}
+
+function displaySidePanelData(formId, data) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    const displayData = data => {
+        for (const [key, value] of Object.entries(data)) {
+            const sidePanelElementId = `${key}-sidepanel`;
+            const sidePanelElement = document.getElementById(sidePanelElementId);
+            if (sidePanelElement) {
+                if (sidePanelElement.tagName === 'IMG') {
+                    sidePanelElement.src = 'data:image/png;base64,' + value;
+                } else {
+                    sidePanelElement.textContent = value;
+                }
+            } else {
+                console.log(`Error: No side panel element found with id ${sidePanelElementId}`);
+            }
+        }
+    };
+
+    if (data) {
+        displayData(data);
+    } else {
+        storage.get([storageKey])
+            .then(items => {
+                const formData = items[storageKey];
+                if (formData) {
+                    displayData(formData);
+                } else {
+                    console.log(`Error: No data found in local storage for key ${storageKey}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error retrieving data from storage', error);
+            });
+    }
+}
 
 function saveFormData(formId) {
     console.log(`${formId} submit button clicked`);
 
     const form = document.getElementById(formId);
+    if (!form) {
+        console.log(`Error: No form found with id ${formId}`);
+        return;
+    }
+
     const dataToSave = {};
     let isEmptyFieldPresent = false;
+
+    // Create an array to hold promises
+    const promises = [];
 
     // Iterate over each input field in the form with the class "formInput"
     for (let element of form.getElementsByClassName('formInput')) {
@@ -151,34 +251,27 @@ function saveFormData(formId) {
             // Convert the file to a base64 string
             const reader = new FileReader();
             reader.readAsDataURL(element.files[0]);
-            reader.onload = function () {
-                const base64String = reader.result.replace('data:', '')
-                    .replace(/^.+,/, '');
 
-                // Assign the base64 string to the corresponding key in the dataToSave object
-                dataToSave[key] = base64String;
+            // Create a new promise
+            const promise = new Promise((resolve, reject) => {
+                reader.onload = function () {
+                    const base64String = reader.result.replace('data:', '')
+                        .replace(/^.+,/, '');
 
-                console.log(`File uploaded: ${key}`);
+                    // Assign the base64 string to the corresponding key in the dataToSave object
+                    dataToSave[key] = base64String;
 
-                // Dynamically generate the storage key based on the form's ID
-                const storageKey = `${formId.replace("-form", "-storage")}`;
+                    console.log(`File uploaded: ${key}`);
+                    resolve();
+                };
+                reader.onerror = function (error) {
+                    console.log('Error: ', error);
+                    reject(error);
+                };
+            });
 
-                console.log(`Storage Key: ${storageKey}`); // Log the storage key
-
-                storage.set({ [storageKey]: dataToSave })
-                    .then(() => {
-                        showLoadMessages_princContact('Settings saved');
-                        // Optionally call a display function here, or handle it separately depending on the form
-                        displayFormData(formId);
-                    })
-                    .catch((error) => {
-                        console.error(error);
-                        showLoadMessages_princContact('Error saving settings');
-                    });
-            };
-            reader.onerror = function (error) {
-                console.log('Error: ', error);
-            };
+            // Add the promise to the array
+            promises.push(promise);
         } else {
             const value = element.value; // Get the input's current value
 
@@ -199,59 +292,41 @@ function saveFormData(formId) {
         showLoadMessages('Error: Missing required contact data');
         return;
     }
-}
-//////////////////////////////////////////////////////////
 
-function displayFormData(formId) {
+    // Dynamically generate the storage key based on the form's ID
     const storageKey = `${formId.replace("-form", "-storage")}`;
 
-    console.log('storageKey:', storageKey);
+    console.log(`Storage Key: ${storageKey}`); // Log the storage key
 
-    storage.get([storageKey])
-        .then(items => {
-            console.log('items:', items);
-            const formData = items[storageKey];
-            console.log('formData:', formData);
-            let messages = []; // Array to store the messages
-
-            if (formData) {
-                const fieldMappings = Object.keys(formData)
-                    .reduce((mappings, key) => {
-                        const displayElementId = key.replace("-storage", "");
-                        mappings[key] = displayElementId;
-                        return mappings;
-                    }, {});
-
-                console.log('fieldMappings:', fieldMappings);
-
-                for (const [storageKey, displayElementId] of Object.entries(fieldMappings)) {
-                    console.log('storageKey:', storageKey);
-                    console.log('displayElementId:', displayElementId);
-                    const displayElement = document.getElementById(displayElementId);
-                    console.log('displayElement:', displayElement);
-
-                    // Check if the displayElement is an img tag
-                    if (displayElement.tagName === 'IMG') {
-                        // Set the src attribute to the base64 string of the uploaded file
-                        displayElement.src = 'data:image/png;base64,' + formData[storageKey];
-                    } else if (displayElement.type !== 'file') { // Skip file inputs
-                        displayElement.value = formData[storageKey];
-                    }
-
-                    messages.push(`Displayed saved ${storageKey.replace("-storage", "")}.`);
-                }
-            }
-
-            console.log('messages:', messages);
-            showDisplayMessages_princContact(messages.join(' '));
+    // Wait for all promises to complete
+    Promise.all(promises)
+        .then(() => {
+            // Before storage.set
+            console.log('Data to save:', dataToSave);
+            // Save the data
+            storage.set({ [storageKey]: dataToSave })
+                .then(() => {
+                    console.log('Data saved:', dataToSave);
+                    showLoadMessages_princContact('Settings saved');
+                    // Optionally call a display function here, or handle it separately depending on the form
+                    displayFormData(formId, dataToSave);
+                    displaySidePanelData(formId, dataToSave);
+                    // Inside storage.set then block
+                    console.log('Data saved successfully');
+                })
+                .catch((error) => {
+                    console.error('Error saving data:', error);
+                    showLoadMessages_princContact('Error saving settings');
+                });
         })
-        .catch(error => {
-            console.error(error);
+        .catch((error) => {
+            console.error('Error reading files:', error);
         });
 }
 
 
 
+/////////////////////////////////////////////
 // async function savePrincSchedChanges() {
 //     console.log('Submit button clicked');
 
@@ -488,7 +563,7 @@ const states = [
     "West Virginia", "Wisconsin", "Wyoming"
 ];
 function populateStates() {
-    const selectElement_USstatesReg = document.getElementById("USstatesReg");
+    const selectElement_USstatesReg = document.getElementById("notary-commission-reg-state");
     const selectElement_USstatesStamp = document.getElementById("USstatesStamp");
 
     states.forEach(state => {
@@ -509,10 +584,10 @@ function populateNewYorkCounties() {
         "Albany", "Allegany", "Bronx", "Broome", "Cattaraugus", "Cayuga", "Chautauqua", "Chemung", "Chenango", "Clinton", "Columbia", "Cortland", "Delaware", "Dutchess", "Erie", "Essex", "Franklin", "Fulton", "Genesee", "Greene", "Hamilton", "Herkimer", "Jefferson", "Kings (Brooklyn)", "Lewis", "Livingston", "Madison", "Monroe", "Montgomery", "Nassau", "New York (Manhattan)", "Niagara", "Oneida", "Onondaga", "Ontario", "Orange", "Orleans", "Oswego", "Otsego", "Putnam", "Queens", "Rensselaer", "Richmond (Staten Island)", "Rockland", "St. Lawrence", "Saratoga", "Schenectady", "Schoharie", "Schuyler", "Seneca", "Steuben", "Suffolk", "Sullivan", "Tioga", "Tompkins", "Ulster", "Warren", "Washington", "Wayne", "Westchester", "Wyoming", "Yates"
     ];
 
-    const selectElementReg = document.getElementById("newYorkCounties-reg");
-    const selectElementFiled = document.getElementById("newYorkCounties-filed");
-    const selectElementRegStamp = document.getElementById("newYorkCounties-regStamp");
-    const selectElementFiledStamp = document.getElementById("newYorkCounties-regFiled");
+    const selectElementReg = document.getElementById("notary-commission-reg-county");
+    const selectElementFiled = document.getElementById("notary-commission-filed-county");
+    const selectElementRegStamp = document.getElementById("notary-commission-reg-county-stamp");
+    const selectElementFiledStamp = document.getElementById("notary-commission-filed-county-stamp");
 
     counties.forEach(county => {
         const optionElementReg = document.createElement("option");
@@ -642,3 +717,9 @@ function saveNotaryToContactList(event) {
     });
 }
 
+document.getElementById('princ-credit-card-expiration').addEventListener('input', function (e) {
+
+    var target = e.target, position = target.selectionEnd, length = target.value.length;
+    target.value = target.value.replace(/[^\d]/g, '').replace(/(\d{2})/, '$1/').trim();
+    target.selectionEnd = position += ((target.value.charAt(position - 1) === '/' && target.value.charAt(length - 1) !== '/') ? 1 : 0);
+});
