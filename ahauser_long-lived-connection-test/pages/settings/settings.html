@@ -9,88 +9,59 @@
 </head>
 
 <body>
-    <header>
-        <div class="container row">
-            <a class="logoContainer" href="#">
-                <img src="../../assets/NYS-flag-icon-128.png" class="col--img" alt="NYS Seal">
+    <header class="row">
+        <div class="brandName--logo">
+            <a class="" href="#">
+                <img src="../../assets/NYS-flag-icon-128.png" class="logo--header" alt="NYS Seal">
             </a>
-            <div class="">
-                <h1 class="header__title_template montagu-slab-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template montserrat-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template raleway-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template noto-sans-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template oswald-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template playfair-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template playfair-display-sc-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template lora-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template pt-sans-caption-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <!-- <h1 class="header__title_template pt-sans-bold">notarIOus</h1> -->
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template merriweather-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template poppins-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template roboto-condensed-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template ubuntu-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <!-- <h1 class="header__title_template ubuntu-bold">notarIOus</h1> -->
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template bitter-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template pt-serif-caption-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template pt-serif-regular">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-                <h1 class="header__title_template open-sans-brandName">notarIOus</h1>
-                <hr class="paletteCleansa"/>
-            
-            </div>
-            <nav>
-                <ul class="nav__list nav__list--primary">
-                    <li class="nav__item">
-                        <a href="#" class="nav__link"> Home </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#" class="nav__link"> About </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#" class="nav__link"> Settings </a>
-                    </li>
-                </ul>
-                <hr />
-                <!-- <ul class="nav__list nav__list--secondary">
-                    <li class="nav__item">
-                        <a href="#" class="nav__link"> Sign In </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#" class="nav__link nav__link--button"> Sign up </a>
-                    </li>
-                </ul> -->
-            </nav>
         </div>
+        <div class="container">
+            <hr class="paletteCleansa" />
+            <h1 class="header__title_template pt-sans-bold">notarIOus</h1>
+            <hr class="paletteCleansa" />
+        </div>
+        <nav class="nav">
+            <ul class="nav__list nav__list--primary">
+                <li class="nav__item">
+                    <a href="#" class="nav__link"> Home </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#" class="nav__link"> About </a>
+                </li>
+                <li class="nav__item">
+                    <a href="#" class="nav__link"> Settings </a>
+                </li>
+            </ul>
+        </nav>
     </header>
     <main class="main container">
         <section id="principal-section">
-            <h2 class="user-settings-section-title">User Settings - Principal</h2>
+            <h2 id="principal-settings-section-title">User Settings - Principal</h2>
             <section class="row" id="principal-contact">
                 <!-- <h3 class="section-title row">Principal Sign Up Form</h3> -->
                 <aside class="sidebar" id="principal-contact-sidebar">
-                    <h3 class="sidebar-title">My Contact Info</h3>
-                    <h4 id="principal-first-name-sidepanel"></h4>
-                    <h4 id="principal-last-name-sidepanel"></h4>
-                    <h4 id="principal-email-sidepanel"></h4>
-                    <h4 id="principal-phone-sidepanel"></h4>
-                    <span id="sidebarMessage_princContact"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title" class="sidebar-text">My Contact Info</h3>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-first-name-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-last-name-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-email-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-phone-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                    </div>
+                    <span id="sidebarMessage_princContact" class="sidebar-text"></span>
                 </aside>
                 <form id="principal-contact-form" class="primary-content">
                     <fieldset>
@@ -126,13 +97,33 @@
             </section>
             <section class="row" id="principal-address">
                 <aside class="sidebar" id="principal-address-sidebar">
-                    <h3 class="sidebar-title">My Address</h3>
-                    <h4 id="principal-address1-sidepanel"></h4>
-                    <h4 id="principal-address2-sidepanel"></h4>
-                    <h4 id="principal-city-sidepanel"></h4>
-                    <h4 id="principal-state-sidepanel"></h4>
-                    <h4 id="principal-zip-sidepanel"></h4>
-                    <span id="sidebarMessage_princAddr"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Address</h3>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-address1-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-address2-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-city-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-state-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-zip-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <span id="sidebarMessage_princAddr" class="sidebar-text"></span>
+                    </div>
                 </aside>
                 <form id="principal-address-form" class="primary-content">
                     <fieldset>
@@ -169,26 +160,56 @@
             </section>
             <section class="row" id="principal-credit-card">
                 <aside class="sidebar" id="principal-billing-sidebar">
-                    <h3 class="sidebar-title">My Billing Info</h3>
-                    <h4 id="princ-first-name-credit-card-sidepanel"></h4>
-                    <h4 id="princ-last-name-credit-card-sidepanel"></h4>
-                    <h4 id="princ-credit-card-number-sidepanel"></h4>
-                    <h4 id="princ-credit-card-expiration-sidepanel"></h4>
-                    <h4 id="princ-credit-card-cvv-sidepanel"></h4>
-                    <h4 id="princ-credit-card-address1-sidepanel"></h4>
-                    <h4 id="princ-credit-card-address2-sidepanel"></h4>
-                    <h4 id="princ-credit-card-city-sidepanel"></h4>
-                    <h4 id="princ-credit-card-state-sidepanel"></h4>
-                    <h4 id="princ-credit-card-zip-sidepanel"></h4>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Billing Info</h3>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-first-name-credit-card-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-last-name-credit-card-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-number-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-expiration-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-cvv-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-address1-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-address2-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-city-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-state-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="princ-credit-card-zip-sidepanel"></h3>
+                            </div>
+                        </div>
+                    </div>
                     <span id="sidebarMessage_princCC"></span>
                 </aside>
                 <form class="primary-content" id="principal-credit-card-form">
                     <fieldset>
                         <legend class="legend-title">Credit Card</legend>
-                        <!-- <div class="formRow">
-                            <label for="same-address" class="formControl">
-                                <input class="formField" type="checkbox" name="checkbox" id="same-address-checkbox" />Same as your billing address? </label>
-                        </div> -->
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="princ-name-credit-card">First Name</label>
@@ -249,11 +270,25 @@
             </section>
             <section class="row" id="principal-scheduling">
                 <aside class="sidebar" id="principal-scheduling-sidebar">
-                    <h3 class="sidebar-title">My Availability</h3>
-                    <h4 id="principal-time-zone-select-sidepanel"></h4>
-                    <h4 id="principal-pref-contact-method-sidepanel"></h4>
-                    <p id="principal-contact-notes-public-sidepanel"></p>
-                    <span id="sidebarMessage_princSched"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Availability</h3>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-time-zone-select-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="principal-pref-contact-method-sidepanel" class="sidebar-text"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <p id="principal-contact-notes-public-sidepanel" class="sidebar-text"></p>
+                        </div>
+                        <span id="sidebarMessage_princSched"></span>
+                    </div>
                 </aside>
                 <form class="primary-content" id="principal-scheduling-form">
                     <fieldset>
@@ -408,9 +443,13 @@
             </section>
             <section class="row" id="principals-list-of-notaries">
                 <aside class="sidebar" id="principals-list-of-notaries-sidebar">
-                    <h3 class="sidebar-title" id="principal-electronic-notary-search-sidepanel">My Notaries</h3>
-                    <ul id="princSavedNotaryContactList">
-                    </ul>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title" id="principal-electronic-notary-search-sidepanel">My Notaries</h3>
+                        </div>
+                        <ul id="princSavedNotaryContactList">
+                        </ul>
+                    </div>
                 </aside>
                 <form class="primary-content" id="principal-electronic-notary-search">
                     <fieldset>
@@ -584,11 +623,33 @@
             </section>
             <section class="row" id="principal-projects-and-docs">
                 <aside class="sidebar" id="principal-projects-and-docs-sidebar">
-                    <h3 class="sidebar-title">My Projects & Documents</h3>
-                    <ul id="uploaded-document-list">
-                        <h3>Document List</h3>
-                        <li class="uploaded-doc">sample uploaded document name</li>
-                    </ul>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Projects & Documents</h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <h3>Document List</h3>
+                            <ul id="principal-document-list">
+                                <div class="formGroup">
+                                    <li class="principal-doc">sample uploaded document name</li>
+                                </div>
+                                <div class="formGroup">
+                                    <li class="principal-doc">sample uploaded document name</li>
+                                </div>
+                            </ul>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <h3>Project List</h3>
+                            <ul id="principal-project-list">
+                                <div class="formGroup">
+                                    <li class="principal-project">sample project name</li>
+                                </div>
+                                <div class="formGroup">
+                                    <li class="principal-project">sample project name</li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
                 </aside>
                 <form class="primary-content" id="principal-projectsAndDocs-form">
                     <fieldset>
@@ -697,12 +758,10 @@
             </section>
             <section class="row" id="principal-signature">
                 <aside class="sidebar" id="principal-signature-sidebar">
-                    <h3 class="sidebar-title">My Signature</h3>
-                    <ul class="sidebar-list">
-                        <li class="sidebar-item">
-                            <p>item 1</p>
-                        </li>
-                    </ul>
+                    <div class="sidebar-text-display-container">
+                        <h3 class="sidebar-title">My Signature</h3>
+                        <img src="" id="principal-signature-sidepanel" class="sideBarImg" />
+                    </div>
                 </aside>
                 <form class="primary-content formRow" id="principal-signature-form">
                     <fieldset>
@@ -717,8 +776,10 @@
             </section>
             <section class="row" id="principal-profile-pic">
                 <aside class="sidebar" id="principal-profile-pic-sidebar">
-                    <h3 class="sidebar-title">My Profile Picture</h3>
-                    <img src="" id="principal-profile-pic-sidepanel" class="sideBarImg" />
+                    <div class="sidebar-text-display-container">
+                        <h3 class="sidebar-title">My Profile Picture</h3>
+                        <img src="" id="principal-profile-pic-sidepanel" class="sideBarImg" />
+                    </div>
                 </aside>
                 <form class="primary-content" id="principal-profile-pic-form">
                     <fieldset>
@@ -736,17 +797,33 @@
                 </form>
             </section>
         </section>
-        <h2 class="principal-settings-section-title">User Settings - E-Notary Public</h2>
         <section id="notary-section">
+            <h2 id="notary-settings-section-title">User Settings - E-Notary Public</h2>
             <section class="row" id="notary-contact">
                 <!-- <h3 class="section-title row">E-Notary Sign Up Form</h3> -->
                 <aside class="sidebar" id="notary-contact-sidebar">
-                    <h3 class="sidebar-title">My Contact Info</h3>
-                    <h4 id="notary-first-name-sidepanel"></h4>
-                    <h4 id="notary-last-name-sidepanel"></h4>
-                    <h4 id="notary-email-sidepanel"></h4>
-                    <h4 id="notary-phone-sidepanel"></h4>
-                    <span id="sidebarMessage_notaryContact"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Contact Info</h3>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-first-name-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-last-name-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-email-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-phone-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <span id="sidebarMessage_notaryContact"></span>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-contact-form">
                     <fieldset>
@@ -786,13 +863,31 @@
             </section>
             <section class="row" id="notary-address">
                 <aside class="sidebar" id="notary-address-sidebar">
-                    <h3 class="sidebar-title">My Address</h3>
-                    <h4 id="notary-address1-sidepanel"></h4>
-                    <h4 id="notary-address2-sidepanel"></h4>
-                    <h4 id="notary-city-sidepanel"></h4>
-                    <h4 id="notary-state-sidepanel"></h4>
-                    <h4 id="notary-zip-sidepanel"></h4>
-                    <span id="sidebarMessage_princAddr"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Address</h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <div class="formGroup">
+                                <h3 id="notary-address1-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup">
+                                <h3 id="notary-address2-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-city-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-state-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-zip-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <span id="sidebarMessage_princAddr"></span>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-address-form">
                     <fieldset>
@@ -808,11 +903,11 @@
                             </div>
                         </div>
                         <div class="formRow formRow--mixed">
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-city">City</label>
                                 <input type="text" id="notary-city" class="formField formInput" />
                             </div>
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-state">State</label>
                                 <input type="text" id="notary-state" class="formField formInput" />
                             </div>
@@ -829,25 +924,51 @@
             </section>
             <section class="row" id="notary-billing">
                 <aside class="sidebar" id="notary-billing-sidebar">
-                    <h3 class="sidebar-title">My Billing Info</h3>
-                    <h4 id="notary-name-on-credit-card-sidepanel"></h4>
-                    <h4 id="notary-credit-card-number-sidepanel"></h4>
-                    <h4 id="notary-credit-card-expiration-sidepanel"></h4>
-                    <h4 id="notary-credit-card-cvv-sidepanel"></h4>
-                    <h4 id="notary-credit-card-address1-sidepanel"></h4>
-                    <h4 id="notary-credit-card-address2-sidepanel"></h4>
-                    <h4 id="notary-credit-card-city-sidepanel"></h4>
-                    <h4 id="notary-credit-card-state-sidepanel"></h4>
-                    <h4 id="notary-credit-card-zip-sidepanel"></h4>
-                    <span id="sidebarMessage_notaryCC"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Billing Info</h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-name-on-credit-card-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-number-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-expiration-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-cvv-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <div class="formGroup">
+                                <h3 id="notary-credit-card-address1-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup">
+                                <h3 id="notary-credit-card-address2-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-city-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-state-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-credit-card-zip-sidepanel"></h3>
+                            </div>
+                            <span id="sidebarMessage_notaryCC"></span>
+                        </div>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-credit-card-form">
                     <fieldset>
                         <legend class="legend-title">Credit Card</legend>
-                        <!-- <div class="formRow">
-                            <label for="same-address" class="formControl">
-                                <input type="checkbox" name="checkbox" id="same-address-checkbox" />Same as your home address? </label>
-                        </div> -->
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="notary-name-on-credit-card">Name on Card</label>
@@ -855,14 +976,13 @@
                             </div>
                         </div>
                         <div class="formRow formRow--mixed">
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-credit-card-number">Card Number</label>
                                 <input type="text" id="notary-credit-card-number" class="formField formInput" />
                             </div>
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-credit-card-expiration">Expiration Date</label>
-                                <!-- <input type="date" id="notary-credit-card-expiration" class="formField formGroup--width-auto formInput" /> -->
-                                <input type="text" id="notary-credit-card-expiration" placeholder="MM/YY" maxlength="5" />
+                                <input type="text" id="notary-credit-card-expiration" placeholder="MM/YY" maxlength="5" class="formField formInput" />
                             </div>
                             <div class="formGroup formGroup--width-auto">
                                 <label for="notary-credit-card-cvv">CVV</label>
@@ -883,11 +1003,11 @@
                             </div>
                         </div>
                         <div class="formRow formRow--mixed">
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-credit-card-city">City</label>
                                 <input type="text" id="notary-credit-card-city" class="formField formInput" />
                             </div>
-                            <div class="formGroup">
+                            <div class="formGroup formGroup--width-auto">
                                 <label for="notary-credit-card-state">State</label>
                                 <input type="text" id="notary-credit-card-state" class="formField formInput" />
                             </div>
@@ -904,11 +1024,21 @@
             </section>
             <section class="row" id="notary-scheduling">
                 <aside class="sidebar" id="notary-scheduling-sidepanel">
-                    <h3 class="sidebar-title">My Availability</h3>
-                    <h4 id="notary-time-zone-select-sidepanel"></h4>
-                    <h4 id="notary-pref-contact-method-sidepanel"></h4>
-                    <p id="notary-contact-notes-public-sidepanel"></p>
-                    <span id="sidebarMessage_notarySched"></span>
+                    <div class="sidebar-text-display-container">
+                        <div class="formRow bottom-row-divider">
+                            <h3 class="sidebar-title">My Availability</h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <h3 id="notary-time-zone-select-sidepanel"></h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <h3 id="notary-pref-contact-method-sidepanel"></h3>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <p id="notary-contact-notes-public-sidepanel"></p>
+                        </div>
+                        <span id="sidebarMessage_notarySched"></span>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-scheduling-form">
                     <fieldset>
@@ -963,15 +1093,29 @@
             </section>
             <section class="row" id="notary-list-of-clients">
                 <aside class="sidebar" id="notary-list-of-clients-sidepanel">
-                    <h3 class="sidebar-title">My Clients</h3>
-                    <ul id="notarySavedClientContactList">
-                        <li>
-                            <h4 id="client-first-name-sidepanel"></h4>
-                            <h4 id="client-last-name-sidepanel"></h4>
-                            <h4 id="client-email-sidepanel"></h4>
-                            <h4 id="client-phone-sidepanel"></h4>
-                        </li>
-                    </ul>
+                    <div class="sidebar-text-display-container">
+                        <h3 class="sidebar-title">My Clients</h3>
+                        <ul id="notarySavedClientContactList">
+                            <li class="client-item formRow">
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <h5 id="client-first-name-sidepanel" class="client-first-name"></h5>
+                                    </div>
+                                    <div class="formGroup">
+                                        <h5 id="client-last-name-sidepanel" class="client-last-name"></h5>
+                                    </div>
+                                </div>
+                                <div class="formRow">
+                                    <div class="formGroup">
+                                        <h5 id="client-email-sidepanel" class="client-email"></h5>
+                                    </div>
+                                    <div class="formGroup">
+                                        <h5 id="client-phone-sidepanel" class="client-phone"></h5>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-clients-form">
                     <fieldset>
@@ -1002,19 +1146,58 @@
             </section>
             <section class="row" id="notary-commission">
                 <aside class="sidebar" id="notary-commission-sidepanel">
-                    <h3 class="sidebar-title">My Commission Info</h3>
-                    <h4 id="notary-commission-reg-state-sidepanel"></h4>
-                    <h4 id="notary-commission-reg-county-sidepanel"></h4>
-                    <h4 id="notary-commission-filed-county-sidepanel"></h4>
-                    <h4 id="notary-commission-num-sidepanel"></h4>
-                    <h4 id="notary-commission-first-name-sidepanel"></h4>
-                    <h4 id="notary-commission-last-name-sidepanel"></h4>
-                    <h4 id="notary-commission-issuance-date-sidepanel"></h4>
-                    <h4 id="notary-commission-expiration-date-sidepanel"></h4>
-                    <h4 id="notary-commission-govt-id-type-sidepanel"></h4>
-                    <img src="" id="notary-commission-govt-id-front-sidepanel" class="sideBarImg" />
-                    <img src="" id="notary-commission-govt-id-back-sidepanel" class="sideBarImg" />
-                    <span id="sidebarMessage_notaryCommissionInfo"></span>
+                    <div class="sidebar-text-display-container">
+                        <h3 class="sidebar-title">My Commission Info</h3>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-commission-reg-state-sidepanel" class="sidepanel-label">Registered:</label>
+                                <h3 id="notary-commission-reg-state-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-commission-reg-county-sidepanel" class="sidepanel-label">Registered:</label>
+                                <h3 id="notary-commission-reg-county-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <div class="formGroup">
+                                <label for="notary-commission-filed-county-sidepanel" class="sidepanel-label">Filed:</label>
+                                <h3 id="notary-commission-filed-county-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-commission-filed-num-sidepanel" class="sidepanel-label">Commission Number:</label>
+                                <h3 id="notary-commission-num-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed">
+                            <label for="notary-commission-full-name-sidepanel" class="sidepanel-label">Name:</label>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-commission-first-name-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <h3 id="notary-commission-last-name-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow formRow--mixed bottom-row-divider">
+                            <div class="formGroup formGroup--width-auto">
+                                <label for="notary-commission-expiration-date-sidepanel" class="sidepanel-label">Issued:</label>
+                                <h3 id="notary-commission-issuance-date-sidepanel"></h3>
+                            </div>
+                            <div class="formGroup formGroup--width-auto">
+                                <label for="notary-commission-expiration-date-sidepanel" class="sidepanel-label">Expires:</label>
+                                <h3 id="notary-commission-expiration-date-sidepanel"></h3>
+                            </div>
+                        </div>
+                        <div class="formRow bottom-row-divider">
+                            <h3 id="notary-commission-govt-id-type-sidepanel"></h3>
+                            <img src="" id="notary-commission-govt-id-front-sidepanel" class="sideBarImg" />
+                            <img src="" id="notary-commission-govt-id-back-sidepanel" class="sideBarImg" />
+                        </div>
+                        <span id="sidebarMessage_notaryCommissionInfo"></span>
+                    </div>
                 </aside>
                 <form class="primary-content" id="notary-commission-form">
                     <fieldset>
@@ -1067,11 +1250,11 @@
                             </div>
                             <div class="formGroup">
                                 <label for="notary-commission-first-name">First Name</label>
-                                <input type="text" id="notary-commission-first-name" class="formField" />
+                                <input type="text" id="notary-commission-first-name" class="formField formInput" />
                             </div>
                             <div class="formGroup">
                                 <label for="notary-commission-last-name">Last Name</label>
-                                <input type="text" id="notary-commission-last-name" class="formField" />
+                                <input type="text" id="notary-commission-last-name" class="formField formInput" />
                             </div>
                         </div>
                         <div class="formRow">
@@ -1259,43 +1442,35 @@
             </section>
             <section class="row" id="notary-projects-and-docs">
                 <aside class="sidebar" id="notary-projects-and-docs-sidepanel">
-                    <h3 class="sidebar-title">My Documents</h3>
-                    <ul id="uploaded-document-list">
-                        <h3>Document List</h3>
-                        <li class="uploaded-doc">sample uploaded document name</li>
-                    </ul>
-                </aside>
-                <form class="primary-content" id="notary-docs-form">
-                    <h3 class="section-title">Notary Documents</h3>
-                    <div id="document-upload-container" class="formRow">
-                        <div id="document-upload-form" class="formGroup">
-                            <label for="document-upload">Upload your document</label>
-                            <input type="file" id="document-upload" class="formField" />
-                        </div>
-                        <div id="document-upload-explanation">
-                            <h3>Useful Documents</h3>
-                            <h5>Acknowledgment Form</h5>
-                            <p>This is a statement by the notary public that the signer of a document appeared before them and acknowledged signing for its stated purpose.</p>
-                            <h5>Jurat Form</h5>
-                            <p>This is a statement from the notary public that a signer has sworn to or affirmed the truthfulness of a document.</p>
-                            <h5>Copy Certification Form</h5>
-                            <p>This is a form used when a notary certifies that a copy of a document is a true and accurate reproduction of the original.</p>
-                            <h5>Oath or Affirmation Form</h5>
-                            <p>This is a form used when a notary administers an oath or affirmation.</p>
-                            <h5>Signature Witnessing Form</h5>
-                            <p>This is a form used when a notary witnesses a signature.</p>
-                            <h5>Deposition Form</h5>
-                            <p>This is a form used when a notary takes a deposition.</p>
-                            <h5>Protest Form</h5>
-                            <p>This is a form used when a notary protests a bill of exchange.</p>
-                            <h5>Notarial Register</h5>
-                            <p>This is a record where the notary keeps track of all notarial acts performed.</p>
-                            <h5>Notarial Certificate</h5>
-                            <p>This is a form that the notary completes and signs to document the notarial act.</p>
-                            <h5>Corporate Acknowledgment Form</h5>
-                            <p>This is a form used when a corporate officer acknowledges signing a document on behalf of the corporation.</p>
-                        </div>
+                    <div class="sidebar-text-display-container">
+                        <h3 class="sidebar-title">My Documents</h3>
+                        <ul id="notary-document-list-sidepanel">
+                            <!-- <li class="uploaded-doc-sidepanel">
+                                <h3 class="notary-doc-name">//insert document name//</h3>
+                                <p class="notary-doc-note">//insert document note//</p>
+                            </li> -->
+                        </ul>
                     </div>
+                </aside>
+                <form class="primary-content" id="notary-projects-and-docs-form">
+                    <fieldset>
+                        <legend class="legend-title">Notary Documents</legend>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-document-upload">Upload your document</label>
+                                <input type="file" id="notary-document-upload" class="formField formInput" />
+                            </div>
+                        </div>
+                        <div class="formRow">
+                            <div class="formGroup">
+                                <label for="notary-document-upload-notes">Add a note</label>
+                                <textarea class="input formfield formInput" id="notary-document-upload-notes" placeholder="e.g. This form needs to be filled out for Phoebe's class trip to the aquarium!" rows="8" cols="35" maxlength="200" wrap="hard" spellcheck="true" autofocus></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <button class="saveBtn" id="notary-document-upload-saveBtn">Save</button>
+                    <button class="resetBtn" id="notary-document-upload-resetBtn">Reset</button>
+                    <span id="primContMsg_notaryDocumentUpload"></span>
                 </form>
             </section>
             <section class="row" id="notary-signature">

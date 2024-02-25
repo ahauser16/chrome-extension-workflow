@@ -33,13 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'principal-address-form',
         'principal-credit-card-form',
         'principal-scheduling-form',
+        "principal-profile-pic-form",
         'notary-contact-form',
         'notary-address-form',
         'notary-credit-card-form',
         'notary-scheduling-form',
         'notary-clients-form',
         'notary-commission-form',
-        "principal-profile-pic-form"
+        'notary-projects-and-docs-form',
         // Add more form IDs as needed
     ];
 
@@ -139,9 +140,15 @@ notaryCommissionFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-commission-form');
 });
+
+const notaryProjsDocsForm = document.getElementById('notary-projects-and-docs-form');
+const notaryProjsDocsFormSubmitButton = document.querySelector('#notary-document-upload-saveBtn');
+
+notaryProjsDocsFormSubmitButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    saveFormData('notary-projects-and-docs-form');
+});
 /////
-
-
 
 function displayFormData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
@@ -155,11 +162,11 @@ function displayFormData(formId, data) {
                     continue;
                 }
                 if (displayElement.type === 'file') {
-                    const imgElement = document.getElementById(`${key}-display`);
+                    const imgElement = document.getElementById(`${key}-sidepanel`);
                     if (imgElement) {
                         imgElement.src = 'data:image/png;base64,' + value;
                     } else {
-                        console.log(`Error: No img element found with id ${key}-display`);
+                        console.log(`Error: No img element found with id ${key}-sidepanel`);
                     }
                 } else {
                     displayElement.value = value;
@@ -184,6 +191,11 @@ function displayFormData(formId, data) {
     }
 }
 
+// function formatDate(dateString) {
+//     const date = new Date(dateString);
+//     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+// }
+
 function displaySidePanelData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
 
@@ -199,6 +211,37 @@ function displaySidePanelData(formId, data) {
                 }
             } else {
                 console.log(`Error: No side panel element found with id ${sidePanelElementId}`);
+            }
+        }
+
+        // Check if the storageKey is "notary-projects-and-docs-storage"
+        if (storageKey === 'notary-projects-and-docs-storage') {
+            const ul = document.getElementById('notary-document-list-sidepanel');
+            if (ul) {
+                // Create a new <li> element with the desired structure
+                const li = document.createElement('li');
+                li.className = 'uploaded-doc-sidepanel';
+
+                const h3 = document.createElement('h3');
+                h3.className = 'notary-doc-name';
+                h3.textContent = data['file-name']; // Insert file name
+
+                const p = document.createElement('p');
+                p.className = 'notary-doc-note';
+                p.textContent = data['notary-document-upload-notes']; // Insert document note
+
+                const a = document.createElement('a');
+                a.href = 'data:image/png;base64,' + data['notary-document-upload']; // Insert document link
+                a.textContent = 'View Document';
+
+                li.appendChild(h3);
+                li.appendChild(p);
+                li.appendChild(a);
+
+                // Append the new <li> element to the <ul>
+                ul.appendChild(li);
+            } else {
+                console.log(`Error: No ul element found with id notary-document-upload-sidepanel`);
             }
         }
     };
@@ -220,7 +263,6 @@ function displaySidePanelData(formId, data) {
             });
     }
 }
-
 function saveFormData(formId) {
     console.log(`${formId} submit button clicked`);
 
@@ -240,51 +282,75 @@ function saveFormData(formId) {
     for (let element of form.getElementsByClassName('formInput')) {
         const key = element.id; // Use the input's id as the key
 
-        // Check if the input field is a file input
-        if (element.type === 'file') {
-            // If the file input is empty
-            if (element.files.length === 0) {
-                isEmptyFieldPresent = true;
+        switch (element.type) {
+            case 'file':
+                // If the file input is empty
+                if (element.files.length === 0) {
+                    isEmptyFieldPresent = true;
+                    break;
+                }
+
+                // Convert the file to a base64 string
+                const reader = new FileReader();
+                reader.readAsDataURL(element.files[0]);
+
+                // Create a new promise
+                const promise = new Promise((resolve, reject) => {
+                    reader.onload = function () {
+                        const base64String = reader.result.replace('data:', '')
+                            .replace(/^.+,/, '');
+
+                        // Assign the base64 string to the corresponding key in the dataToSave object
+                        dataToSave[key] = base64String;
+
+                        // Add the file name to the dataToSave object
+                        dataToSave['file-name'] = element.files[0].name;
+
+                        console.log(`File uploaded: ${key}`);
+                        resolve();
+                    };
+                    reader.onerror = function (error) {
+                        console.log('Error: ', error);
+                        reject(error);
+                    };
+                });
+
+                // Add the promise to the array
+                promises.push(promise);
                 break;
-            }
-
-            // Convert the file to a base64 string
-            const reader = new FileReader();
-            reader.readAsDataURL(element.files[0]);
-
-            // Create a new promise
-            const promise = new Promise((resolve, reject) => {
-                reader.onload = function () {
-                    const base64String = reader.result.replace('data:', '')
-                        .replace(/^.+,/, '');
-
-                    // Assign the base64 string to the corresponding key in the dataToSave object
-                    dataToSave[key] = base64String;
-
-                    console.log(`File uploaded: ${key}`);
-                    resolve();
-                };
-                reader.onerror = function (error) {
-                    console.log('Error: ', error);
-                    reject(error);
-                };
-            });
-
-            // Add the promise to the array
-            promises.push(promise);
-        } else {
-            const value = element.value; // Get the input's current value
-
-            console.log(`Key: ${key}, Value: ${value}`); // Log the key and value
-
-            // Check if the input field is empty
-            if (!value) {
-                isEmptyFieldPresent = true;
+            case 'select-multiple':
+                // If the input field is a multiple select
+                const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
+                if (selectedOptions.length === 0) {
+                    isEmptyFieldPresent = true;
+                    break;
+                }
+                dataToSave[key] = selectedOptions;
                 break;
-            }
+            case 'text':
+            case 'textarea':
+            case 'select-one':
+                // Handle text, textarea, and single select inputs
+                const value = element.value; // Get the input's current value
 
-            // Assign the value to the corresponding key in the dataToSave object
-            dataToSave[key] = value;
+                console.log(`Key: ${key}, Value: ${value}`); // Log the key and value
+
+                // Check if the input field is empty
+                if (!value) {
+                    isEmptyFieldPresent = true;
+                    break;
+                }
+
+                // Assign the value to the corresponding key in the dataToSave object
+                dataToSave[key] = value;
+                break;
+            default:
+                console.log(`Unhandled form input type: ${element.type}`);
+                break;
+        }
+
+        if (isEmptyFieldPresent) {
+            break;
         }
     }
 
@@ -323,6 +389,10 @@ function saveFormData(formId) {
             console.error('Error reading files:', error);
         });
 }
+
+
+
+
 
 
 
