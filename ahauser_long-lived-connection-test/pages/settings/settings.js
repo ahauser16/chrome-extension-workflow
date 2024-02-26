@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'notary-clients-form',
         'notary-commission-form',
         'notary-projects-and-docs-form',
+        'notary-signature-form',
         // Add more form IDs as needed
     ];
 
@@ -148,6 +149,15 @@ notaryProjsDocsFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-projects-and-docs-form');
 });
+
+
+const notarySigForm = document.getElementById('notary-signature-form');
+const notarySigFormSubmitButton = document.querySelector('#notary-signature-upload-saveBtn');
+
+notarySigFormSubmitButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    saveFormData('notary-signature-form');
+});
 /////
 
 function displayFormData(formId, data) {
@@ -191,13 +201,124 @@ function displayFormData(formId, data) {
     }
 }
 
-// function formatDate(dateString) {
-//     const date = new Date(dateString);
-//     return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-// }
+function formatTimestamp(timestamp) {
+    // Create a new Date object from the timestamp
+    const date = new Date(timestamp);
+
+    // Format the date and time
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', timeZone: 'America/New_York', timeZoneName: 'short' };
+    const formattedDate = date.toLocaleString('en-US', options);
+
+    return formattedDate;
+}
+
+function fileSizeConversion(num) {
+    const sizeInKB = num / 1024;
+    const sizeInMB = num / (1024 * 1024);
+    const sizeInGB = num / (1024 * 1024 * 1024);
+
+    if (num < 1024 * 1024) {
+        // If the file size is less than 1 MB, return the size in kilobytes
+        return sizeInKB.toFixed(2) + ' KB';
+    } else if (num < 1024 * 1024 * 1024) {
+        // If the file size is less than 1 GB, return the size in megabytes
+        return sizeInMB.toFixed(2) + ' MB';
+    } else {
+        // If the file size is 1 GB or more, return the size in gigabytes
+        return sizeInGB.toFixed(2) + ' GB';
+    }
+}
+
+function createDocListItem(data) {
+    // Create a new <li> element with the desired structure
+    const docItem = document.createElement('li');
+    docItem.className = 'uploaded-doc-item-sidepanel';
+
+    const notaryDocNameDisplay = document.createElement('a');
+    notaryDocNameDisplay.className = 'notary-doc-name';
+    notaryDocNameDisplay.textContent = data['file-name'];
+
+    const notaryDocFileSizeGroup = document.createElement('div');
+    notaryDocFileSizeGroup.className = 'sidepanelGroup';
+
+    const notaryDocFileSizeLabel = document.createElement('h6');
+    notaryDocFileSizeLabel.className = 'notary-doc-file-size-label';
+    notaryDocFileSizeLabel.textContent = "Size: ";
+
+    const notaryDocFileSizeDisplay = document.createElement('h6');
+    notaryDocFileSizeDisplay.className = 'notary-doc-file-size';
+    notaryDocFileSizeDisplay.textContent = fileSizeConversion(data['file-size']);
+
+    notaryDocFileSizeGroup.appendChild(notaryDocFileSizeLabel);
+    notaryDocFileSizeGroup.appendChild(notaryDocFileSizeDisplay);
+
+    const notaryDocFileTypeGroup = document.createElement('div');
+    notaryDocFileTypeGroup.className = 'sidepanelGroup';
+
+    const notaryDocFileTypeLabel = document.createElement('h6');
+    notaryDocFileTypeLabel.className = 'notary-doc-file-type-label';
+    notaryDocFileTypeLabel.textContent = "Type: ";
+
+    const notaryDocFileTypeDisplay = document.createElement('h6');
+    notaryDocFileTypeDisplay.className = 'notary-doc-file-type';
+    notaryDocFileTypeDisplay.textContent = data['file-type'];
+
+    notaryDocFileTypeGroup.appendChild(notaryDocFileTypeLabel);
+    notaryDocFileTypeGroup.appendChild(notaryDocFileTypeDisplay);
+
+    const notaryDocFileLastModGroup = document.createElement('div');
+    notaryDocFileLastModGroup.className = 'sidepanelGroup';
+
+    const notaryDocFileLastModLabel = document.createElement('h6');
+    notaryDocFileLastModLabel.className = 'notary-doc-file-last-modified-label';
+    notaryDocFileLastModLabel.textContent = "Last Modified: ";
+
+    const notaryDocFileLastModDisplay = document.createElement('h6');
+    notaryDocFileLastModDisplay.className = 'notary-doc-file-last-modified';
+    notaryDocFileLastModDisplay.textContent = formatTimestamp(data['file-lastModified']);
+
+    notaryDocFileLastModGroup.appendChild(notaryDocFileLastModLabel);
+    notaryDocFileLastModGroup.appendChild(notaryDocFileLastModDisplay);
+
+    const notaryDocNoteGroup = document.createElement('div');
+    notaryDocNoteGroup.className = 'sidepanelGroup';
+
+    const notaryDocNoteLabel = document.createElement('h3');
+    notaryDocNoteLabel.className = 'notary-document-upload-notes-label';
+    notaryDocNoteLabel.textContent = "Note: ";
+
+    const notaryDocNote = document.createElement('p');
+    notaryDocNote.className = 'notary-document-upload-notes';
+    notaryDocNote.textContent = data['notary-document-upload-notes'];
+
+    const line1 = document.createElement('div');
+    line1.className = 'uploaded-doc-item-line1';
+    line1.appendChild(notaryDocNameDisplay);
+
+    const line2 = document.createElement('div');
+    line2.className = 'uploaded-doc-item-line2';
+    line2.appendChild(notaryDocFileSizeGroup);
+    line2.appendChild(notaryDocFileTypeGroup);
+    line2.appendChild(notaryDocFileLastModGroup);
+
+
+    const line3 = document.createElement('div');
+    line3.className = 'uploaded-doc-item-line3';
+    line3.appendChild(notaryDocNoteLabel);
+    line3.appendChild(notaryDocNote);
+
+    docItem.appendChild(line1);
+    docItem.appendChild(line2);
+    docItem.appendChild(line3);
+
+    return docItem;
+}
 
 function displaySidePanelData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    // List of keys that are expected to be dates
+    const dateKeys = ['notary-commission-issuance-date', 'notary-commission-expiration-date', 'notary-issuance-date', 'notary-expiration-date']; // Add your actual keys here
 
     const displayData = data => {
         for (const [key, value] of Object.entries(data)) {
@@ -207,7 +328,8 @@ function displaySidePanelData(formId, data) {
                 if (sidePanelElement.tagName === 'IMG') {
                     sidePanelElement.src = 'data:image/png;base64,' + value;
                 } else {
-                    sidePanelElement.textContent = value;
+                    // Check if the current key is in the list of date keys
+                    sidePanelElement.textContent = dateKeys.includes(key) ? formatTimestamp(value) : value;
                 }
             } else {
                 console.log(`Error: No side panel element found with id ${sidePanelElementId}`);
@@ -218,26 +340,7 @@ function displaySidePanelData(formId, data) {
         if (storageKey === 'notary-projects-and-docs-storage') {
             const ul = document.getElementById('notary-document-list-sidepanel');
             if (ul) {
-                // Create a new <li> element with the desired structure
-                const li = document.createElement('li');
-                li.className = 'uploaded-doc-sidepanel';
-
-                const h3 = document.createElement('h3');
-                h3.className = 'notary-doc-name';
-                h3.textContent = data['file-name']; // Insert file name
-
-                const p = document.createElement('p');
-                p.className = 'notary-doc-note';
-                p.textContent = data['notary-document-upload-notes']; // Insert document note
-
-                const a = document.createElement('a');
-                a.href = 'data:image/png;base64,' + data['notary-document-upload']; // Insert document link
-                a.textContent = 'View Document';
-
-                li.appendChild(h3);
-                li.appendChild(p);
-                li.appendChild(a);
-
+                const li = createDocListItem(data);
                 // Append the new <li> element to the <ul>
                 ul.appendChild(li);
             } else {
@@ -263,13 +366,73 @@ function displaySidePanelData(formId, data) {
             });
     }
 }
+
+function handleFileTypeInput(element, dataToSave) {
+    // If the file input is empty
+    if (element.files.length === 0) {
+        return Promise.reject('Empty file input');
+    }
+
+    // Convert the file to a base64 string
+    const reader = new FileReader();
+    reader.readAsDataURL(element.files[0]);
+
+    // List of keys that are expected to be documents
+    const documentKeys = ['notary-document-upload', 'document2']; // Add your actual keys here
+
+    // List of keys that are expected to be images
+    const imageKeys = ['principal-profile-pic', 'principal-signature', 'notary-commission-govt-id-front', 'notary-commission-govt-id-back', 'notary-signature', 'notary-stamp', 'notary-profile-pic']; // Add your actual keys here
+
+    // Create a new promise
+    return new Promise((resolve, reject) => {
+        reader.onload = function () {
+            const base64String = reader.result.replace('data:', '')
+                .replace(/^.+,/, '');
+
+            // Assign the base64 string to the corresponding key in the dataToSave object
+            dataToSave[element.id] = base64String;
+
+            // Add the file metadata to the dataToSave object if the file is a document
+            const file = element.files[0];
+            if (documentKeys.includes(element.id)) {
+                dataToSave['file-name'] = file.name;
+                dataToSave['file-size'] = file.size;
+                dataToSave['file-type'] = file.type;
+                dataToSave['file-lastModified'] = file.lastModified;
+            } else if (imageKeys.includes(element.id)) {
+                dataToSave['file-name'] = file.name;
+            } else {
+                console.error(`Error: Unrecognized key ${element.id}`);
+                reject(`Error: Unrecognized key ${element.id}`);
+                return;
+            }
+
+            console.log(`File uploaded: ${element.id}`);
+            resolve();
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+            reject(error);
+        };
+    });
+}
+
+function handleMultSelectInput(element, dataToSave) {
+    // If the input field is a multiple select
+    const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
+    if (selectedOptions.length === 0) {
+        return false;
+    }
+    dataToSave[element.id] = selectedOptions;
+    return true;
+}
+
 function saveFormData(formId) {
     console.log(`${formId} submit button clicked`);
 
     const form = document.getElementById(formId);
     if (!form) {
-        console.log(`Error: No form found with id ${formId}`);
-        return;
+        throw new Error(`No form found with id ${formId}`);
     }
 
     const dataToSave = {};
@@ -280,52 +443,20 @@ function saveFormData(formId) {
 
     // Iterate over each input field in the form with the class "formInput"
     for (let element of form.getElementsByClassName('formInput')) {
-        const key = element.id; // Use the input's id as the key
-
         switch (element.type) {
             case 'file':
-                // If the file input is empty
-                if (element.files.length === 0) {
-                    isEmptyFieldPresent = true;
-                    break;
-                }
-
-                // Convert the file to a base64 string
-                const reader = new FileReader();
-                reader.readAsDataURL(element.files[0]);
-
-                // Create a new promise
-                const promise = new Promise((resolve, reject) => {
-                    reader.onload = function () {
-                        const base64String = reader.result.replace('data:', '')
-                            .replace(/^.+,/, '');
-
-                        // Assign the base64 string to the corresponding key in the dataToSave object
-                        dataToSave[key] = base64String;
-
-                        // Add the file name to the dataToSave object
-                        dataToSave['file-name'] = element.files[0].name;
-
-                        console.log(`File uploaded: ${key}`);
-                        resolve();
-                    };
-                    reader.onerror = function (error) {
-                        console.log('Error: ', error);
-                        reject(error);
-                    };
-                });
-
-                // Add the promise to the array
-                promises.push(promise);
+                promises.push(handleFileTypeInput(element, dataToSave));
                 break;
             case 'select-multiple':
-                // If the input field is a multiple select
-                const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
-                if (selectedOptions.length === 0) {
+                isEmptyFieldPresent = !handleMultSelectInput(element, dataToSave);
+                break;
+            case 'date':
+                const dateValue = new Date(element.value);
+                if (isNaN(dateValue)) {
                     isEmptyFieldPresent = true;
                     break;
                 }
-                dataToSave[key] = selectedOptions;
+                dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
                 break;
             case 'text':
             case 'textarea':
@@ -333,7 +464,7 @@ function saveFormData(formId) {
                 // Handle text, textarea, and single select inputs
                 const value = element.value; // Get the input's current value
 
-                console.log(`Key: ${key}, Value: ${value}`); // Log the key and value
+                console.log(`Key: ${element.id}, Value: ${value}`); // Log the key and value
 
                 // Check if the input field is empty
                 if (!value) {
@@ -342,7 +473,7 @@ function saveFormData(formId) {
                 }
 
                 // Assign the value to the corresponding key in the dataToSave object
-                dataToSave[key] = value;
+                dataToSave[element.id] = value;
                 break;
             default:
                 console.log(`Unhandled form input type: ${element.type}`);
@@ -350,13 +481,8 @@ function saveFormData(formId) {
         }
 
         if (isEmptyFieldPresent) {
-            break;
+            throw new Error('Missing required contact data');
         }
-    }
-
-    if (isEmptyFieldPresent) {
-        showLoadMessages('Error: Missing required contact data');
-        return;
     }
 
     // Dynamically generate the storage key based on the form's ID
@@ -370,23 +496,20 @@ function saveFormData(formId) {
             // Before storage.set
             console.log('Data to save:', dataToSave);
             // Save the data
-            storage.set({ [storageKey]: dataToSave })
-                .then(() => {
-                    console.log('Data saved:', dataToSave);
-                    showLoadMessages_princContact('Settings saved');
-                    // Optionally call a display function here, or handle it separately depending on the form
-                    displayFormData(formId, dataToSave);
-                    displaySidePanelData(formId, dataToSave);
-                    // Inside storage.set then block
-                    console.log('Data saved successfully');
-                })
-                .catch((error) => {
-                    console.error('Error saving data:', error);
-                    showLoadMessages_princContact('Error saving settings');
-                });
+            return storage.set({ [storageKey]: dataToSave });
+        })
+        .then(() => {
+            console.log('Data saved:', dataToSave);
+            showLoadMessages_princContact('Settings saved');
+            // Optionally call a display function here, or handle it separately depending on the form
+            displayFormData(formId, dataToSave);
+            displaySidePanelData(formId, dataToSave);
+            // Inside storage.set then block
+            console.log('Data saved successfully');
         })
         .catch((error) => {
-            console.error('Error reading files:', error);
+            console.error('Error:', error);
+            showLoadMessages_princContact('Error saving settings');
         });
 }
 

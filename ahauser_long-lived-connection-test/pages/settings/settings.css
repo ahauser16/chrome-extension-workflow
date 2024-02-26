@@ -251,8 +251,6 @@ header {
     border-radius: var(--border-radius);
     box-shadow: 0 0 5px 5px var(--color-primary-100);
     border: 2px solid var(--color-primary-100);
-
-    padding: 1rem;
     /* Add some padding around the text */
     transition: all 0.3s ease;
     /* Add a transition for a smooth animation */
@@ -445,4 +443,99 @@ table p {
 }
 
 
+#notary-document-list-sidepanel {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center;
+    justify-content: center; */
+    background-color: var(--color-neutral-390);
+    border: 1.5px solid var(--color-neutral-300);
+    overflow: auto;
+    max-width: 100%;
+}
 
+.uploaded-doc-item-sidepanel {
+    margin: .5rem 0rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-neutral-390);
+    /* border: 1.5px solid var(--color-neutral-300); */
+    /* max-height: 75px; */
+    max-width: 100%;
+    overflow: auto;
+}
+
+.uploaded-doc-item-line1,
+.uploaded-doc-item-line2,
+.uploaded-doc-item-line3 {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.uploaded-doc-item-line2,
+.uploaded-doc-item-line3 {
+    margin-top: .5rem;
+}
+
+.notary-doc-name-label,
+.notary-doc-name,
+.notary-doc-file-size-label,
+.notary-doc-file-size,
+.notary-doc-file-type-label,
+.notary-doc-file-type,
+.notary-doc-file-last-modified-label,
+.notary-doc-file-last-modified,
+.notary-document-upload-notes-label,
+.notary-document-upload-notes,
+.notary-doc-link {
+    font-size: 0.8em;
+    margin: 0;
+    padding: 0;
+}
+
+.notary-doc-name-label,
+.notary-doc-file-size-label,
+.notary-doc-file-type-label,
+.notary-doc-file-last-modified-label,
+.notary-document-upload-notes-label {
+    margin-right: .25rem;
+
+}
+
+.notary-doc-name,
+.notary-doc-file-size,
+.notary-doc-file-type,
+.notary-doc-file-last-modified,
+.notary-document-upload-notes,
+.notary-doc-link {
+    margin-right: .5rem;
+}
+
+.sidepanelGroup {
+    display: flex;
+    flex-direction: row;
+}
+
+.notary-doc-name {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+/* Initially hide the details */
+.uploaded-doc-item-sidepanel .uploaded-doc-item-line2,
+.uploaded-doc-item-sidepanel .uploaded-doc-item-line3 {
+    display: none;
+}
+
+/* Show the details when the user hovers over the .uploaded-doc-item-sidepanel element */
+.uploaded-doc-item-sidepanel:hover .uploaded-doc-item-line2,
+.uploaded-doc-item-sidepanel:hover .uploaded-doc-item-line3 {
+    display: flex;
+}
