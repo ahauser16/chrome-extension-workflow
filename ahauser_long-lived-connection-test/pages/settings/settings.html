@@ -651,7 +651,7 @@
                         </div>
                     </div>
                 </aside>
-                <form class="primary-content" id="principal-projectsAndDocs-form">
+                <form class="primary-content" id="principal-projects-docs-form">
                     <fieldset>
                         <legend class="legend-title">Create a Project</legend>
                         <div id="project-name-container" class="formRow">
@@ -659,7 +659,7 @@
                                 <label for="project-name">Project Name</label>
                                 <input type="text" id="project-name" class="formField" />
                             </div>
-                            <div id="project-name-explanation" class="formGroup">
+                            <!-- <div id="project-name-explanation" class="formGroup">
                                 <h3>Uniqueness</h3>
                                 <p>Enter a unique name for this project.</p>
                                 <h3>Descriptiveness</h3>
@@ -670,14 +670,14 @@
                                 <p>Use only alphanumeric characters and spaces.</p>
                                 <h3>Relevance</h3>
                                 <p>Choose a name relevant to the documents or the notarization process.</p>
-                            </div>
+                            </div> -->
                         </div>
                         <div id="project-description-container" class="formRow">
                             <div id="project-description-form" class="formGroup">
                                 <label for="project-description">Project Description</label>
                                 <textarea id="project-description" class="project-description"></textarea>
                             </div>
-                            <div id="project-description-explanation" class="formGroup">
+                            <!-- <div id="project-description-explanation" class="formGroup">
                                 <h3>Purpose of the Project</h3>
                                 <p>Describe the purpose of this project. Are these documents for a real estate transaction, a legal proceeding, or something else?</p>
                                 <h3>Documents Involved</h3>
@@ -688,7 +688,7 @@
                                 <p>Mention any important dates or deadlines associated with this project.</p>
                                 <h3>Additional Information</h3>
                                 <p>Include any other information that the notary should know about this project.</p>
-                            </div>
+                            </div> -->
                         </div>
                         <div id="service-vs-act-container" class="formRow">
                             <h3>What's the difference between a notarial service and a notarial act?</h3>
@@ -828,10 +828,6 @@
                 <form class="primary-content" id="notary-contact-form">
                     <fieldset>
                         <legend class="legend-title">Name</legend>
-                        <!-- <div class="formGroup">
-                            <label for="same-contact-as-principal-checkbox" class="formControl">
-                                <input type="checkbox" name="same-contact-as-principal-checkbox" id="same-contact-as-principal-checkbox" />Is your principal contact and notary contact info the same?</label>
-                        </div> -->
                         <div class="formRow">
                             <div class="formGroup">
                                 <label for="notary-first-name">First Name</label>
@@ -1449,27 +1445,8 @@
                         </ul>
                     </div>
                 </aside>
-                <form class="primary-content" id="notary-projects-and-docs-form">
-                    <fieldset>
-                        <legend class="legend-title">Notary Documents</legend>
-                        <div class="formRow">
-                            <div class="formGroup">
-                                <label for="notary-document-upload">Upload your document</label>
-                                <input type="file" id="notary-document-upload" class="formField formInput" />
-                            </div>
-                        </div>
-                        <div class="formRow">
-                            <div class="formGroup">
-                                <label for="notary-document-upload-notes">Add a note</label>
-                                <textarea class="input formfield formInput" id="notary-document-upload-notes" placeholder="e.g. This form needs to be filled out for Phoebe's class trip to the aquarium!" rows="8" cols="35" maxlength="200" wrap="hard" spellcheck="true" autofocus></textarea>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <button class="saveBtn" id="notary-document-upload-saveBtn">Save</button>
-                    <button class="resetBtn" id="notary-document-upload-resetBtn">Reset</button>
-                    <button class="clearStorageBtn" id="notary-document-storage-resetBtn">CLEAR STORAGE</button>
-                    <span id="primContMsg_notaryDocumentUpload"></span>
-                </form>
+                
+                
             </section>
             <section class="row" id="notary-signature">
                 <aside class="sidebar" id="notary-signature-sidepanel">
@@ -1574,6 +1551,7 @@
     <footer class="footer"> footer </footer>
     </div>
     <script src="settings.js"></script>
+    <script src="../../forms/formHandlers.js"></script>
 </body>
 
 </html>

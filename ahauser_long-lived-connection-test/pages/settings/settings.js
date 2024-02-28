@@ -1,3 +1,4 @@
+
 // Store user data in the "local" storage area.
 const storage = chrome.storage.local;
 
@@ -163,17 +164,246 @@ notarySigFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-signature-form');
 });
-////////
+////////SAVE FORM DATA REFACTOR SECTION
+//original function//
+// function saveFormData(formId) {
+//     console.log(`${formId} submit button clicked`);
+
+//     const form = document.getElementById(formId);
+//     if (!form) {
+//         throw new Error(`No form found with id ${formId}`);
+//     }
+
+//     let dataToSave = {};//-->this variable may be causing an issue for forms that submit data that creates one record which is either altered or deleted versus submitting data that creates more than one record
+//     let isEmptyFieldPresent = false;
+
+//     // Dynamically generate the storage key based on the form's ID
+//     const storageKey = `${formId.replace("-form", "-storage")}`;
+
+//     // Retrieve the existing data from local storage
+//     storage.get([storageKey])//--> This line retrieves the existing data from local storage using the `storageKey` variable.
+//         .then(items => {
+//             dataToSave = items[storageKey] || {};//-->This line retrieves the existing data from local storage using the storageKey.
+
+//             // Create an array to hold promises that will be created when handling file inputs.
+//             const promises = [];
+
+//             // Iterate over each input field in the form with the class "formInput"
+//             for (let element of form.getElementsByClassName('formInput')) {
+//                 switch (element.type) {
+//                     //If the form element is a file input this line calls the 'handleFileTypeInput' function with the current element and dataToSave as arguments, and pushes the returned promise to the promises array.
+//                     case 'file':
+//                         promises.push(handleFileTypeInput(element, dataToSave));
+//                         break;
+//                     case 'select-multiple':
+//                         isEmptyFieldPresent = !handleMultSelectInput(element, dataToSave);
+//                         break;
+//                     case 'date':
+//                         const dateValue = new Date(element.value);
+//                         if (isNaN(dateValue)) {
+//                             isEmptyFieldPresent = true;
+//                             break;
+//                         }
+//                         dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
+//                         break;
+//                     case 'text':
+//                     case 'textarea':
+//                     case 'select-one':
+//                         // Handle text, textarea, and single select inputs
+//                         const value = element.value; // Get the input's current value
+
+//                         console.log(`Key: ${element.id}, Value: ${value}`); // Log the key and value
+
+//                         // Check if the input field is empty
+//                         if (!value) {
+//                             isEmptyFieldPresent = true;
+//                             break;
+//                         }
+
+//                         // Assign the value to the corresponding key in the dataToSave object
+//                         dataToSave[element.id] = value;
+//                         break;
+//                     default:
+//                         console.log(`Unhandled form input type: ${element.type}`);
+//                         break;
+//                 }
+
+//                 if (isEmptyFieldPresent) {
+//                     throw new Error('Missing required contact data');
+//                 }
+//             }
+
+//             // After the loop has finished, this line waits for all promises in the `promises` array to resolve.
+//             return Promise.all(promises);
+//         })
+//         .then(() => {
+//             // Before storage.set
+//             console.log('Data to save:', dataToSave);
+
+//             // If the form is for uploading documents, this line retrieves the existing documents from local storage.
+//             if (formId === 'notary-projects-and-docs-form') {
+//                 return storage.get([storageKey])
+
+//                     .then(items => {
+//                         let documents = items[storageKey];
+
+//                         // Check if documents is an array
+//                         if (!Array.isArray(documents)) {
+//                             console.error('Error: Data in storage is not an array', documents);
+//                             documents = []; // Initialize as an empty array
+//                         }
+
+//                         // Check if dataToSave is an array
+//                         if (!Array.isArray(dataToSave)) {
+//                             dataToSave = [dataToSave]; // Initialize as an array containing dataToSave
+//                         }
+
+//                         documents = [...documents, ...dataToSave]; // Merge the two arrays
+//                         return storage.set({ [storageKey]: documents });
+//                     });
+//             } else {
+//                 // Save the data
+//                 return storage.set({ [storageKey]: dataToSave });
+//             }
+//         })
+//         .then(() => {
+//             console.log('Data saved:', dataToSave);
+//             showLoadMessages_princContact('Settings saved');
+//             // Optionally call a display function here, or handle it separately depending on the form
+//             displayFormData(formId, dataToSave);
+//             displaySidePanelData(formId, dataToSave);
+//             // Inside storage.set then block
+//             console.log('Data saved successfully');
+//         })
+//         .catch((error) => {
+//             console.error('Error:', error);
+//             showLoadMessages_princContact('Error saving settings');
+//         });
+// }
+
+
+
+//////////////////
+function saveFormData(formId) {
+    getFormAndData(formId)
+        .then(({ form, dataToSave, storageKey }) => {
+            return processFormData(form, dataToSave)
+                .then(dataToSave => ({ dataToSave, storageKey }));
+        })
+        .then(({ dataToSave, storageKey }) => {
+            return saveDataToStorage(formId, storageKey, dataToSave);
+        })
+        .then(dataToSave => {
+            console.log('Data saved:', dataToSave);
+            showLoadMessages_princContact('Settings saved');
+            displayFormData(formId, dataToSave);
+            displaySidePanelData(formId, dataToSave);
+            console.log('Data saved successfully');
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            showLoadMessages_princContact('Error saving settings');
+        });
+}
+
+function getFormAndData(formId) {
+    console.log(`${formId} submit button clicked`);
+
+    const form = document.getElementById(formId);
+    if (!form) {
+        throw new Error(`No form found with id ${formId}`);
+    }
+
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    return storage.get([storageKey])
+        .then(items => {
+            // Initialize dataToSave as an array if there's no data in storage
+            const dataToSave = Array.isArray(items[storageKey]) ? items[storageKey] : [];
+            return { form, dataToSave, storageKey };
+        });
+}
+
+function processFormData(form, dataToSave) {
+    return new Promise((resolve, reject) => {
+        try {
+            switch (form.id) {
+                case 'principal-contact-form':
+                    resolve(handlePrincipleContactInfoForm(form, dataToSave));
+                    break;
+                case 'principal-address-form':
+                    resolve(handlePrincipleAddressForm(form, dataToSave));
+                    break;
+                case 'principal-credit-card-form':
+                    resolve(handlePrincipleCreditCardForm(form, dataToSave));
+                    break;
+                case 'principal-scheduling-form':
+                    resolve(handlePrincipleSchedulingForm(form, dataToSave));
+                    break;
+                case 'notary-contact-form':
+                    resolve(handleNotaryContactForm(form, dataToSave));
+                    break;
+                case 'notary-address-form':
+                    resolve(handleNotaryAddressForm(form, dataToSave));
+                    break;
+                case 'notary-credit-card-form':
+                    resolve(handleNotaryCreditCardForm(form, dataToSave));
+                    break;
+                case 'notary-scheduling-form':
+                    resolve(handleNotarySchedulingForm(form, dataToSave));
+                    break;
+                case 'notary-commission-form':
+                    resolve(handleNotaryCommissionForm(form, dataToSave));
+                    break;
+                case 'notary-projects-and-docs-form':
+                    resolve(handleNotaryProjectsDocsForm(form, dataToSave));
+                    break;
+                case 'example-form':
+                    resolve(exampleForm(form, dataToSave));
+                    break;
+                default:
+                    throw new Error(`Unhandled form id: ${form.id}`);
+            }
+        } catch (error) {
+            reject(error);
+        }
+    });
+}
+
+function saveDataToStorage(formId, storageKey, dataToSave) {
+    console.log('Data to save:', dataToSave);
+
+    if (formId === 'notary-projects-and-docs-form') {
+        return storage.get([storageKey])
+            .then(items => {
+                let documents = items[storageKey];
+
+                if (!Array.isArray(documents)) {
+                    console.error('Error: Data in storage is not an array', documents);
+                    documents = [];
+                }
+
+                if (!Array.isArray(dataToSave)) {
+                    dataToSave = [dataToSave];
+                }
+
+                documents = [...documents, ...dataToSave];
+
+                // Remove all elements from dataToSave
+                dataToSave.splice(0, dataToSave.length);
+
+                return storage.set({ [storageKey]: documents });
+            });
+    } else {
+        return storage.set({ [storageKey]: dataToSave });
+    }
+}
+///
 
 
 
 
-
-
-////////////
-
-
-
+////////////END OF SaveFormData refactor////////////
 
 function clearLocalStorageByKey(key) {
     chrome.storage.local.remove(key, function () {
@@ -410,187 +640,6 @@ function displaySidePanelData(formId, data) {
             });
     }
 }
-
-async function handleFileTypeInput(element, dataToSave) {
-    // If the file input is empty
-    if (element.files.length === 0) {
-        throw new Error('Empty file input');
-    }
-
-    // List of keys that are expected to be documents
-    const documentKeys = ['notary-document-upload', 'document2']; // Add your actual keys here
-
-    // List of keys that are expected to be images
-    const imageKeys = ['principal-profile-pic', 'principal-signature', 'notary-commission-govt-id-front', 'notary-commission-govt-id-back', 'notary-signature', 'notary-stamp', 'notary-profile-pic']; // Add your actual keys here
-
-    // Create an array to hold promises for each file
-    const filesData = await Promise.all(Array.from(element.files).map(async (file) => {
-        const reader = new FileReader();
-        const result = await new Promise((resolve, reject) => {
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-
-        const base64String = result.replace('data:', '').replace(/^.+,/, '');
-
-        // Create an object to hold the file data
-        const fileData = {
-            file: base64String,
-            'file-name': file.name,
-        };
-
-        // Add the file metadata to the fileData object if the file is a document
-        if (documentKeys.includes(element.id)) {
-            fileData['file-size'] = file.size;
-            fileData['file-type'] = file.type;
-            fileData['file-lastModified'] = file.lastModified;
-        } else if (imageKeys.includes(element.id)) {
-            // Do nothing, we only want to save the file and file-name for images
-        } else {
-            throw new Error(`Error: Unrecognized key ${element.id}`);
-        }
-
-        console.log(`File uploaded: ${file.name}`);
-        return fileData;
-    }));
-
-    // If there's only one file, save the file data directly, otherwise save the array of file data
-    dataToSave[element.id] = filesData.length === 1 ? filesData[0] : filesData;
-}
-
-function saveFormData(formId) {
-    console.log(`${formId} submit button clicked`);
-
-    const form = document.getElementById(formId);
-    if (!form) {
-        throw new Error(`No form found with id ${formId}`);
-    }
-
-    let dataToSave = {};//-->this variable may be causing an issue for forms that submit data that creates one record which is either altered or deleted versus submitting data that creates more than one record
-    let isEmptyFieldPresent = false;
-
-    // Dynamically generate the storage key based on the form's ID
-    const storageKey = `${formId.replace("-form", "-storage")}`;
-
-    // Retrieve the existing data from local storage
-    storage.get([storageKey])//--> This line retrieves the existing data from local storage using the `storageKey` variable.
-        .then(items => {
-            dataToSave = items[storageKey] || {};//-->This line retrieves the existing data from local storage using the storageKey.
-
-            // Create an array to hold promises that will be created when handling file inputs.
-            const promises = [];
-
-            // Iterate over each input field in the form with the class "formInput"
-            for (let element of form.getElementsByClassName('formInput')) {
-                switch (element.type) {
-                    //If the form element is a file input this line calls the 'handleFileTypeInput' function with the current element and dataToSave as arguments, and pushes the returned promise to the promises array.
-                    case 'file':
-                        promises.push(handleFileTypeInput(element, dataToSave));
-                        break;
-                    case 'select-multiple':
-                        isEmptyFieldPresent = !handleMultSelectInput(element, dataToSave);
-                        break;
-                    case 'date':
-                        const dateValue = new Date(element.value);
-                        if (isNaN(dateValue)) {
-                            isEmptyFieldPresent = true;
-                            break;
-                        }
-                        dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
-                        break;
-                    case 'text':
-                    case 'textarea':
-                    case 'select-one':
-                        // Handle text, textarea, and single select inputs
-                        const value = element.value; // Get the input's current value
-
-                        console.log(`Key: ${element.id}, Value: ${value}`); // Log the key and value
-
-                        // Check if the input field is empty
-                        if (!value) {
-                            isEmptyFieldPresent = true;
-                            break;
-                        }
-
-                        // Assign the value to the corresponding key in the dataToSave object
-                        dataToSave[element.id] = value;
-                        break;
-                    default:
-                        console.log(`Unhandled form input type: ${element.type}`);
-                        break;
-                }
-
-                if (isEmptyFieldPresent) {
-                    throw new Error('Missing required contact data');
-                }
-            }
-
-            // After the loop has finished, this line waits for all promises in the `promises` array to resolve.
-            return Promise.all(promises);
-        })
-        .then(() => {
-            // Before storage.set
-            console.log('Data to save:', dataToSave);
-
-            // If the form is for uploading documents, this line retrieves the existing documents from local storage.
-            if (formId === 'notary-projects-and-docs-form') {
-                return storage.get([storageKey])
-                
-                    .then(items => {
-                        let documents = items[storageKey];
-
-                        // Check if documents is an array
-                        if (!Array.isArray(documents)) {
-                            console.error('Error: Data in storage is not an array', documents);
-                            documents = []; // Initialize as an empty array
-                        }
-
-                        // Check if dataToSave is an array
-                        if (!Array.isArray(dataToSave)) {
-                            dataToSave = [dataToSave]; // Initialize as an array containing dataToSave
-                        }
-
-                        documents = [...documents, ...dataToSave]; // Merge the two arrays
-                        return storage.set({ [storageKey]: documents });
-                    });
-            } else {
-                // Save the data
-                return storage.set({ [storageKey]: dataToSave });
-            }
-        })
-        .then(() => {
-            console.log('Data saved:', dataToSave);
-            showLoadMessages_princContact('Settings saved');
-            // Optionally call a display function here, or handle it separately depending on the form
-            displayFormData(formId, dataToSave);
-            displaySidePanelData(formId, dataToSave);
-            // Inside storage.set then block
-            console.log('Data saved successfully');
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-            showLoadMessages_princContact('Error saving settings');
-        });
-}
-
-
-
-function handleMultSelectInput(element, dataToSave) {
-    // If the input field is a multiple select
-    const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
-    if (selectedOptions.length === 0) {
-        return false;
-    }
-    dataToSave[element.id] = selectedOptions;
-    return true;
-}
-
-///////////////////
-
-
-
-
 
 /////////////////////////////////////////////
 // async function savePrincSchedChanges() {
