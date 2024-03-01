@@ -327,48 +327,9 @@ function handleNotaryCommissionForm(form, dataToSave) {
         resolve(dataToSave);
     });
 }
-///
+/////////////////////////////////////
 
-
-// async function handleNotaryProjectsDocsForm(form, dataToSave) {
-//     let isEmptyFieldPresent = false;
-//     let docData = {};
-//     let promises = [];
-
-//     for (let element of form.getElementsByClassName('formInput')) {
-//         const value = element.value;
-//         console.log(`Key: ${element.id}, Value: ${value}`);
-
-//         switch (element.id) {
-//             case 'notary-document-upload':
-//                 promises.push(handleFileTypeInput(element, docData));
-//                 break;
-//             case 'notary-document-upload-notes':
-//                 if (!value) {
-//                     isEmptyFieldPresent = true;
-//                     break;
-//                 }
-//                 docData[element.id] = value;
-//                 break;
-//             default:
-//                 console.log(`Unhandled form input id: ${element.id}`);
-//                 break;
-//         }
-
-//         if (isEmptyFieldPresent) {
-//             throw new Error('Missing required document data');
-//         }
-//     }
-
-//     // Wait for all promises to resolve
-//     await Promise.all(promises);
-
-//     // Add the new document data to the array
-//     dataToSave.push(docData);
-
-//     return dataToSave;
-// }
-async function handleNotaryProjectsDocsForm(form) {
+async function handleNotaryProjectsDocsForm(form, dataToSave) {
     let isEmptyFieldPresent = false;
     let docData = {};
     let promises = [];
@@ -378,10 +339,10 @@ async function handleNotaryProjectsDocsForm(form) {
         console.log(`Key: ${element.id}, Value: ${value}`);
 
         switch (element.id) {
-            case 'notary-document-upload':
+            case 'notary-doc-upload':
                 promises.push(handleFileTypeInput(element, docData));
                 break;
-            case 'notary-document-upload-notes':
+            case 'notary-docNote-upload':
                 if (!value) {
                     isEmptyFieldPresent = true;
                     break;
@@ -404,70 +365,40 @@ async function handleNotaryProjectsDocsForm(form) {
     // Create a new record with the document data
     const newRecord = createRecord(docData);
 
-    // Add the new record to the array
-    addRecord(newRecord);
+    // Check if an item with the same id already exists in dataToSave
+    if (!dataToSave.some(item => item.id === newRecord.id)) {
+        // If not, add the new record to dataToSave
+        dataToSave.push(newRecord);
+    }
 
-    // Save the updated records array to localStorage
-    localStorage.setItem('records', JSON.stringify(records));
+    console.log('New record:', newRecord); // Added console log
+
+    // Return dataToSave
+    return dataToSave;
 }
 
 function createRecord(docData) {
     return {
         id: createId(),
         document: docData.file,
-        documentName: docData.file.name,
-        documentSize: docData.file.size,
-        documentType: docData.file.type,
-        lastModified: docData.file.lastModified,
+        documentName: docData['file-name'],
+        documentSize: docData['file-size'],
+        documentType: docData['file-type'],
+        lastModified: docData['file-lastModified'],
         notes: docData.notes
     };
 }
 
-function handleFileTypeInput(element, docData) {
-    return new Promise((resolve, reject) => {
-        const file = element.files[0];
-        if (file) {
-            docData.file = file;
-            resolve();
-        } else {
-            reject(new Error('No file selected'));
-        }
-    });
-}
-/// the following are CRUD functions for the `handleNotaryProjectsDocsForm` function
+async function handleFileTypeInput(element, docData) {
+    console.log('handleFileTypeInput called with element:', element); //correctly being called with the input element with id "notary-doc-upload".
 
-///
-module.exports = { handlePrincipleContactInfoForm, handlePrincipleAddressForm, handlePrincipleCreditCardForm, handlePrincipleSchedulingForm, handleNotaryContactForm, handleNotaryAddressForm, handleNotaryCreditCardForm, handleNotarySchedulingForm, handleNotaryCommissionForm, handleNotaryProjectsDocsForm };
-
-//helper functions below.  not exported so they are not accessible outside of this module.
-
-function handleDateInput(element, dataToSave) {
-    const dateValue = new Date(element.value);
-    if (isNaN(dateValue)) {
-        return false;
-    }
-    dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
-    return true;
-}
-
-function handleMultSelectInput(element, dataToSave) {
-    // If the input field is a multiple select
-    const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
-    if (selectedOptions.length === 0) {
-        return false;
-    }
-    dataToSave[element.id] = selectedOptions;
-    return true;
-}
-
-async function handleFileTypeInput(element, dataToSave) {
     // If the file input is empty
     if (element.files.length === 0) {
         throw new Error('Empty file input');
     }
 
     // List of keys that are expected to be documents
-    const documentKeys = ['notary-document-upload', 'document2']; // Add your actual keys here
+    const documentKeys = ['notary-doc-upload', 'document2']; // Add your actual keys here
 
     // List of keys that are expected to be images
     const imageKeys = ['principal-profile-pic', 'principal-signature', 'notary-commission-govt-id-front', 'notary-commission-govt-id-back', 'notary-signature', 'notary-stamp', 'notary-profile-pic']; // Add your actual keys here
@@ -505,5 +436,53 @@ async function handleFileTypeInput(element, dataToSave) {
     }));
 
     // If there's only one file, save the file data directly, otherwise save the array of file data
-    dataToSave[element.id] = filesData.length === 1 ? filesData[0] : filesData;
+    Object.assign(docData, filesData.length === 1 ? filesData[0] : filesData);
+
+    console.log('docData after handleFileTypeInput:', docData); // docData properly contains the metadata and base64 string of the file.
 }
+
+
+
+///
+module.exports = { handlePrincipleContactInfoForm, handlePrincipleAddressForm, handlePrincipleCreditCardForm, handlePrincipleSchedulingForm, handleNotaryContactForm, handleNotaryAddressForm, handleNotaryCreditCardForm, handleNotarySchedulingForm, handleNotaryCommissionForm, handleNotaryProjectsDocsForm };
+
+//helper functions below.  not exported so they are not accessible outside of this module.
+
+function createId() {
+    return Date.now().toString();
+}
+
+function handleDateInput(element, dataToSave) {
+    const dateValue = new Date(element.value);
+    if (isNaN(dateValue)) {
+        return false;
+    }
+    dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
+    return true;
+}
+
+function handleMultSelectInput(element, dataToSave) {
+    // If the input field is a multiple select
+    const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
+    if (selectedOptions.length === 0) {
+        return false;
+    }
+    dataToSave[element.id] = selectedOptions;
+    return true;
+}
+
+// function addRecord(newRecord) {
+//     // Get the existing records from localStorage
+//     let records = JSON.parse(localStorage.getItem('records'));
+
+//     // If there are no existing records, initialize records as an empty array
+//     if (!records) {
+//         records = [];
+//     }
+
+//     // Add the new record to the array
+//     records.push(newRecord);
+
+//     // Save the updated records array to localStorage
+//     localStorage.setItem('records', JSON.stringify(records));
+// }

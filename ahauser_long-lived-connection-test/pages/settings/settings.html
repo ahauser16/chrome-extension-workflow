@@ -1445,8 +1445,22 @@
                         </ul>
                     </div>
                 </aside>
-                
-                
+                <form class="primary-content" id="notary-projects-and-docs-form">
+                    <fieldset>
+                        <legend class="legend-title">Documents</legend>
+                        <div class="formGroup">
+                            <label for="notary-docNote-upload">Note</label>
+                            <textarea class="input formfield formInput" id="notary-docNote-upload" placeholder="e.g. This form needs to signed & notarized for Timmy's class trip to the zoo." rows="8" cols="35" maxlength="200" wrap="hard" spellcheck="true" autofocus required></textarea>
+                        </div>
+                        <div class="formGroup">
+                            <label for="notary-doc-upload">Upload your document</label>
+                            <input type="file" id="notary-doc-upload" class="formField formInput" accept="application/pdf" capture="user" />
+                        </div>
+                        <button class="saveBtn" id="notary-document-upload-saveBtn">Save</button>
+                        <button class="resetBtn" id="notary-document-storage-resetBtn">Reset Local Storage</button>
+                        <span id="primContMsg_notaryDocs"></span>
+                    </fieldset>
+                </form>
             </section>
             <section class="row" id="notary-signature">
                 <aside class="sidebar" id="notary-signature-sidepanel">
