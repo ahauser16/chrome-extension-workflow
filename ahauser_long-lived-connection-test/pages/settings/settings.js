@@ -25,6 +25,7 @@ const term_expiration_date_1 = document.querySelector('#term_expiration_date_1')
 
 ////////////////
 // Load any user data that may have previously been saved.
+
 document.addEventListener('DOMContentLoaded', () => {
     populateStates();
     populateNewYorkCounties();
@@ -47,13 +48,25 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     formIds.forEach(formId => {
-        displayFormData(formId);
-        displaySidePanelData(formId);
+        displayContentOnLoad(formId);
     });
 });
 
-princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
+function displayContentOnLoad(formId) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
 
+    chrome.storage.local.get([storageKey], function (result) {
+        const formData = result[storageKey];
+        if (formData) {
+            displayFormData(formId, formData);
+            displaySidePanelData(formId, formData);
+        } else {
+            console.log(`Error: No data found in local storage for key ${storageKey}`);
+        }
+    });
+}
+
+princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
 
 const principalContactForm = document.getElementById('principal-contact-form');
 const principalContactFormSubmitButton = document.querySelector('#princ-contact-saveBtn');
@@ -164,22 +177,20 @@ notarySigFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-signature-form');
 });
-////////SAVE FORM DATA REFACTOR SECTION
 
+////////saveFormData() REFACTOR BELOW////////
 
-
-//////////////////
 function saveFormData(formId) {
     getFormAndData(formId)
-        .then(({ form, dataToSave, storageKey }) => {
-            return processFormData(form, dataToSave)
+        .then(({ dataToSave, storageKey }) => {
+            return processFormData(formId, dataToSave)
                 .then(dataToSave => ({ dataToSave, storageKey }));
         })
         .then(({ dataToSave, storageKey }) => {
             return saveDataToStorage(formId, storageKey, dataToSave);
         })
         .then(dataToSave => {
-            console.log('Data saved:', dataToSave);
+            console.log('Data saved:', JSON.stringify(dataToSave));
             showLoadMessages_princContact('Settings saved');
             displayFormData(formId, dataToSave);
             displaySidePanelData(formId, dataToSave);
@@ -205,51 +216,51 @@ function getFormAndData(formId) {
         .then(items => {
             // Initialize dataToSave as an array if there's no data in storage
             const dataToSave = Array.isArray(items[storageKey]) ? items[storageKey] : [];
-            return { form, dataToSave, storageKey };
+            return { dataToSave, storageKey };
         });
 }
 
-function processFormData(form, dataToSave) {
+function processFormData(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         try {
-            console.log('Processing form data for form:', form.id); // Added console log
-            console.log('Initial data to save:', dataToSave); // why is the metadata all equal to 'undefined' at this point?
-            switch (form.id) {
+            console.log('Processing form data for form:', formId); // Added console log
+            console.log('Initial data to save:', JSON.stringify(dataToSave)); // why is the metadata all equal to 'undefined' at this point?
+            switch (formId) {
                 case 'principal-contact-form':
-                    resolve(handlePrincipleContactInfoForm(form, dataToSave));
+                    resolve(handlePrincipleContactInfoForm(formId, dataToSave));
                     break;
                 case 'principal-address-form':
-                    resolve(handlePrincipleAddressForm(form, dataToSave));
+                    resolve(handlePrincipleAddressForm(formId, dataToSave));
                     break;
                 case 'principal-credit-card-form':
-                    resolve(handlePrincipleCreditCardForm(form, dataToSave));
+                    resolve(handlePrincipleCreditCardForm(formId, dataToSave));
                     break;
                 case 'principal-scheduling-form':
-                    resolve(handlePrincipleSchedulingForm(form, dataToSave));
+                    resolve(handlePrincipleSchedulingForm(formId, dataToSave));
                     break;
                 case 'notary-contact-form':
-                    resolve(handleNotaryContactForm(form, dataToSave));
+                    resolve(handleNotaryContactForm(formId, dataToSave));
                     break;
                 case 'notary-address-form':
-                    resolve(handleNotaryAddressForm(form, dataToSave));
+                    resolve(handleNotaryAddressForm(formId, dataToSave));
                     break;
                 case 'notary-credit-card-form':
-                    resolve(handleNotaryCreditCardForm(form, dataToSave));
+                    resolve(handleNotaryCreditCardForm(formId, dataToSave));
                     break;
                 case 'notary-scheduling-form':
-                    resolve(handleNotarySchedulingForm(form, dataToSave));
+                    resolve(handleNotarySchedulingForm(formId, dataToSave));
                     break;
                 case 'notary-commission-form':
-                    resolve(handleNotaryCommissionForm(form, dataToSave));
+                    resolve(handleNotaryCommissionForm(formId, dataToSave));
                     break;
                 case 'notary-projects-and-docs-form':
-                    resolve(handleNotaryProjectsDocsForm(form, dataToSave));
+                    resolve(handleNotaryProjectsDocsForm(formId, dataToSave));
                     break;
                 case 'example-form':
-                    resolve(exampleForm(form, dataToSave));
+                    resolve(exampleForm(formId, dataToSave));
                     break;
                 default:
-                    throw new Error(`Unhandled form id: ${form.id}`);
+                    throw new Error(`Unhandled form id: ${formId}`);
             }
         } catch (error) {
             reject(error);
@@ -259,7 +270,7 @@ function processFormData(form, dataToSave) {
 
 function saveDataToStorage(formId, storageKey, dataToSave) {
     console.log('Saving data to storage for form:', formId);
-    console.log('Final data to save:', dataToSave);
+    console.log('Final data to save:', JSON.stringify(dataToSave));
 
     let savePromise;
 
@@ -290,30 +301,35 @@ function saveDataToStorage(formId, storageKey, dataToSave) {
 
     return savePromise.then(() => dataToSave);
 }
-///
+
+///////////////END OF SaveFormData refactor////////////
+
 function displayFormData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
 
     const displayData = data => {
-        for (const [key, value] of Object.entries(data)) {
-            try {
-                const displayElement = document.getElementById(key);
-                if (!displayElement) {
-                    console.log(`Error: No element found with id ${key}`);
-                    continue;
-                }
-                if (displayElement.type === 'file') {
-                    const imgElement = document.getElementById(`${key}-sidepanel`);
-                    if (imgElement) {
-                        imgElement.src = 'data:image/png;base64,' + value;
-                    } else {
-                        console.log(`Error: No img element found with id ${key}-sidepanel`);
+        // Handle the data as an array of objects
+        for (const obj of data) {
+            for (const [key, value] of Object.entries(obj)) {
+                try {
+                    const displayElement = document.getElementById(key);
+                    if (!displayElement) {
+                        console.log(`Error: No element found with id ${key}`);
+                        continue;
                     }
-                } else {
-                    displayElement.value = value;
+                    if (displayElement.type === 'file') {
+                        const imgElement = document.getElementById(`${key}-sidepanel`);
+                        if (imgElement) {
+                            imgElement.src = 'data:image/png;base64,' + value;
+                        } else {
+                            console.log(`Error: No img element found with id ${key}-sidepanel`);
+                        }
+                    } else {
+                        displayElement.value = value;
+                    }
+                } catch (error) {
+                    console.error('Error processing element. Key:', key, 'Error:', error);
                 }
-            } catch (error) {
-                console.error('Error processing element. Key:', key, 'Error:', error);
             }
         }
     };
@@ -332,76 +348,132 @@ function displayFormData(formId, data) {
     }
 }
 
+///////////////BEGINNING OF displaySidePanelData refactor////////////
+//this is old code to be refactored...
+// function displaySidePanelData(formId, data) {
+//     const storageKey = `${formId.replace("-form", "-storage")}`;
+//     console.log(`storageKey: ${storageKey}, data:`, data);
+
+//     // List of keys that are expected to be dates
+//     const dateKeys = ['notary-commission-issuance-date', 'notary-commission-expiration-date', 'notary-issuance-date', 'notary-expiration-date']; // Add your actual keys here
+
+//     const displayData = data => {
+//         // If the storageKey is "notary-projects-and-docs-storage", handle the data as an array of documents
+//         if (storageKey === 'notary-projects-and-docs-storage') {
+//             // Get the list element where the documents will be displayed
+//             const listElement = document.getElementById('notary-document-list-sidepanel');
+//             if (!listElement) {
+//                 console.error(`No element found with id notary-document-list-sidepanel`);
+//                 return;
+//             }
+
+//             // Clear the list element
+//             while (listElement.firstChild) {
+//                 listElement.removeChild(listElement.firstChild);
+//             }
+
+//             // Ensure data is an array before iterating over it
+//             const documentsData = Array.isArray(data) ? data : [data];
+//             console.log('documentsData:', documentsData);
+
+//             // Create a list item for each document and add it to the list element
+//             documentsData.forEach((documentData) => {
+//                 const listItem = createDocListItem(documentData);
+//                 listElement.appendChild(listItem);
+//             });
+//         } else {
+//             // Otherwise, handle the data as an object of key-value pairs
+//             for (const [key, value] of Object.entries(data)) {
+//                 const sidePanelElementId = `${key}-sidepanel`;
+//                 const sidePanelElement = document.getElementById(sidePanelElementId);
+//                 if (sidePanelElement) {
+//                     if (sidePanelElement.tagName === 'IMG') {
+//                         sidePanelElement.src = 'data:image/png;base64,' + value;
+//                     } else {
+//                         // Check if the current key is in the list of date keys
+//                         sidePanelElement.textContent = dateKeys.includes(key) ? formatTimestamp(value) : value;
+//                     }
+//                 } else {
+//                     console.log(`Error: No side panel element found with id ${sidePanelElementId}, key: ${key}, value:`, value); // Added console.log
+//                 }
+//             }
+//         }
+//     };
+
+//     if (data) {
+//         displayData(data);
+//     } else {
+//         storage.get([storageKey])
+//             .then(items => {
+//                 const formData = items[storageKey];
+//                 if (formData) {
+//                     console.log('formData:', formData); // Added console.log
+//                     displayData(formData);
+//                 } else {
+//                     console.log(`Error: No data found in local storage for key ${storageKey}`);
+//                 }
+//             })
+//             .catch(error => {
+//                 console.error('Error retrieving data from storage', error);
+//             });
+//     }
+// }
+
+
+///new code below:
 function displaySidePanelData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
     console.log(`storageKey: ${storageKey}, data:`, data);
 
-    // List of keys that are expected to be dates
-    const dateKeys = ['notary-commission-issuance-date', 'notary-commission-expiration-date', 'notary-issuance-date', 'notary-expiration-date']; // Add your actual keys here
-
-    const displayData = data => {
-        // If the storageKey is "notary-projects-and-docs-storage", handle the data as an array of documents
-        if (storageKey === 'notary-projects-and-docs-storage') {
-            // Get the list element where the documents will be displayed
-            const listElement = document.getElementById('notary-document-list-sidepanel');
-            if (!listElement) {
-                console.error(`No element found with id notary-document-list-sidepanel`);
-                return;
-            }
-
-            // Clear the list element
-            while (listElement.firstChild) {
-                listElement.removeChild(listElement.firstChild);
-            }
-
-            // Ensure data is an array before iterating over it
-            const documentsData = Array.isArray(data) ? data : [data];
-            console.log('documentsData:', documentsData);
-
-            // Create a list item for each document and add it to the list element
-            documentsData.forEach((documentData) => {
-                const listItem = createDocListItem(documentData);
-                listElement.appendChild(listItem);
-            });
-        } else {
-            // Otherwise, handle the data as an object of key-value pairs
-            for (const [key, value] of Object.entries(data)) {
-                const sidePanelElementId = `${key}-sidepanel`;
-                const sidePanelElement = document.getElementById(sidePanelElementId);
-                if (sidePanelElement) {
-                    if (sidePanelElement.tagName === 'IMG') {
-                        sidePanelElement.src = 'data:image/png;base64,' + value;
-                    } else {
-                        // Check if the current key is in the list of date keys
-                        sidePanelElement.textContent = dateKeys.includes(key) ? formatTimestamp(value) : value;
-                    }
-                } else {
-                    console.log(`Error: No side panel element found with id ${sidePanelElementId}, key: ${key}, value:`, value); // Added console.log
-                }
-            }
-        }
-    };
-
-    if (data) {
-        displayData(data);
-    } else {
-        storage.get([storageKey])
-            .then(items => {
-                const formData = items[storageKey];
-                if (formData) {
-                    console.log('formData:', formData); // Added console.log
-                    displayData(formData);
-                } else {
-                    console.log(`Error: No data found in local storage for key ${storageKey}`);
-                }
-            })
-            .catch(error => {
-                console.error('Error retrieving data from storage', error);
-            });
+    switch (formId) {
+        case 'principal-contact-form':
+            handlePrincipalContactDisplay(data);
+            break;
+        case 'principal-address-form':
+            handlePrincipalAddressDisplay(data);
+            break;
+        case 'principal-credit-card-form':
+            handlePrincipalCreditCardDisplay(data);
+            break;
+        case 'principal-scheduling-form':
+            handlePrincipalSchedulingDisplay(data);
+            break;
+        case 'principal-profile-pic-form':
+            handlePrincipalProfilePicDisplay(data);
+            break;
+        case 'notary-contact-form':
+            handleNotaryContactDisplay(data);
+            break;
+        case 'notary-address-form':
+            handleNotaryAddressDisplay(data);
+            break;
+        case 'notary-credit-card-form':
+            handleNotaryCreditCardDisplay(data);
+            break;
+        case 'notary-scheduling-form':
+            handleNotarySchedulingDisplay(data);
+            break;
+        case 'notary-clients-form':
+            handleNotaryClientsDisplay(data);
+            break;
+        case 'notary-commission-form':
+            handleNotaryCommissionDisplay(data);
+            break;
+        case 'notary-projects-and-docs-form':
+            handleNotaryProjectsAndDocsDisplay(data);
+            break;
+        case 'notary-signature-form':
+            handleNotarySignatureDisplay(data);
+            break;
+        default:
+            console.error(`Unhandled form id: ${formId}`);
     }
 }
 
 
+
+
+///end of new code
 
 
 ////////////END OF SaveFormData refactor////////////
@@ -533,119 +605,6 @@ function createDocListItem(data) {
 }
 
 
-
-/////////////////////////////////////////////
-// async function savePrincSchedChanges() {
-//     console.log('Submit button clicked');
-
-//     // Get the current contact-user data from the form.
-//     const princTimeZoneVal = princTimeZoneField.value;
-//     const princPrefContactMethVal = princPrefContactMethField.value;
-//     const princContactNotesPublicVal = princContactNotesPublicField.value;
-
-
-
-//     // Check that all values are present.
-//     if (!princTimeZoneVal || !princPrefContactMethVal || !princContactNotesPublicVal) {
-//         showLoadMessages('Error: Missing required scheduling data');
-//         return;
-//     }
-
-//     // Save the data using the Chrome extension storage API.
-//     await storage.set({
-//         princSchedData: {
-//             princTimeZoneStorage: princTimeZoneVal,
-//             princPrefContactMethStorage: princPrefContactMethVal,
-//             princContactNotesPublicStorage: princContactNotesPublicVal,
-//         }
-//     });
-//     showLoadMessages_princSched('Settings saved');
-//     displayPrincSchedChanges();
-// }
-
-// function loadPrincSchedChanges() {
-//     storage.get(['princSchedData'], function (items) {
-//         userDataFromStorage = items['princSchedData'];
-
-//         let messages = []; // Array to store the messages
-
-//         if (userDataFromStorage) {
-//             if (userDataFromStorage.princTimeZoneStorage) {
-//                 princTimeZoneField.value = userDataFromStorage.princTimeZoneStorage;
-//                 messages.push('Loaded saved user time zone.');
-//             }
-//             if (userDataFromStorage.princPrefContactMethStorage) {
-//                 princPrefContactMethField.value = userDataFromStorage.princPrefContactMethStorage;
-//                 messages.push('Loaded saved user preferred contact method.');
-//             }
-//             if (userDataFromStorage.princContactNotesPublicStorage) {
-//                 princContactNotesPublicField.value = userDataFromStorage.princContactNotesPublicStorage;
-//                 messages.push('Loaded saved user credit card expiration date.');
-//             }
-//         }
-//         showLoadMessages_princSched(messages.join(' '));
-//     });
-// }
-
-//////////////////////////////
-
-// async function resetPrincCont() {
-//     // Remove the saved values from storage.
-//     await storage.remove(['princContactData']);
-//     showLoadMessages_princContact('Reset stored principal contact data');
-//     // Refresh the text field area.
-//     princFirstNameField.value = '';
-//     princLastNameField.value = '';
-//     princEmailField.value = '';
-//     princPhoneField.value = '';
-
-//     // Refresh the sidebar area.
-//     princFirstNameDisp.innerText = '';
-//     princLastNameDisp.innerText = '';
-//     princEmailDisp.innerText = '';
-//     princPhoneDisp.innerText = '';
-// }
-
-///////////////////////////
-
-// async function displayPrincAddressChanges() {
-//     const items = await storage.get(['princAddressData']);
-//     userDataFromStorage = items['princAddressData'];
-
-//     let messages = []; // Array to store the messages
-
-//     if (userDataFromStorage) {
-//         if (userDataFromStorage.princAddressLine1Storage) {
-//             princAddress1Disp.innerText = userDataFromStorage.princAddressLine1Storage;
-//             // showMessage('Displayed saved user first name.');
-//             messages.push("Displayed saved user's address (line 1).");
-
-//         }
-//         if (userDataFromStorage.princAddressLine2Storage) {
-//             princAddress2Disp.innerText = userDataFromStorage.princAddressLine2Storage;
-//             // showMessage('Displayed saved user last name.');
-//             messages.push("Displayed saved user's address (line 2).");
-
-//         }
-//         if (userDataFromStorage.princCityStorage) {
-//             princCityDisp.innerText = userDataFromStorage.princCityStorage;
-//             // showMessage('Displayed saved user email.');
-//             messages.push("Displayed saved user's City.");
-
-//         }
-//         if (userDataFromStorage.princStateStorage) {
-//             princStateDisp.innerText = userDataFromStorage.princStateStorage;
-//             // showMessage('Displayed saved user phone number.');
-//             messages.push("Displayed saved user's State location.");
-//         }
-//         if (userDataFromStorage.princZipStorage) {
-//             princZipDisp.innerText = userDataFromStorage.princZipStorage;
-//             // showMessage('Displayed saved user phone number.');
-//             messages.push("Displayed saved user's zip code.");
-//         }
-//     }
-//     showDisplayMessages_princAddr(messages.join(' '));
-// }
 
 //////////////////////////////////
 

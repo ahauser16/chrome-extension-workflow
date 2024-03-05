@@ -1,8 +1,14 @@
 // formHandlers.js
 
-function handlePrincipleContactInfoForm(form, dataToSave) {
+function handlePrincipleContactInfoForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -17,7 +23,15 @@ function handlePrincipleContactInfoForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -26,6 +40,7 @@ function handlePrincipleContactInfoForm(form, dataToSave) {
 
             if (isEmptyFieldPresent) {
                 reject(new Error('Missing required contact data'));
+                return;
             }
         }
 
@@ -33,9 +48,15 @@ function handlePrincipleContactInfoForm(form, dataToSave) {
     });
 }
 
-function handlePrincipleAddressForm(form, dataToSave) {
+function handlePrincipleAddressForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -51,7 +72,15 @@ function handlePrincipleAddressForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -60,6 +89,7 @@ function handlePrincipleAddressForm(form, dataToSave) {
 
             if (isEmptyFieldPresent) {
                 reject(new Error('Missing required address data'));
+                return;
             }
         }
 
@@ -67,9 +97,15 @@ function handlePrincipleAddressForm(form, dataToSave) {
     });
 }
 
-function handlePrincipleCreditCardForm(form, dataToSave) {
+function handlePrincipleCreditCardForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -90,7 +126,15 @@ function handlePrincipleCreditCardForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -106,9 +150,15 @@ function handlePrincipleCreditCardForm(form, dataToSave) {
     });
 }
 
-function handlePrincipleSchedulingForm(form, dataToSave) {
+function handlePrincipleSchedulingForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -122,7 +172,15 @@ function handlePrincipleSchedulingForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -138,9 +196,16 @@ function handlePrincipleSchedulingForm(form, dataToSave) {
     });
 }
 
-function handleNotaryContactForm(form, dataToSave) {
+
+function handleNotaryContactForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -155,7 +220,15 @@ function handleNotaryContactForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -171,9 +244,15 @@ function handleNotaryContactForm(form, dataToSave) {
     });
 }
 
-function handleNotaryAddressForm(form, dataToSave) {
+function handleNotaryAddressForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -189,7 +268,15 @@ function handleNotaryAddressForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -205,9 +292,15 @@ function handleNotaryAddressForm(form, dataToSave) {
     });
 }
 
-function handleNotaryCreditCardForm(form, dataToSave) {
+function handleNotaryCreditCardForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -227,7 +320,15 @@ function handleNotaryCreditCardForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -243,9 +344,15 @@ function handleNotaryCreditCardForm(form, dataToSave) {
     });
 }
 
-function handleNotarySchedulingForm(form, dataToSave) {
+function handleNotarySchedulingForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
 
         for (let element of form.getElementsByClassName('formInput')) {
             const value = element.value;
@@ -259,7 +366,15 @@ function handleNotarySchedulingForm(form, dataToSave) {
                         isEmptyFieldPresent = true;
                         break;
                     }
-                    dataToSave[element.id] = value;
+                    // Find the index of the object with the same key in dataToSave
+                    const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+                    if (index !== -1) {
+                        // If the object exists, update its value
+                        dataToSave[index][element.id] = value;
+                    } else {
+                        // If the object doesn't exist, add a new object
+                        dataToSave.push({ [element.id]: value });
+                    }
                     break;
                 default:
                     console.log(`Unhandled form input id: ${element.id}`);
@@ -275,60 +390,87 @@ function handleNotarySchedulingForm(form, dataToSave) {
     });
 }
 
-function handleNotaryCommissionForm(form, dataToSave) {
+function handleNotaryCommissionForm(formId, dataToSave) {
     return new Promise((resolve, reject) => {
         let isEmptyFieldPresent = false;
+        let promises = [];
 
-        for (let element of form.getElementsByClassName('formInput')) {
+        const form = document.getElementById(formId);
+        if (!form) {
+            reject(new Error(`No form found with id ${formId}`));
+            return;
+        }
+
+        for (let element of form.elements) {
+            if (!element.id || element.value === undefined || element.type === 'button') {
+                continue; // Skip elements without an id or value, and buttons
+            }
+
             const value = element.value;
             console.log(`Key: ${element.id}, Value: ${value}`);
 
-            switch (element.id) {
-                case 'notary-commission-reg-state':
-                case 'notary-commission-reg-county':
-                case 'notary-commission-num':
-                case 'notary-commission-first-name':
-                case 'notary-commission-last-name':
-                case 'notary-commission-govt-id-type':
-                    if (!value) {
-                        isEmptyFieldPresent = true;
-                        break;
-                    }
-                    dataToSave[element.id] = value;
-                    break;
-                case 'notary-commission-issuance-date':
-                case 'notary-commission-expiration-date':
-                    if (!handleDateInput(element, dataToSave)) {
-                        isEmptyFieldPresent = true;
-                    }
-                    break;
-                case 'notary-commission-filed-county':
-                    if (!handleMultSelectInput(element, dataToSave)) {
-                        isEmptyFieldPresent = true;
-                    }
-                    break;
-                case 'notary-commission-govt-id-front':
-                case 'notary-commission-govt-id-back':
-                    handleFileTypeInput(element, dataToSave).catch(error => {
-                        console.error(`Error handling file input: ${error}`);
-                        isEmptyFieldPresent = true;
-                    });
-                    break;
-                default:
-                    console.log(`Unhandled form input id: ${element.id}`);
-                    break;
+            if (element.type === 'select-multiple') {
+                const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
+                if (selectedOptions.length === 0) {
+                    isEmptyFieldPresent = true;
+                } else {
+                    dataToSave.push({ [element.id]: selectedOptions });
+                }
+            } else if (element.type === 'file') {
+                if (element.files.length === 0) {
+                    isEmptyFieldPresent = true;
+                } else {
+                    promises.push(
+                        handleFileInput(element.files[0]).then(base64String => {
+                            dataToSave.push({ [element.id]: base64String });
+                        }).catch(error => {
+                            console.error(`Error handling file input: ${error}`);
+                            isEmptyFieldPresent = true;
+                        })
+                    );
+                }
+            } else if (element.type === 'date') {
+                if (!handleDateInput(element, dataToSave)) {
+                    isEmptyFieldPresent = true;
+                }
+            } else {
+                if (!value) {
+                    isEmptyFieldPresent = true;
+                } else {
+                    dataToSave.push({ [element.id]: value });
+                }
             }
 
             if (isEmptyFieldPresent) {
                 reject(new Error('Missing required commission data'));
+                return;
             }
         }
 
-        resolve(dataToSave);
+        Promise.all(promises).then(() => resolve(dataToSave));
     });
 }
-/////////////////////////////////////
 
+function handleFileInput(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]); // Get the Base64 string
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+    });
+}
+
+function handleDateInput(element, dataToSave) {
+    const dateValue = new Date(element.value);
+    if (isNaN(dateValue)) {
+        return false;
+    }
+    dataToSave.push({ [element.id]: dateValue.getTime() }); // Save as timestamp
+    return true;
+}
+
+/////////////////////////////////////
+// refactor required below
 async function handleNotaryProjectsDocsForm(form, dataToSave) {
     let isEmptyFieldPresent = false;
     let docData = {};
@@ -377,6 +519,11 @@ async function handleNotaryProjectsDocsForm(form, dataToSave) {
     return dataToSave;
 }
 
+
+function createId() {
+    return Date.now().toString();
+}
+
 function createRecord(docData) {
     return {
         id: createId(),
@@ -389,100 +536,12 @@ function createRecord(docData) {
     };
 }
 
-async function handleFileTypeInput(element, docData) {
-    console.log('handleFileTypeInput called with element:', element); //correctly being called with the input element with id "notary-doc-upload".
-
-    // If the file input is empty
-    if (element.files.length === 0) {
-        throw new Error('Empty file input');
-    }
-
-    // List of keys that are expected to be documents
-    const documentKeys = ['notary-doc-upload', 'document2']; // Add your actual keys here
-
-    // List of keys that are expected to be images
-    const imageKeys = ['principal-profile-pic', 'principal-signature', 'notary-commission-govt-id-front', 'notary-commission-govt-id-back', 'notary-signature', 'notary-stamp', 'notary-profile-pic']; // Add your actual keys here
-
-    // Create an array to hold promises for each file
-    const filesData = await Promise.all(Array.from(element.files).map(async (file) => {
-        const reader = new FileReader();
-        const result = await new Promise((resolve, reject) => {
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-        });
-
-        const base64String = result.replace('data:', '').replace(/^.+,/, '');
-
-        // Create an object to hold the file data
-        const fileData = {
-            file: base64String,
-            'file-name': file.name,
-        };
-
-        // Add the file metadata to the fileData object if the file is a document
-        if (documentKeys.includes(element.id)) {
-            fileData['file-size'] = file.size;
-            fileData['file-type'] = file.type;
-            fileData['file-lastModified'] = file.lastModified;
-        } else if (imageKeys.includes(element.id)) {
-            // Do nothing, we only want to save the file and file-name for images
-        } else {
-            throw new Error(`Error: Unrecognized key ${element.id}`);
-        }
-
-        console.log(`File uploaded: ${file.name}`);
-        return fileData;
-    }));
-
-    // If there's only one file, save the file data directly, otherwise save the array of file data
-    Object.assign(docData, filesData.length === 1 ? filesData[0] : filesData);
-
-    console.log('docData after handleFileTypeInput:', docData); // docData properly contains the metadata and base64 string of the file.
-}
 
 
 
 ///
 module.exports = { handlePrincipleContactInfoForm, handlePrincipleAddressForm, handlePrincipleCreditCardForm, handlePrincipleSchedulingForm, handleNotaryContactForm, handleNotaryAddressForm, handleNotaryCreditCardForm, handleNotarySchedulingForm, handleNotaryCommissionForm, handleNotaryProjectsDocsForm };
 
-//helper functions below.  not exported so they are not accessible outside of this module.
 
-function createId() {
-    return Date.now().toString();
-}
 
-function handleDateInput(element, dataToSave) {
-    const dateValue = new Date(element.value);
-    if (isNaN(dateValue)) {
-        return false;
-    }
-    dataToSave[element.id] = dateValue.getTime(); // Save as timestamp
-    return true;
-}
 
-function handleMultSelectInput(element, dataToSave) {
-    // If the input field is a multiple select
-    const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
-    if (selectedOptions.length === 0) {
-        return false;
-    }
-    dataToSave[element.id] = selectedOptions;
-    return true;
-}
-
-// function addRecord(newRecord) {
-//     // Get the existing records from localStorage
-//     let records = JSON.parse(localStorage.getItem('records'));
-
-//     // If there are no existing records, initialize records as an empty array
-//     if (!records) {
-//         records = [];
-//     }
-
-//     // Add the new record to the array
-//     records.push(newRecord);
-
-//     // Save the updated records array to localStorage
-//     localStorage.setItem('records', JSON.stringify(records));
-// }
