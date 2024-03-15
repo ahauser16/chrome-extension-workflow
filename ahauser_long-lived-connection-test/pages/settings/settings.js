@@ -42,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'notary-scheduling-form',
         'notary-clients-form',
         'notary-commission-form',
-        'notary-projects-and-docs-form',
+        'notary-docs-form',
+        'notary-project-form',
         'notary-signature-form',
         // Add more form IDs as needed
     ];
@@ -60,6 +61,13 @@ function displayContentOnLoad(formId) {
         if (formData) {
             displayFormData(formId, formData);
             displaySidePanelData(formId, formData);
+
+            // If the formId is 'notary-docs-form', display all documents
+            if (formId === 'notary-docs-form') {
+                formData.forEach(doc => {
+                    handleNotaryProjectsDocsDisplay(doc);
+                });
+            }
         } else {
             console.log(`Error: No data found in local storage for key ${storageKey}`);
         }
@@ -156,20 +164,34 @@ notaryCommissionFormSubmitButton.addEventListener('click', function (event) {
     saveFormData('notary-commission-form');
 });
 /////////////////////////////////
-const notaryProjsDocsForm = document.getElementById('notary-projects-and-docs-form');
-const notaryProjsDocsFormSubmitButton = document.querySelector('#notary-document-upload-saveBtn');
+const notaryDocsForm = document.getElementById('notary-docs-form');
+const notaryDocsFormSubmitButton = document.querySelector('#notary-document-upload-saveBtn');
 
-notaryProjsDocsFormSubmitButton.addEventListener('click', function (event) {
+notaryDocsFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
-    saveFormData('notary-projects-and-docs-form');
+    saveFormData('notary-docs-form');
 });
 
-const notaryProjsDocsStorageResetButton = document.querySelector('#notary-document-storage-resetBtn');
+const notaryDocsStorageResetButton = document.querySelector('#notary-document-storage-resetBtn');
 
-notaryProjsDocsStorageResetButton.addEventListener('click', function () {
-    clearLocalStorageByKey('notary-projects-and-docs-storage');
+notaryDocsStorageResetButton.addEventListener('click', function () {
+    clearLocalStorageByKey('notary-docs-storage');
 });
 
+const notaryProjectForm = document.getElementById('notary-project-form');
+const notaryProjectFormSubmitButton = document.querySelector('#notary-create-project-saveBtn');
+
+notaryProjectFormSubmitButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    saveFormData('notary-project-form');
+});
+
+const notaryProjectStorageResetButton = document.querySelector('#notary-project-storage-resetBtn');
+
+notaryProjectStorageResetButton.addEventListener('click', function () {
+    clearLocalStorageByKey('notary-project-storage');
+});
+/////////////////////////////////
 const notarySigForm = document.getElementById('notary-signature-form');
 const notarySigFormSubmitButton = document.querySelector('#notary-signature-upload-saveBtn');
 
@@ -178,7 +200,7 @@ notarySigFormSubmitButton.addEventListener('click', function (event) {
     saveFormData('notary-signature-form');
 });
 
-////////saveFormData() REFACTOR BELOW////////
+////////saveFormData() BELOW////////
 
 function saveFormData(formId) {
     getFormAndData(formId)
@@ -253,8 +275,11 @@ function processFormData(formId, dataToSave) {
                 case 'notary-commission-form':
                     resolve(handleNotaryCommissionForm(formId, dataToSave));
                     break;
-                case 'notary-projects-and-docs-form':
-                    resolve(handleNotaryProjectsDocsForm(formId, dataToSave));
+                case 'notary-docs-form':
+                    resolve(handleNotaryDocsForm(formId, dataToSave));
+                    break;
+                case 'notary-project-form':
+                    resolve(handleNotaryDocsForm(formId, dataToSave));
                     break;
                 case 'example-form':
                     resolve(exampleForm(formId, dataToSave));
@@ -274,7 +299,7 @@ function saveDataToStorage(formId, storageKey, dataToSave) {
 
     let savePromise;
 
-    if (formId === 'notary-projects-and-docs-form') {
+    if (formId === 'notary-docs-form') {
         savePromise = storage.get([storageKey])
             .then(items => {
                 let documents = items[storageKey];
@@ -302,7 +327,7 @@ function saveDataToStorage(formId, storageKey, dataToSave) {
     return savePromise.then(() => dataToSave);
 }
 
-///////////////END OF SaveFormData refactor////////////
+///////////////END OF SaveFormData ////////////
 
 function displayFormData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
@@ -348,79 +373,6 @@ function displayFormData(formId, data) {
     }
 }
 
-///////////////BEGINNING OF displaySidePanelData refactor////////////
-//this is old code to be refactored...
-// function displaySidePanelData(formId, data) {
-//     const storageKey = `${formId.replace("-form", "-storage")}`;
-//     console.log(`storageKey: ${storageKey}, data:`, data);
-
-//     // List of keys that are expected to be dates
-//     const dateKeys = ['notary-commission-issuance-date', 'notary-commission-expiration-date', 'notary-issuance-date', 'notary-expiration-date']; // Add your actual keys here
-
-//     const displayData = data => {
-//         // If the storageKey is "notary-projects-and-docs-storage", handle the data as an array of documents
-//         if (storageKey === 'notary-projects-and-docs-storage') {
-//             // Get the list element where the documents will be displayed
-//             const listElement = document.getElementById('notary-document-list-sidepanel');
-//             if (!listElement) {
-//                 console.error(`No element found with id notary-document-list-sidepanel`);
-//                 return;
-//             }
-
-//             // Clear the list element
-//             while (listElement.firstChild) {
-//                 listElement.removeChild(listElement.firstChild);
-//             }
-
-//             // Ensure data is an array before iterating over it
-//             const documentsData = Array.isArray(data) ? data : [data];
-//             console.log('documentsData:', documentsData);
-
-//             // Create a list item for each document and add it to the list element
-//             documentsData.forEach((documentData) => {
-//                 const listItem = createDocListItem(documentData);
-//                 listElement.appendChild(listItem);
-//             });
-//         } else {
-//             // Otherwise, handle the data as an object of key-value pairs
-//             for (const [key, value] of Object.entries(data)) {
-//                 const sidePanelElementId = `${key}-sidepanel`;
-//                 const sidePanelElement = document.getElementById(sidePanelElementId);
-//                 if (sidePanelElement) {
-//                     if (sidePanelElement.tagName === 'IMG') {
-//                         sidePanelElement.src = 'data:image/png;base64,' + value;
-//                     } else {
-//                         // Check if the current key is in the list of date keys
-//                         sidePanelElement.textContent = dateKeys.includes(key) ? formatTimestamp(value) : value;
-//                     }
-//                 } else {
-//                     console.log(`Error: No side panel element found with id ${sidePanelElementId}, key: ${key}, value:`, value); // Added console.log
-//                 }
-//             }
-//         }
-//     };
-
-//     if (data) {
-//         displayData(data);
-//     } else {
-//         storage.get([storageKey])
-//             .then(items => {
-//                 const formData = items[storageKey];
-//                 if (formData) {
-//                     console.log('formData:', formData); // Added console.log
-//                     displayData(formData);
-//                 } else {
-//                     console.log(`Error: No data found in local storage for key ${storageKey}`);
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error retrieving data from storage', error);
-//             });
-//     }
-// }
-
-
-///new code below:
 function displaySidePanelData(formId, data) {
     const storageKey = `${formId.replace("-form", "-storage")}`;
     console.log(`storageKey: ${storageKey}, data:`, data);
@@ -459,8 +411,11 @@ function displaySidePanelData(formId, data) {
         case 'notary-commission-form':
             handleNotaryCommissionDisplay(data);
             break;
-        case 'notary-projects-and-docs-form':
-            handleNotaryProjectsAndDocsDisplay(data);
+        case 'notary-docs-form':
+            handleNotaryDocsDisplay(data);
+            break;
+        case 'notary-project-form':
+            handleNotaryDocsDisplay(data);
             break;
         case 'notary-signature-form':
             handleNotarySignatureDisplay(data);
@@ -471,12 +426,7 @@ function displaySidePanelData(formId, data) {
 }
 
 
-
-
-///end of new code
-
-
-////////////END OF SaveFormData refactor////////////
+////////////////////////
 
 function clearLocalStorageByKey(key) {
     chrome.storage.local.remove(key, function () {

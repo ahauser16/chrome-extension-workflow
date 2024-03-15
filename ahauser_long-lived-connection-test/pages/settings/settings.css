@@ -539,3 +539,33 @@ table p {
 .uploaded-doc-item-sidepanel:hover .uploaded-doc-item-line3 {
     display: flex;
 }
+
+.doc-link{
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.doc-size,
+.doc-type,
+.doc-id,
+.doc-last-modified{
+    font-size: .75rem;
+}
+
+.doc-notes{
+    font-size: 1rem;
+    font-style: italic;
+}
+
+.doc-item{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+    padding: 1rem;
+    background-color: var(--color-neutral-390);
+    border: 1.5px solid var(--color-neutral-300);
+    max-width: 100%;
+    overflow: auto;
+}
