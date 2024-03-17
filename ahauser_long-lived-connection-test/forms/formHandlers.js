@@ -307,7 +307,8 @@ function handleNotaryCreditCardForm(formId, dataToSave) {
             console.log(`Key: ${element.id}, Value: ${value}`);
 
             switch (element.id) {
-                case 'notary-name-on-credit-card':
+                case 'notary-first-name-credit-card':
+                case 'notary-last-name-credit-card':
                 case 'notary-credit-card-number':
                 case 'notary-credit-card-expiration':
                 case 'notary-credit-card-cvv':
@@ -510,6 +511,9 @@ async function handleNotaryDocsForm(formId, dataToSave) {
 
     console.log('New record:', newRecord); // Added console log
 
+    // Add the new document to the document selection in the project form
+    populateDocumentSelection([newRecord]); // Wrap newRecord in an array because populateDocumentSelection expects an array
+
     // Return dataToSave
     return dataToSave;
 }
@@ -567,10 +571,10 @@ function createRecord(docData) {
     return {
         id: createId(),
         document: docData.file,
-        documentName: docData['file-name'],
-        documentSize: docData['file-size'],
-        documentType: docData['file-type'],
-        lastModified: docData['file-lastModified'],
+        documentName: docData['fileName'],
+        documentSize: docData['fileSize'],
+        documentType: docData['fileType'],
+        lastModified: docData['fileLastModified'],
         notes: docData.notes
     };
 }
@@ -586,13 +590,33 @@ function handleFileInput(element, docData) {
         const reader = new FileReader();
         reader.onload = () => {
             docData.file = reader.result.split(',')[1]; // Get the Base64 string
-            docData['file-name'] = file.name;
-            docData['file-size'] = file.size;
-            docData['file-type'] = file.type;
-            docData['file-lastModified'] = file.lastModified;
+            docData['fileName'] = file.name;
+            docData['fileSize'] = file.size;
+            docData['fileType'] = file.type;
+            docData['fileLastModified'] = file.lastModified;
             resolve();
         };
         reader.onerror = reject;
         reader.readAsDataURL(file); // Pass the first File object
     });
+}
+
+function populateDocumentSelection(docs) {
+    // Get the select element
+    const select = document.getElementById('notary-project-document-selection');
+
+    // Add an option for each document
+    for (const doc of docs) {
+        const option = document.createElement('option');
+        option.value = doc.id; // Set the value to the id of the document
+        option.textContent = doc.documentName; // Set the text content to the documentName of the document
+
+        // Set the data attributes
+        option.dataset.fileName = doc.documentName; // Use the camelCase key
+        option.dataset.fileSize = doc.documentSize; // Use the camelCase key
+        option.dataset.fileType = doc.documentType; // Use the camelCase key
+        option.dataset.fileLastModified = doc.lastModified; // Use the camelCase key
+
+        select.appendChild(option);
+    }
 }

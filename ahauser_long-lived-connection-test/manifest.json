@@ -4,10 +4,10 @@
     "version": "1.0",
     "description": "A test to see if a long-lived connection is required when developing an extension for Google Meet",
     "icons": {
-      "16": "assets/NYS-flag-icon-16.png",
-      "32": "assets/NYS-flag-icon-32.png",
-      "48": "assets/NYS-flag-icon-48.png",
-      "128": "assets/NYS-flag-icon-128.png"
+      "16": "assets/images/NYS-flag-icon-16.png",
+      "32": "assets/images/NYS-flag-icon-32.png",
+      "48": "assets/images/NYS-flag-icon-48.png",
+      "128": "assets/images/NYS-flag-icon-128.png"
     },
     "permissions": [
       "tabs",
@@ -31,10 +31,10 @@
       "default_popup": "popup.html",
       "default_title": "Click for more options",
       "default_icon": {
-        "16": "assets/NYS-flag-icon-16.png",
-        "32": "assets/NYS-flag-icon-32.png",
-        "48": "assets/NYS-flag-icon-48.png",
-        "128": "assets/NYS-flag-icon-128.png"
+        "16": "assets/images/NYS-flag-icon-16.png",
+        "32": "assets/images/NYS-flag-icon-32.png",
+        "48": "assets/images/NYS-flag-icon-48.png",
+        "128": "assets/images/NYS-flag-icon-128.png"
       }
     },
     "side_panel": {

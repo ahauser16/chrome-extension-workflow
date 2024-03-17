@@ -2,15 +2,6 @@
 // Store user data in the "local" storage area.
 const storage = chrome.storage.local;
 
-const princContactResetButton = document.querySelector('#princ-contact-resetBtn');
-
-const princAddressResetButton = document.querySelector('#princ-address-resetBtn');
-
-const princCCresetButton = document.querySelector('#princ-credit-card-resetBtn');
-
-// const princSchedSubmitButton = document.querySelector('#princ-scheduling-saveBtn');
-const princSchedResetButton = document.querySelector('#princ-scheduling-resetBtn');
-
 //principal's notary contacts related
 const princElectronicNotarySearchSubmitButton = document.querySelector('#princ-elect-notary-searchBtn');
 const princNotarySaveButton = document.querySelector('#princ-scheduling-saveBtn');
@@ -22,6 +13,7 @@ const commissioned_county_1 = document.querySelector('#commissioned_county_1');
 const commission_type_traditional_or_electronic_1 = document.querySelector('#commission_type_traditional_or_electronic_1');
 const term_issue_date_1 = document.querySelector('#term_issue_date_1');
 const term_expiration_date_1 = document.querySelector('#term_expiration_date_1');
+princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
 
 ////////////////
 // Load any user data that may have previously been saved.
@@ -33,13 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const formIds = [
         'principal-contact-form',
         'principal-address-form',
-        'principal-credit-card-form',
+        'principal-billing-form',
         'principal-scheduling-form',
         "principal-profile-pic-form",
         'notary-contact-form',
         'notary-address-form',
         'notary-credit-card-form',
-        'notary-scheduling-form',
+        'notary-sched-form',
         'notary-clients-form',
         'notary-commission-form',
         'notary-docs-form',
@@ -51,30 +43,86 @@ document.addEventListener('DOMContentLoaded', () => {
     formIds.forEach(formId => {
         displayContentOnLoad(formId);
     });
+
 });
 
-function displayContentOnLoad(formId) {
-    const storageKey = `${formId.replace("-form", "-storage")}`;
 
-    chrome.storage.local.get([storageKey], function (result) {
-        const formData = result[storageKey];
-        if (formData) {
-            displayFormData(formId, formData);
-            displaySidePanelData(formId, formData);
+//////////////////////////
 
-            // If the formId is 'notary-docs-form', display all documents
-            if (formId === 'notary-docs-form') {
-                formData.forEach(doc => {
-                    handleNotaryProjectsDocsDisplay(doc);
-                });
-            }
-        } else {
-            console.log(`Error: No data found in local storage for key ${storageKey}`);
-        }
-    });
-}
+const princContactResetButton = document.querySelector('#princ-contact-resetBtn');
+princContactResetButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('principal-contact-storage', ["principal-first-name-sidepanel", "principal-last-name-sidepanel", "principal-email-sidepanel", "principal-phone-sidepanel"]
+    );
+});
 
-princElectronicNotarySearchSubmitButton.addEventListener('click', fetchElectronicNotaryList);
+const princAddressResetButton = document.querySelector('#princ-address-resetBtn');
+princAddressResetButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('principal-address-storage', ["principal-address1-sidepanel", "principal-address2-sidepanel", "principal-city-sidepanel", "principal-state-sidepanel", "principal-zip-sidepanel"]);
+});
+
+const princBillingResetButton = document.querySelector('#princ-billing-resetBtn');
+princBillingResetButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('principal-billing-storage', ["princ-first-name-credit-card-sidepanel", "princ-last-name-credit-card-sidepanel", "princ-credit-card-number-sidepanel", "princ-credit-card-expiration-sidepanel", "princ-credit-card-cvv-sidepanel", "princ-credit-card-address1-sidepanel", "princ-credit-card-address2-sidepanel", "princ-credit-card-city-sidepanel", "princ-credit-card-state-sidepanel", "princ-credit-card-zip-sidepanel"]);
+});
+
+const princSchedResetButton = document.querySelector('#princ-scheduling-resetBtn');
+princSchedResetButton.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('principal-scheduling-storage', ["principal-time-zone-select-sidepanel", "principal-pref-contact-method-sidepanel", "principal-contact-notes-public-sidepanel"]
+    );
+});
+
+const notaryContactResetBtn = document.querySelector('#notary-contact-resetBtn');
+notaryContactResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-contact-storage', ["notary-first-name-sidepanel", "notary-last-name-sidepanel", "notary-email-sidepanel", "notary-phone-sidepanel"]
+    );
+});
+
+const notaryAddressResetBtn = document.querySelector('#notary-address-resetBtn');
+notaryAddressResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-address-storage', ["notary-address1-sidepanel", "notary-address2-sidepanel", "notary-city-sidepanel", "notary-state-sidepanel", "notary-zip-sidepanel"]
+    );
+});
+
+const notaryBillingResetBtn = document.querySelector('#notary-credit-card-resetBtn');
+notaryBillingResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-credit-card-storage', ["notary-first-name-credit-card-sidepanel", "notary-last-name-credit-card-sidepanel", "notary-credit-card-number-sidepanel", "notary-credit-card-expiration-sidepanel", "notary-credit-card-cvv-sidepanel", "notary-credit-card-address1-sidepanel", "notary-credit-card-address2-sidepanel", "notary-credit-card-city-sidepanel", "notary-credit-card-state-sidepanel", "notary-credit-card-zip-sidepanel"]
+    );
+});
+
+
+const notarySchedResetBtn = document.querySelector('#notary-sched-resetBtn');
+notarySchedResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-sched-storage', ["notary-time-zone-select-sidepanel", "notary-pref-contact-method-sidepanel", "notary-contact-notes-public-sidepanel"]
+    );
+});
+///
+
+const notaryCommissionResetBtn = document.querySelector('#notary-commission-resetBtn');
+notaryCommissionResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-commission-storage', ["notary-commission-reg-county-sidepanel", "notary-commission-filed-county-sidepanel", "notary-commission-num-sidepanel", "notary-commission-first-name-sidepanel", "notary-commission-last-name-sidepanel", "notary-commission-issuance-date-sidepanel", "notary-commission-expiration-date-sidepanel", "notary-commission-govt-id-front-sidepanel", "notary-commission-govt-id-back-sidepanel"]
+    );
+});
+
+
+///notary-commission-reg-state-sidepanel
+const notaryDocsResetBtn = document.querySelector('#notary-document-storage-resetBtn');
+notaryDocsResetBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    clearLocalStorageByKey('notary-docs-storage', ["notary-document-list-sidepanel"]
+    );
+});
+
+///
+
 
 const principalContactForm = document.getElementById('principal-contact-form');
 const principalContactFormSubmitButton = document.querySelector('#princ-contact-saveBtn');
@@ -84,6 +132,9 @@ principalContactFormSubmitButton.addEventListener('click', function (event) {
     saveFormData('principal-contact-form');
 });
 
+
+
+
 const principalAddressForm = document.getElementById('principal-address-form');
 const principalAddressFormSubmitButton = document.querySelector('#princ-address-saveBtn');
 
@@ -92,12 +143,12 @@ principalAddressFormSubmitButton.addEventListener('click', function (event) {
     saveFormData('principal-address-form');
 });
 
-const principalCCForm = document.getElementById('principal-credit-card-form');
+const principalCCForm = document.getElementById('principal-billing-form');
 const principalCCFormSubmitButton = document.querySelector('#princ-credit-card-saveBtn');
 
 principalCCFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
-    saveFormData('principal-credit-card-form');
+    saveFormData('principal-billing-form');
 });
 
 const principalSchedForm = document.getElementById('principal-scheduling-form');
@@ -140,12 +191,12 @@ notaryCCFormSubmitButton.addEventListener('click', function (event) {
     saveFormData('notary-credit-card-form');
 });
 
-const notarySchedulingForm = document.getElementById('notary-scheduling-form');
-const notarySchedulingFormSubmitButton = document.querySelector('#notary-scheduling-saveBtn');
+const notarySchedulingForm = document.getElementById('notary-sched-form');
+const notarySchedulingFormSubmitButton = document.querySelector('#notary-sched-saveBtn');
 
 notarySchedulingFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
-    saveFormData('notary-scheduling-form');
+    saveFormData('notary-sched-form');
 });
 
 const notaryClientsForm = document.getElementById('notary-clients-form');
@@ -175,7 +226,7 @@ notaryDocsFormSubmitButton.addEventListener('click', function (event) {
 const notaryDocsStorageResetButton = document.querySelector('#notary-document-storage-resetBtn');
 
 notaryDocsStorageResetButton.addEventListener('click', function () {
-    clearLocalStorageByKey('notary-docs-storage');
+    clearLocalStorageByKey('notary-docs-storage', 'notary-document-list-sidepanel');
 });
 
 const notaryProjectForm = document.getElementById('notary-project-form');
@@ -189,7 +240,7 @@ notaryProjectFormSubmitButton.addEventListener('click', function (event) {
 const notaryProjectStorageResetButton = document.querySelector('#notary-project-storage-resetBtn');
 
 notaryProjectStorageResetButton.addEventListener('click', function () {
-    clearLocalStorageByKey('notary-project-storage');
+    clearLocalStorageByKey('notary-project-storage', 'notary-project-list-sidepanel');
 });
 /////////////////////////////////
 const notarySigForm = document.getElementById('notary-signature-form');
@@ -199,6 +250,21 @@ notarySigFormSubmitButton.addEventListener('click', function (event) {
     event.preventDefault();
     saveFormData('notary-signature-form');
 });
+////////////
+
+function displayContentOnLoad(formId) {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    storage.get([storageKey], function (result) {
+        const formData = result[storageKey];
+        if (formData) {
+            displayFormData(formId, formData);
+            displaySidePanelData(formId, formData);
+        } else {
+            console.log(`Error: No data found in local storage for key ${storageKey}`);
+        }
+    });
+}
 
 ////////saveFormData() BELOW////////
 
@@ -254,7 +320,7 @@ function processFormData(formId, dataToSave) {
                 case 'principal-address-form':
                     resolve(handlePrincipleAddressForm(formId, dataToSave));
                     break;
-                case 'principal-credit-card-form':
+                case 'principal-billing-form':
                     resolve(handlePrincipleCreditCardForm(formId, dataToSave));
                     break;
                 case 'principal-scheduling-form':
@@ -269,7 +335,7 @@ function processFormData(formId, dataToSave) {
                 case 'notary-credit-card-form':
                     resolve(handleNotaryCreditCardForm(formId, dataToSave));
                     break;
-                case 'notary-scheduling-form':
+                case 'notary-sched-form':
                     resolve(handleNotarySchedulingForm(formId, dataToSave));
                     break;
                 case 'notary-commission-form':
@@ -279,7 +345,7 @@ function processFormData(formId, dataToSave) {
                     resolve(handleNotaryDocsForm(formId, dataToSave));
                     break;
                 case 'notary-project-form':
-                    resolve(handleNotaryDocsForm(formId, dataToSave));
+                    resolve(handleNotaryProjectForm(formId, dataToSave));
                     break;
                 case 'example-form':
                     resolve(exampleForm(formId, dataToSave));
@@ -362,7 +428,7 @@ function displayFormData(formId, data) {
     if (data) {
         displayData(data);
     } else {
-        chrome.storage.local.get([storageKey], function (result) {
+        storage.get([storageKey], function (result) {
             const formData = result[storageKey];
             if (formData) {
                 displayData(formData);
@@ -384,7 +450,7 @@ function displaySidePanelData(formId, data) {
         case 'principal-address-form':
             handlePrincipalAddressDisplay(data);
             break;
-        case 'principal-credit-card-form':
+        case 'principal-billing-form':
             handlePrincipalCreditCardDisplay(data);
             break;
         case 'principal-scheduling-form':
@@ -402,7 +468,7 @@ function displaySidePanelData(formId, data) {
         case 'notary-credit-card-form':
             handleNotaryCreditCardDisplay(data);
             break;
-        case 'notary-scheduling-form':
+        case 'notary-sched-form':
             handleNotarySchedulingDisplay(data);
             break;
         case 'notary-clients-form':
@@ -415,7 +481,7 @@ function displaySidePanelData(formId, data) {
             handleNotaryDocsDisplay(data);
             break;
         case 'notary-project-form':
-            handleNotaryDocsDisplay(data);
+            handleNotaryProjectsDisplay(data);
             break;
         case 'notary-signature-form':
             handleNotarySignatureDisplay(data);
@@ -428,13 +494,30 @@ function displaySidePanelData(formId, data) {
 
 ////////////////////////
 
-function clearLocalStorageByKey(key) {
-    chrome.storage.local.remove(key, function () {
+function clearLocalStorageByKey(key, displayIds) {
+    storage.remove(key, function () {
         var error = chrome.runtime.lastError;
         if (error) {
             console.error(error);
         } else {
             console.log(`Data for ${key} removed`);
+
+            // Clear the display for each ID in the array
+            for (const displayId of displayIds) {
+                const displayElement = document.getElementById(displayId);
+                if (displayElement) {
+                    if (displayElement.tagName === 'IMG') {
+                        // If the element is an img, clear its src
+                        displayElement.src = '';
+                    } else {
+                        // Otherwise, clear its innerHTML
+                        displayElement.innerHTML = '';
+                    }
+                    console.log(`Display for ${displayId} cleared`);
+                } else {
+                    console.log(`No element found with id ${displayId}`);
+                }
+            }
         }
     });
 }
@@ -476,7 +559,7 @@ function createDocListItem(data) {
 
     const notaryDocNameDisplay = document.createElement('a');
     notaryDocNameDisplay.className = 'notary-doc-name';
-    notaryDocNameDisplay.textContent = data['file-name'];
+    notaryDocNameDisplay.textContent = data['fileName'];
 
     const notaryDocFileSizeGroup = document.createElement('div');
     notaryDocFileSizeGroup.className = 'sidepanelGroup';
@@ -487,7 +570,7 @@ function createDocListItem(data) {
 
     const notaryDocFileSizeDisplay = document.createElement('h6');
     notaryDocFileSizeDisplay.className = 'notary-doc-file-size';
-    notaryDocFileSizeDisplay.textContent = fileSizeConversion(data['file-size']);
+    notaryDocFileSizeDisplay.textContent = fileSizeConversion(data['fileSize']);
 
     notaryDocFileSizeGroup.appendChild(notaryDocFileSizeLabel);
     notaryDocFileSizeGroup.appendChild(notaryDocFileSizeDisplay);
@@ -501,7 +584,7 @@ function createDocListItem(data) {
 
     const notaryDocFileTypeDisplay = document.createElement('h6');
     notaryDocFileTypeDisplay.className = 'notary-doc-file-type';
-    notaryDocFileTypeDisplay.textContent = data['file-type'];
+    notaryDocFileTypeDisplay.textContent = data['fileType'];
 
     notaryDocFileTypeGroup.appendChild(notaryDocFileTypeLabel);
     notaryDocFileTypeGroup.appendChild(notaryDocFileTypeDisplay);
@@ -515,7 +598,7 @@ function createDocListItem(data) {
 
     const notaryDocFileLastModDisplay = document.createElement('h6');
     notaryDocFileLastModDisplay.className = 'notary-doc-file-last-modified';
-    notaryDocFileLastModDisplay.textContent = formatTimestamp(data['file-lastModified']);
+    notaryDocFileLastModDisplay.textContent = formatTimestamp(data['fileLastModified']);
 
     notaryDocFileLastModGroup.appendChild(notaryDocFileLastModLabel);
     notaryDocFileLastModGroup.appendChild(notaryDocFileLastModDisplay);
@@ -840,3 +923,42 @@ document.getElementById('princ-credit-card-expiration').addEventListener('input'
     target.value = target.value.replace(/[^\d]/g, '').replace(/(\d{2})/, '$1/').trim();
     target.selectionEnd = position += ((target.value.charAt(position - 1) === '/' && target.value.charAt(length - 1) !== '/') ? 1 : 0);
 });
+
+// function populateDocumentSelection(docs) {
+//     // Get the select element
+//     const select = document.getElementById('notary-project-document-selection');
+
+//     // Add an option for each document
+//     for (const doc of docs) {
+//         const option = document.createElement('option');
+//         option.value = doc.id; // Set the value to the id of the document
+//         option.textContent = doc.documentName; // Set the text content to the documentName of the document
+
+//         // Set the data attributes
+//         option.dataset.fileName = doc.documentName; // Use the camelCase key
+//         option.dataset.fileSize = doc.documentSize; // Use the camelCase key
+//         option.dataset.fileType = doc.documentType; // Use the camelCase key
+//         option.dataset.fileLastModified = doc.lastModified; // Use the camelCase key
+
+//         select.appendChild(option);
+//     }
+// }
+
+// function displayDocumentMetadata(docs) {
+//     // Get the ul element
+//     const ul = document.getElementById('notary-document-list-sidepanel');
+
+//     // Add a li for each document
+//     for (const doc of docs) {
+//         const li = document.createElement('li');
+//         li.innerHTML = `
+//             <p>${doc.documentName}</p>
+//             <p>Size: ${doc.documentSize / 1000} KB</p>
+//             <p>Type: ${doc.documentType}</p>
+//             <p>ID: ${doc.id}</p>
+//             <p>Last Modified: ${doc.lastModified}</p>
+//             <p>Notes: ${doc.notes || ''}</p>
+//         `;
+//         ul.appendChild(li);
+//     }
+// }

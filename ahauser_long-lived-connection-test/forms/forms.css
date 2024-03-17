@@ -63,9 +63,14 @@
     --disabled-color-border: #ccc;
     --disabled-color-background: #eee;
     --accent-error: #ff0033;
+
     --select-border: #777;
     --select-focus: var(--color-secondary-240);
     --select-arrow: var(--select-border);
+    --select-min-width: 15ch;
+    --select-max-width: 60ch;
+
+
     --formControl-color: purple;
     --formControl-disabled: #959495;
 
@@ -77,7 +82,7 @@
 
 }
 
-/* css reset code for text and textarea input types START*/
+/* css reset code START*/
 
 *,
 *:before,
@@ -96,14 +101,14 @@ input[type="file"] {
     color: #777;
 }
 
-.input[disabled] {
+.formField[disabled] {
     border: 1px solid var(--input-border);
     background-color: #eee;
     cursor: not-allowed;
 }
 
 
-textarea.input {
+textarea.formField {
     resize: vertical;
 
     overflow: auto;
@@ -124,7 +129,6 @@ textarea.input {
     padding: 0.25em 0.5em;
     /* these values are inherited from the :root location */
     font-family: inherit;
-    font-family: inherit;
     /* IOS text zoom prevention  */
     /* fallback */
     font-size: 16px;
@@ -138,8 +142,10 @@ textarea.input {
     height: 2.25rem;
 }
 
-/* .formField select {
+select {
+    /* A reset of styles, including removing the default dropdown arrow */
     appearance: none;
+    /* Additional resets for further consistency */
     background-color: transparent;
     border: none;
     padding: 0 1m 0 0;
@@ -152,22 +158,24 @@ textarea.input {
     cursor: inherit;
     line-height: inherit;
     outline: none;
-} */
+}
 
-/* this removes the dropdown arrow in IE10 & IE11 */
+/* this removes the dropdown arrow in IE10 & IE11 for the Select element */
 .formField::-ms-expand {
     display: none;
 }
 
 fieldset {
     margin: 0;
+    border: none;
+    padding: 0;
 }
 
 legend {
     padding: 0;
 }
 
-/* css reset code for text and textarea input types END*/
+/* css reset code END*/
 
 
 .formGroup {
@@ -317,42 +325,11 @@ section+section {
 }
 
 
-/* css reset code for select input types START*/
-
-select {
-    /* A reset of styles, including removing the default dropdown arrow */
-    appearance: none;
-    /* Additional resets for further consistency */
-    background-color: transparent;
-    border: none;
-    padding: 0 1em 0 0;
-    margin: 0;
-    width: 100%;
-    font-family: inherit;
-    font-size: inherit;
-    cursor: inherit;
-    line-height: inherit;
-
-    /* Stack above custom arrow */
-    z-index: 1;
-
-    outline: none;
-
-}
-
-
-/* removes the arrow for lower IE versions */
-select::-ms-expand {
-    display: none;
-}
-
-/* css reset code for select input types END*/
-
 .select {
     width: 100%;
     /* The min-width and max-width values are mostly for this demo, and you may choose to drop or alter it for your use case. */
-    min-width: 15ch;
-    max-width: 30ch;
+    min-width: var(--select-min-width);
+    max-width: var(--select-max-width);
 
     border: 1px solid var(--select-border);
     border-radius: 0.25em;
@@ -366,9 +343,11 @@ select::-ms-expand {
     background-color: #fff;
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 
+    /* without the "display: grid" code below the arrow will not appear despite defining width and height. When inspected, its found that the ::after is not actually being allowed it's width. */
     display: grid;
     grid-template-areas: "select";
     align-items: center;
+
     position: relative;
 
 }
@@ -409,12 +388,12 @@ select:focus+.focus {
 
 select[multiple] {
     padding-right: 0;
-    height: 6rem;
+    height: 12rem;
 }
 
 select[multiple] option {
     white-space: normal;
-    outline-color: var(--select-focus);
+    /* outline-color: var(--select-focus); */
 }
 
 .select--disabled {
@@ -423,7 +402,7 @@ select[multiple] option {
     background-image: linear-gradient(to top, #ddd, #eee 33%);
 }
 
-.select+label {
+select+label {
     margin-top: 2rem;
 }
 

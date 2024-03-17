@@ -35,48 +35,83 @@ function handleNotaryCommissionDisplay(data) {
 }
 
 function handleNotaryDocsDisplay(data) {
+    const curatedDocs = [
+        {
+            id: 'default-notary-doc-a',
+            documentName: 'Acknowledgement of Conveyance Form',
+            path: 'assets/legal memoranda/Acknowledgement of Conveyance Form.txt',
+            documentSize: '762', // Replace 'placeholder' with the actual file size
+            documentType: 'txt', // Replace 'placeholder' with the actual file type
+            lastModified: 'Friday, March 15, 2024, 1:30:15 PM' // Replace 'placeholder' with the actual last modified date
+        },
+        {
+            id: 'default-notary-doc-b',
+            documentName: 'Certificate of Subscribing Witness Form',
+            path: 'assets/legal memoranda/Certificate of Subscribing Witness Form.txt',
+            documentSize: '905', // Replace 'placeholder' with the actual file size
+            documentType: 'txt', // Replace 'placeholder' with the actual file type
+            lastModified: 'Friday, March 15, 2024, 1:31:01 PM' // Replace 'placeholder' with the actual last modified date
+        },
+        {
+            id: 'default-notary-doc-c',
+            documentName: 'Corporate Acknowledgement Form',
+            path: 'assets/legal memoranda/Corporate Acknowledgement Form.txt',
+            documentSize: '1800', // Replace 'placeholder' with the actual file size
+            documentType: 'txt', // Replace 'placeholder' with the actual file type
+            lastModified: 'Friday, March 15, 2024, 1:29:35 PM' // Replace 'placeholder' with the actual last modified date
+        },
+    ];
+
+    // If data is not an array, default it to an empty array
+    if (!Array.isArray(data)) {
+        data = [];
+    }
+
     const ul = document.getElementById('notary-document-list-sidepanel');
 
-    // Loop over all documents in the data array
-    data.forEach(doc => {
+    // Clear the ul element
+    ul.innerHTML = '';
+
+    // Merge the data from local storage and the curatedDocs array
+    const mergedData = [...data, ...curatedDocs];
+
+    // Loop over all documents in the mergedData array
+    mergedData.forEach(doc => {
         const li = document.createElement('li');
-        li.classList.add('doc-item');
-
-        const a = document.createElement('a');
-        a.textContent = doc.documentName;
-        a.href = doc.document;
-        a.target = '_blank'; // Open in a new tab
-        a.classList.add('doc-link');
-
-        const pSize = document.createElement('p');
-        // Use fileSizeConversion to convert the file size
-        pSize.textContent = `Size: ${fileSizeConversion(doc.documentSize)}`;
-        pSize.classList.add('doc-size');
-
-        const pType = document.createElement('p');
-        pType.textContent = `Type: ${doc.documentType}`;
-        pType.classList.add('doc-type');
-
-        const pId = document.createElement('p');
-        pId.textContent = `ID: ${doc.id}`;
-        pId.classList.add('doc-id');
-
-        const pLastModified = document.createElement('p');
-        pLastModified.textContent = `Last Modified: ${new Date(doc.lastModified).toLocaleString()}`;
-        pLastModified.classList.add('doc-last-modified');
-
-        const pNotes = document.createElement('p');
-        pNotes.textContent = `Notes: ${doc.notes}`;
-        pNotes.classList.add('doc-notes');
-
-        li.append(a, pSize, pType, pId, pLastModified, pNotes);
+        li.innerHTML = `
+            <p>${doc.documentName}</p>
+            <p>Size: ${doc.documentSize / 1000} KB</p>
+            <p>Type: ${doc.documentType}</p>
+            <p>ID: ${doc.id}</p>
+            <p>Last Modified: ${doc.lastModified}</p>
+            <p>Notes: ${doc.notes || ''}</p>
+        `;
         ul.appendChild(li);
     });
 }
 
+function handleNotaryProjectsDisplay(data) {
+    // Get the select element
+    const select = document.getElementById('notary-project-document-selection');
+
+    // Add an option for each document
+    for (const doc of data) {
+        const option = document.createElement('option');
+        option.value = doc.id; // Set the value to the id of the document
+        option.textContent = doc.documentName; // Set the text content to the documentName of the document
+
+        // Set the data attributes
+        option.dataset.fileName = doc.documentName; // Use the camelCase key
+        option.dataset.fileSize = doc.documentSize; // Use the camelCase key
+        option.dataset.fileType = doc.documentType; // Use the camelCase key
+        option.dataset.fileLastModified = doc.lastModified; // Use the camelCase key
+
+        select.appendChild(option);
+    }
+}
 
 
-module.exports = { handlePrincipalContactDisplay, handlePrincipalAddressDisplay, handlePrincipalCreditCardDisplay, handlePrincipalSchedulingDisplay, handleNotaryContactDisplay, handleNotaryAddressDisplay, handleNotaryCreditCardDisplay, handleNotarySchedulingDisplay, handleNotaryCommissionDisplay, handleNotaryDocsDisplay };
+module.exports = { handlePrincipalContactDisplay, handlePrincipalAddressDisplay, handlePrincipalCreditCardDisplay, handlePrincipalSchedulingDisplay, handleNotaryContactDisplay, handleNotaryAddressDisplay, handleNotaryCreditCardDisplay, handleNotarySchedulingDisplay, handleNotaryCommissionDisplay, handleNotaryDocsDisplay, handleNotaryProjectsDisplay };
 
 
 function displayDataAsKeyValuePairs(data) {
@@ -135,3 +170,5 @@ function fileSizeConversion(num) {
         return sizeInGB.toFixed(2) + ' GB';
     }
 }
+
+
