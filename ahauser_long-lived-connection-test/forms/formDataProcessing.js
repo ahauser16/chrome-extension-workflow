@@ -396,7 +396,6 @@ function handleNotaryCommissionForm(formId, dataToSave) {
         let isEmptyFieldPresent = false;
         let promises = [];
 
-
         const form = document.getElementById(formId);
         if (!form) {
             reject(new Error(`No form found with id ${formId}`));
@@ -411,15 +410,20 @@ function handleNotaryCommissionForm(formId, dataToSave) {
             const value = element.value;
             console.log(`Key: ${element.id}, Value: ${value}`);
 
+            // Find the index of the object with the same key in dataToSave
+            const index = dataToSave.findIndex(obj => obj.hasOwnProperty(element.id));
+
             if (element.type === 'select-one' || element.type === 'select-multiple') {
                 const selectedOptions = Array.from(element.selectedOptions).map(option => option.value);
                 if (selectedOptions.length === 0) {
                     isEmptyFieldPresent = true;
                 } else {
                     if (element.id === 'notary-commission-filed-county') {
-                        dataToSave.push({ 'notary-commission-filed-county': selectedOptions });
+                        // If the object exists, update its value
+                        index !== -1 ? dataToSave[index]['notary-commission-filed-county'] = selectedOptions : dataToSave.push({ 'notary-commission-filed-county': selectedOptions });
                     } else {
-                        dataToSave.push({ [element.id]: selectedOptions[0] });
+                        // If the object exists, update its value
+                        index !== -1 ? dataToSave[index][element.id] = selectedOptions[0] : dataToSave.push({ [element.id]: selectedOptions[0] });
                     }
                 }
             } else if (element.type === 'file') {
@@ -428,7 +432,8 @@ function handleNotaryCommissionForm(formId, dataToSave) {
                 } else {
                     promises.push(
                         handleImageInput(element).then(base64String => {
-                            dataToSave.push({ [element.id]: base64String });
+                            // If the object exists, update its value
+                            index !== -1 ? dataToSave[index][element.id] = base64String : dataToSave.push({ [element.id]: base64String });
                         }).catch(error => {
                             console.error(`Error handling file input: ${error}`);
                             isEmptyFieldPresent = true;
@@ -436,14 +441,19 @@ function handleNotaryCommissionForm(formId, dataToSave) {
                     );
                 }
             } else if (element.type === 'date') {
-                if (!handleDateInput(element, dataToSave)) {
+                const dateValue = handleDateInput(element);
+                if (!dateValue) {
                     isEmptyFieldPresent = true;
+                } else {
+                    // If the object exists, update its value
+                    index !== -1 ? dataToSave[index][element.id] = dateValue[element.id] : dataToSave.push(dateValue);
                 }
             } else {
                 if (!value) {
                     isEmptyFieldPresent = true;
                 } else {
-                    dataToSave.push({ [element.id]: value });
+                    // If the object exists, update its value
+                    index !== -1 ? dataToSave[index][element.id] = value : dataToSave.push({ [element.id]: value });
                 }
             }
 
@@ -545,22 +555,12 @@ function handleNotaryProjectForm(formId, dataToSave) {
 ///
 module.exports = { handlePrincipleContactInfoForm, handlePrincipleAddressForm, handlePrincipleCreditCardForm, handlePrincipleSchedulingForm, handleNotaryContactForm, handleNotaryAddressForm, handleNotaryCreditCardForm, handleNotarySchedulingForm, handleNotaryCommissionForm, handleNotaryDocsForm, handleNotaryProjectForm };
 
-function handleImageInput(element) {
-    return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result.split(',')[1]); // Get the Base64 string
-        reader.onerror = reject;
-        reader.readAsDataURL(element.files[0]); // Pass the first File object
-    });
-}
-
-function handleDateInput(element, dataToSave) {
+function handleDateInput(element) {
     const dateValue = new Date(element.value);
     if (isNaN(dateValue)) {
         return false;
     }
-    dataToSave.push({ [element.id]: dateValue.toISOString() }); // Save as ISO string
-    return true;
+    return { [element.id]: dateValue.toISOString() }; // Return the date object instead of modifying dataToSave
 }
 
 function createId() {
@@ -619,4 +619,13 @@ function populateDocumentSelection(docs) {
 
         select.appendChild(option);
     }
+}
+
+function handleImageInput(element) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]); // Get the Base64 string
+        reader.onerror = reject;
+        reader.readAsDataURL(element.files[0]); // Pass the first File object
+    });
 }

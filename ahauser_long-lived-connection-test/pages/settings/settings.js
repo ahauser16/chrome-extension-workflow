@@ -258,19 +258,19 @@ function displayContentOnLoad(formId) {
     storage.get([storageKey], function (result) {
         const formData = result[storageKey];
         if (formData) {
-            displayFormData(formId, formData);
-            displaySidePanelData(formId, formData);
+            displayFormData(formId, formData, storageKey); 
+            displaySidePanelData(formId, formData, storageKey); 
         } else {
             console.log(`Error: No data found in local storage for key ${storageKey}`);
         }
     });
 }
 
-////////saveFormData() BELOW////////
-
 function saveFormData(formId) {
-    getFormAndData(formId)
-        .then(({ dataToSave, storageKey }) => {
+    const storageKey = `${formId.replace("-form", "-storage")}`;
+
+    getFormAndData(formId, storageKey)
+        .then(dataToSave => {
             return processFormData(formId, dataToSave)
                 .then(dataToSave => ({ dataToSave, storageKey }));
         })
@@ -280,8 +280,8 @@ function saveFormData(formId) {
         .then(dataToSave => {
             console.log('Data saved:', JSON.stringify(dataToSave));
             showLoadMessages_princContact('Settings saved');
-            displayFormData(formId, dataToSave);
-            displaySidePanelData(formId, dataToSave);
+            displayFormData(formId, dataToSave, storageKey);
+            displaySidePanelData(formId, dataToSave, storageKey);
             console.log('Data saved successfully');
         })
         .catch((error) => {
@@ -290,7 +290,7 @@ function saveFormData(formId) {
         });
 }
 
-function getFormAndData(formId) {
+function getFormAndData(formId, storageKey) {
     console.log(`${formId} submit button clicked`);
 
     const form = document.getElementById(formId);
@@ -298,13 +298,11 @@ function getFormAndData(formId) {
         throw new Error(`No form found with id ${formId}`);
     }
 
-    const storageKey = `${formId.replace("-form", "-storage")}`;
-
     return storage.get([storageKey])
         .then(items => {
             // Initialize dataToSave as an array if there's no data in storage
             const dataToSave = Array.isArray(items[storageKey]) ? items[storageKey] : [];
-            return { dataToSave, storageKey };
+            return dataToSave;
         });
 }
 
@@ -393,98 +391,102 @@ function saveDataToStorage(formId, storageKey, dataToSave) {
     return savePromise.then(() => dataToSave);
 }
 
-///////////////END OF SaveFormData ////////////
-
-function displayFormData(formId, data) {
-    const storageKey = `${formId.replace("-form", "-storage")}`;
-
-    const displayData = data => {
-        // Handle the data as an array of objects
-        for (const obj of data) {
-            for (const [key, value] of Object.entries(obj)) {
-                try {
-                    const displayElement = document.getElementById(key);
-                    if (!displayElement) {
-                        console.log(`Error: No element found with id ${key}`);
-                        continue;
-                    }
-                    if (displayElement.type === 'file') {
-                        const imgElement = document.getElementById(`${key}-sidepanel`);
-                        if (imgElement) {
-                            imgElement.src = 'data:image/png;base64,' + value;
-                        } else {
-                            console.log(`Error: No img element found with id ${key}-sidepanel`);
-                        }
-                    } else {
-                        displayElement.value = value;
-                    }
-                } catch (error) {
-                    console.error('Error processing element. Key:', key, 'Error:', error);
-                }
-            }
-        }
-    };
-
-    if (data) {
-        displayData(data);
-    } else {
-        storage.get([storageKey], function (result) {
-            const formData = result[storageKey];
-            if (formData) {
-                displayData(formData);
-            } else {
-                console.log(`Error: No data found in local storage for key ${storageKey}`);
-            }
-        });
-    }
-}
-
-function displaySidePanelData(formId, data) {
-    const storageKey = `${formId.replace("-form", "-storage")}`;
-    console.log(`storageKey: ${storageKey}, data:`, data);
+function displayFormData(formId, data, storageKey) {
+    console.log(`display data in FORM from storageKey: ${storageKey}, data:`, data);
 
     switch (formId) {
         case 'principal-contact-form':
-            handlePrincipalContactDisplay(data);
+            displayPrincipalContactInForm(data);
             break;
         case 'principal-address-form':
-            handlePrincipalAddressDisplay(data);
+            displayPrincipalAddressInForm(data);
             break;
         case 'principal-billing-form':
-            handlePrincipalCreditCardDisplay(data);
+            displayPrincipalCreditCardInForm(data);
             break;
         case 'principal-scheduling-form':
-            handlePrincipalSchedulingDisplay(data);
+            displayPrincipalSchedulingInForm(data);
             break;
         case 'principal-profile-pic-form':
-            handlePrincipalProfilePicDisplay(data);
+            displayPrincipalProfilePicInForm(data);
             break;
         case 'notary-contact-form':
-            handleNotaryContactDisplay(data);
+            displayNotaryContactInForm(data);
             break;
         case 'notary-address-form':
-            handleNotaryAddressDisplay(data);
+            displayNotaryAddressInForm(data);
             break;
         case 'notary-credit-card-form':
-            handleNotaryCreditCardDisplay(data);
+            displayNotaryCreditCardInForm(data);
             break;
         case 'notary-sched-form':
-            handleNotarySchedulingDisplay(data);
+            displayNotarySchedulingInForm(data);
             break;
         case 'notary-clients-form':
-            handleNotaryClientsDisplay(data);
+            displayNotaryClientsInForm(data);
             break;
         case 'notary-commission-form':
-            handleNotaryCommissionDisplay(data);
+            displayNotaryCommissionInForm(data);
             break;
         case 'notary-docs-form':
-            handleNotaryDocsDisplay(data);
+            displayNotaryDocsInForm(data);
             break;
         case 'notary-project-form':
-            handleNotaryProjectsDisplay(data);
+            displayNotaryProjectsInForm(data);
             break;
         case 'notary-signature-form':
-            handleNotarySignatureDisplay(data);
+            displayNotarySignatureInForm(data);
+            break;
+        default:
+            console.error(`Unhandled form id: ${formId}`);
+    }
+}
+
+function displaySidePanelData(formId, data, storageKey) {
+    console.log(`display data in SIDEPANEL from storageKey: ${storageKey}, data:`, data);
+
+    switch (formId) {
+        case 'principal-contact-form':
+            displayPrincipalContactInSidePanel(data);
+            break;
+        case 'principal-address-form':
+            displayPrincipalAddressInSidePanel(data);
+            break;
+        case 'principal-billing-form':
+            displayPrincipalCreditCardInSidePanel(data);
+            break;
+        case 'principal-scheduling-form':
+            displayPrincipalSchedulingInSidePanel(data);
+            break;
+        case 'principal-profile-pic-form':
+            displayPrincipalProfilePicInSidePanel(data);
+            break;
+        case 'notary-contact-form':
+            displayNotaryContactInSidePanel(data);
+            break;
+        case 'notary-address-form':
+            displayNotaryAddressInSidePanel(data);
+            break;
+        case 'notary-credit-card-form':
+            displayNotaryCreditCardInSidePanel(data);
+            break;
+        case 'notary-sched-form':
+            displayNotarySchedulingInSidePanel(data);
+            break;
+        case 'notary-clients-form':
+            displayNotaryClientsInSidePanel(data);
+            break;
+        case 'notary-commission-form':
+            displayNotaryCommissionInSidePanel(data);
+            break;
+        case 'notary-docs-form':
+            displayNotaryDocsInSidePanel(data);
+            break;
+        case 'notary-project-form':
+            displayNotaryProjectsInSidePanel(data);
+            break;
+        case 'notary-signature-form':
+            displayNotarySignatureInSidePanel(data);
             break;
         default:
             console.error(`Unhandled form id: ${formId}`);

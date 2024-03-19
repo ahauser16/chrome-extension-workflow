@@ -1,40 +1,44 @@
-function handlePrincipalContactDisplay(data) {
+function displayPrincipalContactInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handlePrincipalAddressDisplay(data) {
+function displayPrincipalAddressInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handlePrincipalCreditCardDisplay(data) {
+function displayPrincipalCreditCardInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handlePrincipalSchedulingDisplay(data) {
+function displayPrincipalSchedulingInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotaryContactDisplay(data) {
+function displayNotaryContactInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotaryAddressDisplay(data) {
+function displayNotaryAddressInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotaryCreditCardDisplay(data) {
+function displayNotaryCreditCardInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotarySchedulingDisplay(data) {
+function displayNotarySchedulingInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotaryCommissionDisplay(data) {
+function displayNotaryClientsInSidePanel(data) {
     displayDataAsKeyValuePairs(data);
 }
 
-function handleNotaryDocsDisplay(data) {
+function displayNotaryCommissionInSidePanel(data) {
+    displayDataAsKeyValuePairs(data);
+}
+
+function displayNotaryDocsInSidePanel(data) {
     const curatedDocs = [
         {
             id: 'default-notary-doc-a',
@@ -90,7 +94,7 @@ function handleNotaryDocsDisplay(data) {
     });
 }
 
-function handleNotaryProjectsDisplay(data) {
+function displayNotaryProjectsInSidePanel(data) {
     // Get the select element
     const select = document.getElementById('notary-project-document-selection');
 
@@ -110,8 +114,13 @@ function handleNotaryProjectsDisplay(data) {
     }
 }
 
+function displayNotarySignatureInSidePanel(data) {
+    displayDataAsKeyValuePairs(data);
+}
 
-module.exports = { handlePrincipalContactDisplay, handlePrincipalAddressDisplay, handlePrincipalCreditCardDisplay, handlePrincipalSchedulingDisplay, handleNotaryContactDisplay, handleNotaryAddressDisplay, handleNotaryCreditCardDisplay, handleNotarySchedulingDisplay, handleNotaryCommissionDisplay, handleNotaryDocsDisplay, handleNotaryProjectsDisplay };
+module.exports = {
+    displayPrincipalContactInSidePanel,    displayPrincipalAddressInSidePanel,    displayPrincipalCreditCardInSidePanel,    displayPrincipalSchedulingInSidePanel,    displayNotaryContactInSidePanel,    displayNotaryAddressInSidePanel,    displayNotaryCreditCardInSidePanel,    displayNotarySchedulingInSidePanel,    displayNotaryClientsInSidePanel,    displayNotaryCommissionInSidePanel,    displayNotaryDocsInSidePanel,    displayNotaryProjectsInSidePanel,    displayNotarySignatureInSidePanel
+};
 
 
 function displayDataAsKeyValuePairs(data) {
@@ -170,5 +179,4 @@ function fileSizeConversion(num) {
         return sizeInGB.toFixed(2) + ' GB';
     }
 }
-
 
